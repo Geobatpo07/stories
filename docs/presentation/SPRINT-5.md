@@ -54,7 +54,7 @@ not promoted into competing top-level directories.
 | `/projects`, `/projects/[slug]`           | Project directory and workspace              |
 | `/stories`, `/stories/[slug]`             | Filterable directory and reading view        |
 | `/artifacts`, `/artifacts/[kind]/[slug]`  | Artifact directory and collision-safe record |
-| `/search`                                 | Accessible Sprint 6 placeholder              |
+| `/search`                                 | Runtime-backed knowledge search              |
 | `/rss.xml`, `/sitemap.xml`, `/robots.txt` | Discovery endpoints                          |
 
 Detail routes use `generateStaticParams`; directories and content are server-rendered.

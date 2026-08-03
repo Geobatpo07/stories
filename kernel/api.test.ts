@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   findById,
-  findBySlug,
   findRelated,
   getKnowledgeGraph,
   KnowledgeNotFoundError,
@@ -20,37 +19,36 @@ import {
   resetKernelCache,
 } from "@/kernel";
 
-// Integration test — runs against the real content/ tree and the real
-// domain schemas, not mocks. Regression check that content and schemas
-// stay in sync as both evolve.
+// Integration test: runs against the real content tree and real domain schemas.
+// It remains valid for a new, empty laboratory and as research is added.
 beforeEach(() => {
   resetKernelCache();
 });
 
 describe("Knowledge Kernel public API", () => {
-  it("loads exactly one entity per collection's example file", () => {
-    expect(loadPrograms()).toHaveLength(1);
-    expect(loadQuestions()).toHaveLength(1);
-    expect(loadHypotheses()).toHaveLength(1);
-    expect(loadExperiments()).toHaveLength(1);
-    expect(loadKnowledgeObjects()).toHaveLength(1);
-    expect(loadSoftware()).toHaveLength(1);
-    expect(loadPublications()).toHaveLength(1);
-    expect(loadDatasets()).toHaveLength(1);
-    expect(loadPresentations()).toHaveLength(1);
-    expect(loadEverything()).toHaveLength(9);
+  it("loads every content collection without requiring seeded records", () => {
+    const collections = [
+      loadPrograms(),
+      loadQuestions(),
+      loadHypotheses(),
+      loadExperiments(),
+      loadKnowledgeObjects(),
+      loadSoftware(),
+      loadPublications(),
+      loadDatasets(),
+      loadPresentations(),
+    ];
+
+    expect(loadEverything()).toHaveLength(
+      collections.reduce((sum, items) => sum + items.length, 0),
+    );
   });
 
-  it("resolves the example Question's programSlug to the example Program", () => {
-    const question = findBySlug("question", "cyclone-radial-profile-stability");
-    expect(question).toBeDefined();
-
-    const parents = getKnowledgeGraph().getParents(question!.id);
-    expect(parents).toHaveLength(1);
-    expect(parents[0]?.id).toBe("program:environmental-climate-modeling");
+  it("builds one graph node for every loaded entity", () => {
+    expect(getKnowledgeGraph().nodes.size).toBe(loadEverything().length);
   });
 
-  it("loadResearchNotes()/loadTutorials() are disjoint filtered subsets of loadKnowledgeObjects()", () => {
+  it("loadResearchNotes()/loadTutorials() are disjoint filtered subsets", () => {
     const all = loadKnowledgeObjects();
     const notes = loadResearchNotes();
     const tutorials = loadTutorials();
@@ -63,16 +61,16 @@ describe("Knowledge Kernel public API", () => {
     expect(notes.every((note) => note.noteType === "research-note")).toBe(true);
   });
 
-  it("findById returns undefined for an unknown id and the entity for a known one", () => {
+  it("findById returns undefined for unknown ids and resolves loaded entities", () => {
     expect(findById("program:does-not-exist")).toBeUndefined();
-    expect(findById("program:environmental-climate-modeling")).toBeDefined();
+    for (const entity of loadEverything()) expect(findById(entity.id)).toBe(entity);
   });
 
   it("findRelated throws KnowledgeNotFoundError for an unknown id", () => {
     expect(() => findRelated("program:does-not-exist")).toThrow(KnowledgeNotFoundError);
   });
 
-  it("loadEverything() results are memoized until resetKernelCache()", () => {
+  it("memoizes loadEverything() results until resetKernelCache()", () => {
     const first = loadEverything();
     const second = loadEverything();
     expect(first).toBe(second);

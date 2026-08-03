@@ -6,7 +6,7 @@ building pages but not for ordinary page requests after a successful production 
 ## Required configuration
 
 ```text
-NEXT_PUBLIC_SITE_URL=https://research.example.org
+NEXT_PUBLIC_SITE_URL=https://<canonical-production-origin>
 DUCKDB_PATH=./database/generated/knowledge.duckdb
 ```
 
