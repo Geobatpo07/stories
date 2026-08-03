@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens are intentionally minimal at foundation stage.
+ * The visual system for Stories (see the platform audit) is a
+ * deliberate, subject-grounded design decision for a later sprint —
+ * not something to default while scaffolding.
+ */
+@theme inline {
+  --font-sans: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-mono: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}

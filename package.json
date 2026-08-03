@@ -1,0 +1,73 @@
+{
+  "name": "stories",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Stories — Open Research Laboratory. Operating system for a research program: questions, hypotheses, experiments, knowledge objects, software, publications and datasets, with Markdown/MDX as the single source of truth.",
+  "type": "module",
+  "engines": {
+    "node": ">=20.9.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@10.15.1",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "db:index": "tsx database/build-index.ts",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@duckdb/node-api": "1.5.5-r.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "^0.469.0",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.2",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^15.1.6",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.3.0",
+    "postcss": "^8.4.49",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/postcss": "^4.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,mjs,cjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,mdx,css}": [
+      "prettier --write"
+    ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+# Reserved for future extraction of shared packages (e.g. a published
+# `@stories/schemas` or `@stories/markdown` package). Empty today — see
+# packages/README.md.
+packages:
+  - "packages/*"

@@ -1,0 +1,40 @@
+# dependencies
+node_modules
+.pnpm-store
+
+# next.js
+.next
+out
+
+# production
+build
+dist
+
+# duckdb — generated analytical index, never a source of truth
+*.duckdb
+*.duckdb.wal
+*.wal
+database/generated/*
+!database/generated/.gitkeep
+
+# env
+.env
+.env.local
+.env.*.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea
