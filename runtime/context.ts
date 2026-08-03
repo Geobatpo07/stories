@@ -6,6 +6,7 @@ import type {
   ExportPort,
   IdentifierPort,
   KnowledgeSourcePort,
+  KnowledgeSourceMetadata,
   LoggingPort,
   PersistencePort,
   SearchPort,
@@ -13,6 +14,7 @@ import type {
 
 export interface RuntimeMetadata {
   readonly startedAt: Date;
+  readonly source?: KnowledgeSourceMetadata;
 }
 
 export interface ApplicationContextAdapters {
@@ -50,6 +52,7 @@ export interface BuildContextParams {
   readonly configuration: ConfigurationPort;
   readonly logger: LoggingPort;
   readonly startedAt: Date;
+  readonly sourceMetadata?: KnowledgeSourceMetadata;
 }
 
 export function buildContext(params: BuildContextParams): ApplicationContext {
@@ -58,7 +61,7 @@ export function buildContext(params: BuildContextParams): ApplicationContext {
     adapters: Object.freeze({ ...params.adapters }),
     configuration: params.configuration,
     logger: params.logger,
-    metadata: Object.freeze({ startedAt: params.startedAt }),
+    metadata: Object.freeze({ startedAt: params.startedAt, source: params.sourceMetadata }),
     environment: Object.freeze({ ...params.configuration.getAll() }),
   });
 }

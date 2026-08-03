@@ -8,6 +8,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   typedRoutes: true,
+  serverExternalPackages: ["@duckdb/node-api", "@duckdb/node-bindings"],
+  images: { remotePatterns: [{ protocol: "https", hostname: "**" }] },
 };
 
 export default nextConfig;

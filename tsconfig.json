@@ -21,6 +21,8 @@
     "baseUrl": ".",
     "paths": {
       "@/app/*": ["app/*"],
+      "@/build": ["build/index.ts"],
+      "@/build/*": ["build/*"],
       "@/components/*": ["components/*"],
       "@/content/*": ["content/*"],
       "@/database/*": ["database/*"],

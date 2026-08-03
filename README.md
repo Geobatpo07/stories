@@ -6,9 +6,9 @@ It organizes Research Programs, Scientific Questions, Hypotheses, Experiments, K
 Objects, Software, Publications, and Datasets as Markdown/MDX, and generates a DuckDB
 index on top for fast querying. See `docs/adr/ADR-001.md` for why.
 
-**This repository currently contains foundations only** — configuration, domain
-modeling, content schemas, and an empty analytical index. No research surfaces are
-implemented yet. See `docs/roadmap/ROADMAP.md`.
+Version 2 is the complete public Digital Research Laboratory: Programs, Projects, Stories,
+and Artifacts are statically presented from the Platform Runtime's verified generated
+snapshot. See `docs/presentation/SPRINT-6.md` and `docs/release/V2-RELEASE-NOTES.md`.
 
 ## Philosophy
 
@@ -70,11 +70,12 @@ automatically by the `prepare` script on `pnpm install`.
 
 ## Build process
 
-`pnpm build` runs a standard Next.js production build. `pnpm db:index` is a separate,
-explicit step — it is not run automatically on build yet, since it does not do anything
-beyond opening the database file at this stage. Once indexing logic exists, wiring it
-into the build pipeline (`prebuild`, or a Vercel Build Output step) is a roadmap item, not
-a foundation-sprint concern.
+`pnpm build:knowledge` generates and validates `manifest.json` and `knowledge.duckdb`.
+`pnpm build` then statically renders the public laboratory from those artifacts through
+the Platform Runtime. The website never rebuilds knowledge automatically.
+
+For a production candidate, run `pnpm release:verify`. Deployment, authoring, maintenance,
+and release procedures are documented under `docs/operations/` and `docs/release/`.
 
 ## Deployment
 

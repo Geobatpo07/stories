@@ -16,6 +16,22 @@ import type { KnowledgeEntity, KnowledgeGraph } from "@/kernel";
 export interface KnowledgeSourcePort {
   loadAll(): readonly KnowledgeEntity[];
   getGraph(): KnowledgeGraph;
+  /** Build metadata when the source is a generated knowledge artifact. */
+  getMetadata?(): KnowledgeSourceMetadata;
+}
+
+export interface KnowledgeSourceMetadata {
+  readonly platformVersion: string;
+  readonly kernelVersion: string;
+  readonly buildVersion: string;
+  readonly schemaVersion: string;
+  readonly generatedAt: string;
+  readonly contentHash: string;
+  readonly generationDuration: number;
+  readonly knowledge: {
+    readonly entities: number;
+    readonly relationships: number;
+  };
 }
 
 export interface PersistencePort {

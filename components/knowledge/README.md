@@ -3,5 +3,6 @@
 Presentational components for Knowledge Objects, Publications, Software, and Datasets:
 article chrome, citation blocks, dataset/software metadata panels, MDX renderers.
 
-Empty at foundation stage — see components/research/README.md for the same rules
-(presentational only, typed props from `domain/*/types.ts`, no direct data access).
+Sprint 5 supplies reusable cards, detail chrome, metadata, related-content patterns, and
+the reading document renderer. These components accept normalized Runtime entities and
+perform no filesystem, DuckDB, Kernel, or Runtime access.

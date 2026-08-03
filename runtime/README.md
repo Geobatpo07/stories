@@ -196,6 +196,12 @@ including `KernelKnowledgeSourceAdapter` against the real `content/` tree (mirro
 
 ## Extension points
 
+Sprint 5 added `ArtifactKnowledgeSourceAdapter`, the production knowledge source. Its
+async factory validates `manifest.json` and its checksum, materializes DuckDB rows into
+the existing `KnowledgeEntity`/`KnowledgeGraph` contract, and closes the database before
+the synchronous Runtime lifecycle begins. `KernelKnowledgeSourceAdapter` remains useful
+for Kernel verification and tests but is not imported by the website.
+
 - **`SearchPort`/`ExportPort` implementations** once a concrete search/export need
   exists — interfaces are already in place, no Runtime change required to add one.
 - **`PersistencePort` beyond null** — a real adapter (e.g. backed by `lib/duckdb` or a

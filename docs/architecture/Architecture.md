@@ -2,8 +2,8 @@
 
 Stories is the operating system of a research laboratory, not a blog and not a CMS. This
 document describes the shape of the foundation laid in the first sprint, the Knowledge
-Kernel added in the second, and the Platform Runtime added in the third — see
-docs/roadmap for what comes next.
+Kernel added in the second, the Platform Runtime added in the third, and the Knowledge
+Artifact Pipeline added in the fourth — see docs/roadmap for what comes next.
 
 ## Layers
 
@@ -21,9 +21,16 @@ runtime/     → the Platform Runtime — composition root, dependency injection
                @/kernel, sibling to domain/ — not a layer "below" it. Contains no
                business logic. Not yet wired into app/ — ships standalone. See
                runtime/README.md.
+build/       → the Knowledge Artifact Pipeline — compiles the Knowledge Graph into
+               deterministic, disk-based artifacts (database/generated/knowledge.duckdb,
+               manifest.json) via a registry of Build Targets. A third, independent
+               consumer of @/kernel, sibling to domain/ and runtime/. Generation only —
+               not consumed by runtime/ yet (documented future extension point). See
+               build/README.md.
 domain/      → one module per entity: types.ts, schema.ts, service.ts, index.ts, README.md
 lib/         → infrastructure: markdown parsing, DuckDB client, search, metadata, utils
-database/    → the generated analytical index (DuckDB) and the script that builds it
+database/    → output directory only (database/generated/) — the pipeline that builds
+               its contents lives in build/, not here.
 components/  → presentational React, grouped by surface (research, knowledge, layout, shared, ui)
 app/         → Next.js App Router routes — composes domain services and components
 ```
@@ -32,24 +39,31 @@ Dependencies point one direction, at file granularity: `app/` and `components/` 
 `domain/*/service.ts`; `domain/*/service.ts` depends on `@/kernel` (the Kernel's public
 barrel) and nothing else in the Kernel; `kernel/` depends on `domain/*/schema.ts` (never
 a domain module's `types.ts` or `service.ts` or its barrel `index.ts`) plus `schemas/`;
-`schemas/` and `domain/*/schema.ts` depend on nothing above them. `runtime/` depends only
-on `@/kernel` (never `domain/*`, `app/`, `components/`, `lib/duckdb`, `lib/search`,
-`lib/metadata`) — a second, independent consumer of the Kernel's public barrel, alongside
-`domain/*/service.ts`. The full graph: `schemas/ → domain/*/schema.ts → kernel/ →
-{domain/*/service.ts, runtime/}`.
+`schemas/` and `domain/*/schema.ts` depend on nothing above them. `runtime/` and `build/`
+each depend only on `@/kernel` (never `domain/*`, `app/`, `components/`, `lib/search`,
+`lib/metadata` — `build/` additionally uses `@duckdb/node-api` directly for its DuckDB
+target, not `lib/duckdb`; see build/README.md) — two more independent consumers of the
+Kernel's public barrel, alongside `domain/*/service.ts`. Neither depends on the other.
+The full graph: `schemas/ → domain/*/schema.ts → kernel/ → {domain/*/service.ts,
+runtime/, build/}`.
 
 The Kernel is the one place business logic (listing, filtering, cross-referencing,
 relationship resolution) actually lives — `domain/*/service.ts` is a thin wrapper over
-it, and `runtime/` orchestrates around it without adding any of its own. A domain module
-never imports from `components/` or `app/`. See kernel/README.md, "Dependency direction,"
-for why this isn't a cycle even though the Kernel reuses the domain's schemas and the
-domain consumes the Kernel.
+it, and `runtime/`/`build/` each orchestrate around it without adding any of their own
+(the Runtime executes the platform live; the Build Pipeline compiles it to disk — see
+build/README.md's "Build philosophy" for why those stay separate responsibilities). A
+domain module never imports from `components/` or `app/`. See kernel/README.md,
+"Dependency direction," for why this isn't a cycle even though the Kernel reuses the
+domain's schemas and the domain consumes the Kernel.
 
-Note the brief's own conceptual stack for the Runtime (`Adapters → Platform Runtime →
-Knowledge Kernel → Knowledge Graph → Applications`) describes _runtime data flow_ — the
-Runtime orchestrates calls into the Kernel at boot. That's a different axis from the
-_file import direction_ above (`runtime/ → @/kernel`); both are simultaneously true. See
-runtime/README.md for the full explanation.
+Note the brief's own conceptual stacks for the Runtime (`Adapters → Platform Runtime →
+Knowledge Kernel → Knowledge Graph → Applications`) and the Build Pipeline (`Knowledge
+Kernel → Knowledge Graph → Knowledge Artifact Pipeline → Build Targets → Generated
+Artifacts → Platform Runtime → Applications`) describe _runtime/build-time data flow_ —
+each orchestrates calls into the Kernel. That's a different axis from the _file import
+direction_ above (`runtime/ → @/kernel`, `build/ → @/kernel`); both descriptions are
+simultaneously true. See runtime/README.md and build/README.md for the full
+explanations.
 
 ## Domain-Driven Design, applied narrowly
 
@@ -87,8 +101,8 @@ See docs/adr/ADR-001.md for the full reasoning. In short: every fact about the l
 research lives in a file under `content/`, in plain text, versioned in Git. DuckDB never
 holds information that doesn't also exist in a content file — it exists purely so the
 site can query across hundreds of notes fast (search, tag filters, cross-references)
-without re-parsing MDX on every request. Delete `database/generated/*.duckdb` at any time
-and rebuilding from `content/` should reproduce it exactly.
+without re-parsing MDX on every request. Delete `database/generated/knowledge.duckdb` at
+any time and `pnpm build:knowledge` (see build/README.md) should reproduce it exactly.
 
 ## Open questions
 
@@ -96,6 +110,6 @@ and rebuilding from `content/` should reproduce it exactly.
   validates frontmatter; it does not compile MDX to React. `next-mdx-remote` and `@next/
 mdx` are both reasonable choices and neither is installed yet — decide once the first
   route actually needs to render a note's body.
-- **DuckDB schema design.** `database/build-index.ts` intentionally creates no tables.
-  Table shape should follow from real query patterns (search? tag filters? cross-program
-  timelines?) rather than being guessed at before any UI needs them.
+- ~~**DuckDB schema design.**~~ Resolved in Sprint 4 — a generic, kind-agnostic schema
+  (`knowledge_entity`, `knowledge_relationship`, `knowledge_snapshot`,
+  `knowledge_metadata`), built by `build/`. See build/README.md, "DuckDB schema."

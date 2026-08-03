@@ -103,6 +103,7 @@ export class PlatformRuntime {
         configuration: this.options.configuration,
         logger: this.options.logger,
         startedAt: this.options.clock.now(),
+        sourceMetadata: knowledgeSource.getMetadata?.(),
       });
 
       this.context = context;
