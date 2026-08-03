@@ -25,8 +25,13 @@
       "@/content/*": ["content/*"],
       "@/database/*": ["database/*"],
       "@/lib/*": ["lib/*"],
+      "@/schemas": ["schemas/index.ts"],
       "@/schemas/*": ["schemas/*"],
       "@/domain/*": ["domain/*"],
+      "@/kernel": ["kernel/index.ts"],
+      "@/kernel/*": ["kernel/*"],
+      "@/runtime": ["runtime/index.ts"],
+      "@/runtime/*": ["runtime/*"],
       "@/styles/*": ["styles/*"],
       "@/types/*": ["types/*"]
     }

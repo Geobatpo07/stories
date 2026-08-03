@@ -26,7 +26,12 @@ export function readContentFile<TSchema extends z.ZodTypeAny>(
   return { slug, frontmatter, content: content.trim(), filePath };
 }
 
-function extractSlug(frontmatter: unknown, filePath: string): string {
+/**
+ * Derive a slug from parsed frontmatter, falling back to the filename.
+ * Exported for reuse by the Knowledge Kernel's `MarkdownParser`, which
+ * needs the same fallback logic before frontmatter is Zod-validated.
+ */
+export function extractSlug(frontmatter: unknown, filePath: string): string {
   if (
     typeof frontmatter === "object" &&
     frontmatter !== null &&

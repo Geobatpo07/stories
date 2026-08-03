@@ -7,7 +7,8 @@ Experiments, and Knowledge Objects attach to.
 - **Content source:** `content/programs/*.mdx`
 - **Schema:** `schema.ts` — `programSchema` extends the shared `baseFrontmatterSchema`
   with `theme`, `leadResearcher`, `relatedQuestionSlugs`.
-- **Service:** `service.ts` is an empty stub. Not implemented this sprint.
+- **Service:** `service.ts` — a thin wrapper over the Knowledge Kernel's
+  `loadPrograms()` / `findBySlug()` / `findRelated()`.
 
 ## Extension points
 

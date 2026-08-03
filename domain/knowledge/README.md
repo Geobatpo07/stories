@@ -9,7 +9,11 @@ convention, not in data shape.
 - **Content source:** `content/notes/*.mdx`
 - **Schema:** `schema.ts` — `knowledgeSchema` extends `baseFrontmatterSchema` with
   `noteType` and optional `programSlug`.
-- **Service:** `service.ts` is an empty stub. Not implemented this sprint.
+- **Service:** `service.ts` — a thin wrapper over the Knowledge Kernel's
+  `loadKnowledgeObjects()` / `findBySlug()` / `findRelated()`, plus `listResearchNotes()`
+  / `listTutorials()` delegating to the Kernel's `loadResearchNotes()` / `loadTutorials()`
+  filtered views (see "Notes vs Tutorial" in `kernel/README.md` for why these stay
+  filtered views over one collection rather than separate schemas).
 
 ## Extension points
 

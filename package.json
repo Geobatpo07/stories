@@ -18,7 +18,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "db:index": "tsx database/build-index.ts",
+    "kernel:verify": "tsx scripts/verify-kernel.ts",
+    "runtime:verify": "tsx scripts/verify-runtime.ts",
     "prepare": "husky"
   },
   "dependencies": {
@@ -48,7 +52,9 @@
     "tailwindcss": "^4.0.0",
     "@tailwindcss/postcss": "^4.0.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.5"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

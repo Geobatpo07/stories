@@ -6,7 +6,8 @@ reference a Question by slug.
 - **Content source:** `content/questions/*.mdx`
 - **Schema:** `schema.ts` — `questionSchema` extends `baseFrontmatterSchema` with
   `programSlug`.
-- **Service:** `service.ts` is an empty stub. Not implemented this sprint.
+- **Service:** `service.ts` — a thin wrapper over the Knowledge Kernel's
+  `loadQuestions()` / `findBySlug()` / `findRelated()`.
 
 ## Extension points
 
@@ -14,4 +15,4 @@ reference a Question by slug.
   referential integrity) — a natural job for the DuckDB index once it exists, rather
   than a runtime check on every read.
 - Track question state beyond `status` (open / answered / abandoned) if `draft / active /
-  paused / concluded` proves too coarse.
+paused / concluded` proves too coarse.

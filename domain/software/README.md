@@ -6,7 +6,8 @@ counterpart to a Publication or Dataset.
 - **Content source:** `content/software/*.mdx`
 - **Schema:** `schema.ts` — `softwareSchema` extends `baseFrontmatterSchema` with
   optional `repositoryUrl` and `license`.
-- **Service:** `service.ts` is an empty stub. Not implemented this sprint.
+- **Service:** `service.ts` — a thin wrapper over the Knowledge Kernel's
+  `loadSoftware()` / `findBySlug()` / `findRelated()`.
 
 ## Extension points
 

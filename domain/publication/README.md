@@ -5,7 +5,8 @@ A formal scholarly output: paper, preprint, or conference proceeding.
 - **Content source:** `content/publications/*.mdx`
 - **Schema:** `schema.ts` — `publicationSchema` extends `baseFrontmatterSchema` with
   optional `venue`, `doi`, `preprintUrl`, and `coAuthors`.
-- **Service:** `service.ts` is an empty stub. Not implemented this sprint.
+- **Service:** `service.ts` — a thin wrapper over the Knowledge Kernel's
+  `loadPublications()` / `findBySlug()` / `findRelated()`.
 
 ## Extension points
 

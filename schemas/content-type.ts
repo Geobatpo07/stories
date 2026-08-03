@@ -1,19 +1,22 @@
 import { z } from "zod";
 
 /**
- * The seven content collections under `content/`. Note this is six
- * knowledge-artifact types plus `program`, not the eight domain modules —
- * `hypothesis` has no standalone collection yet. See
- * docs/architecture/Architecture.md, "Open questions", for why.
+ * The nine content collections under `content/`, one per domain module.
+ * This is the canonical entity-kind vocabulary: the Knowledge Kernel's
+ * registry (`kernel/registry/registrations.ts`) keys every registration
+ * off one of these values, so the registry and the schema vocabulary can
+ * never drift apart.
  */
 export const contentTypeSchema = z.enum([
   "program",
   "question",
+  "hypothesis",
   "note",
   "experiment",
   "software",
   "publication",
   "dataset",
+  "presentation",
 ]);
 
 export type ContentType = z.infer<typeof contentTypeSchema>;

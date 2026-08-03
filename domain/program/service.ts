@@ -1,8 +1,16 @@
-/**
- * ProgramService — intentionally empty this sprint.
- *
- * Future responsibilities (not implemented): list all programs, resolve a
- * program by slug, aggregate the questions/experiments/notes that belong
- * to it. See README.md for the extension plan.
- */
-export class ProgramService {}
+import { findBySlug, findRelated, loadPrograms, type ProgramEntity } from "@/kernel";
+
+/** Thin wrapper over the Knowledge Kernel's public API, scoped to Research Program. */
+export class ProgramService {
+  static listAll(): readonly ProgramEntity[] {
+    return loadPrograms();
+  }
+
+  static findBySlug(slug: string): ProgramEntity | undefined {
+    return findBySlug("program", slug) as ProgramEntity | undefined;
+  }
+
+  static findRelated(slug: string) {
+    return findRelated(`program:${slug}`);
+  }
+}

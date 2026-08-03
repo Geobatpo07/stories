@@ -6,7 +6,8 @@ Research Note; the atomic unit of "did this work."
 - **Content source:** `content/experiments/*.mdx`
 - **Schema:** `schema.ts` — `experimentSchema` extends `baseFrontmatterSchema` with
   `questionSlug` and optional `hypothesisSlug`.
-- **Service:** `service.ts` is an empty stub. Not implemented this sprint.
+- **Service:** `service.ts` — a thin wrapper over the Knowledge Kernel's
+  `loadExperiments()` / `findBySlug()` / `findRelated()`.
 
 ## Extension points
 
