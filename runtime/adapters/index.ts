@@ -6,3 +6,4 @@ export * from "./in-memory-event-bus";
 export * from "./kernel-knowledge-source-adapter";
 export * from "./artifact-knowledge-source-adapter";
 export * from "./null-persistence-adapter";
+export * from "./file-system-persistence-adapter";

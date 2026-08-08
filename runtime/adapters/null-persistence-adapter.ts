@@ -15,6 +15,11 @@ export class NullPersistenceAdapter implements PersistencePort {
     return Promise.resolve(undefined);
   }
 
+  async list<T>(collection: string): Promise<readonly T[]> {
+    void collection;
+    return Promise.resolve([]);
+  }
+
   async delete(collection: string, id: string): Promise<void> {
     void collection;
     void id;

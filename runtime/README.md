@@ -131,7 +131,7 @@ swallowed — a broken subscriber during bootstrap should visibly break bootstra
 | Port                  | Concrete implementation                                                                                                                                                                                                                                                                                 |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `KnowledgeSourcePort` | `KernelKnowledgeSourceAdapter` — see above                                                                                                                                                                                                                                                              |
-| `PersistencePort`     | `NullPersistenceAdapter` — no-op; `save`/`delete` resolve immediately, `load` always resolves `undefined`                                                                                                                                                                                               |
+| `PersistencePort`     | `NullPersistenceAdapter` for read-only public Runtime composition; `FileSystemPersistenceAdapter` for private canonical Knowledge Objects, including `save`, `load`, `list`, and `delete`                                                                                                               |
 | `SearchPort`          | interface only — no implementation this sprint                                                                                                                                                                                                                                                          |
 | `ExportPort`          | interface only — no implementation this sprint                                                                                                                                                                                                                                                          |
 | `LoggingPort`         | `ConsoleLogger` — routes `debug`/`info`/`warn` through `console.warn` and `error` through `console.error`, since `eslint.config.mjs`'s `no-console` rule only allows those two (the same workaround `scripts/verify-kernel.ts` already uses)                                                            |
@@ -204,8 +204,8 @@ for Kernel verification and tests but is not imported by the website.
 
 - **`SearchPort`/`ExportPort` implementations** once a concrete search/export need
   exists — interfaces are already in place, no Runtime change required to add one.
-- **`PersistencePort` beyond null** — a real adapter (e.g. backed by `lib/duckdb` or a
-  future store) plugs in via the same composition-root call.
+- **Durable hosted persistence** — V3 provides local JSON filesystem persistence for the
+  private Studio. A hosted workspace can add another adapter through the same port.
 - **Wiring into `app/`** — a Next.js server-only bootstrap module that calls
   `createPlatformRuntime(...).start()` once and shares the resulting context; explicitly
   deferred this sprint (Next.js pages are out of scope).

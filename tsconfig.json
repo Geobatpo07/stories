@@ -21,6 +21,8 @@
     "baseUrl": ".",
     "paths": {
       "@/app/*": ["app/*"],
+      "@/authoring": ["authoring/index.ts"],
+      "@/authoring/*": ["authoring/*"],
       "@/build": ["build/index.ts"],
       "@/build/*": ["build/*"],
       "@/components/*": ["components/*"],

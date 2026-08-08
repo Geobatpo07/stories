@@ -48,5 +48,6 @@ export {
   ArtifactKnowledgeSourceAdapter,
   KernelKnowledgeSourceAdapter,
   NullPersistenceAdapter,
+  FileSystemPersistenceAdapter,
   SystemClock,
 } from "./adapters";

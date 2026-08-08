@@ -10,6 +10,9 @@ Pipeline — a build-time compiler from the Knowledge Graph into
 completed the public Presentation Layer and wired `app/` to the Runtime's verified
 generated snapshot. Sprint 6 completed the Knowledge Experience and Version 2 release
 preparation. See `docs/presentation/SPRINT-6.md` for the final delivered experience.
+Version 3 adds the Knowledge Authoring Studio: canonical Knowledge Objects, schema-generated
+forms, deterministic MDX rendering, and transactional publication through the existing
+artifact pipeline. See `docs/architecture/AUTHORING-STUDIO.md`.
 
 1. **First vertical slice.** Pick one entity (Research Program is the natural start,
    since everything else references it), wire a server-only bootstrap module that calls

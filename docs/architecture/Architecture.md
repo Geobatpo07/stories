@@ -1,14 +1,16 @@
 # Architecture
 
 Stories is the operating system of a research laboratory, not a blog and not a CMS. This
-document describes the shape of the foundation laid in the first sprint, the Knowledge
-Kernel added in the second, the Platform Runtime added in the third, and the Knowledge
-Artifact Pipeline added in the fourth — see docs/roadmap for what comes next.
+document describes the complete platform through Version 3: Foundation, Knowledge Kernel,
+Platform Runtime, Knowledge Artifact Pipeline, public Presentation and Experience layers,
+and the private Knowledge Authoring Studio.
 
 ## Layers
 
 ```
-content/     → the source of truth (MDX + frontmatter), one folder per collection
+knowledge/   → canonical Knowledge Objects created and autosaved by the private Studio
+authoring/   → model repository, publishing workflow, and renderer extension point
+content/     → generated, Git-versioned MDX publications, one folder per collection
 schemas/     → shared Zod primitives every content type's frontmatter extends
 kernel/      → the Knowledge Kernel — owns the lifecycle, relationship resolution, the
                in-memory Knowledge Graph, and the one stable Public API. Framework-free:
@@ -19,13 +21,14 @@ runtime/     → the Platform Runtime — composition root, dependency injection
                Search, Export, Logging, Configuration, Clock, Identifier) for the
                collaborators a real platform needs. A second, independent consumer of
                @/kernel, sibling to domain/ — not a layer "below" it. Contains no
-               business logic. Not yet wired into app/ — ships standalone. See
+               business logic. Supplies generated knowledge to the Presentation Layer and
+               persistence to the private Authoring Studio. See
                runtime/README.md.
 build/       → the Knowledge Artifact Pipeline — compiles the Knowledge Graph into
                deterministic, disk-based artifacts (database/generated/knowledge.duckdb,
                manifest.json) via a registry of Build Targets. A third, independent
-               consumer of @/kernel, sibling to domain/ and runtime/. Generation only —
-               not consumed by runtime/ yet (documented future extension point). See
+               consumer of @/kernel, sibling to domain/ and runtime/. Its generated output
+               is consumed by the Runtime artifact adapter. See
                build/README.md.
 domain/      → one module per entity: types.ts, schema.ts, service.ts, index.ts, README.md
 lib/         → infrastructure: markdown parsing, DuckDB client, search, metadata, utils
@@ -95,21 +98,12 @@ given; they do not fetch, filter, or decide. That decision keeps presentational
 components trivially testable in isolation and keeps the same domain service reusable
 from a page, a script, or (later) an API route without duplicating logic in JSX.
 
-## MDX as the source of truth, DuckDB as a generated index
+## Knowledge Objects and generated publication artifacts
 
-See docs/adr/ADR-001.md for the full reasoning. In short: every fact about the lab's
-research lives in a file under `content/`, in plain text, versioned in Git. DuckDB never
-holds information that doesn't also exist in a content file — it exists purely so the
-site can query across hundreds of notes fast (search, tag filters, cross-references)
-without re-parsing MDX on every request. Delete `database/generated/knowledge.duckdb` at
-any time and `pnpm build:knowledge` (see build/README.md) should reproduce it exactly.
+ADR-002 supersedes ADR-001. Canonical authoring state lives under `knowledge/`. Publishing
+validates that model through the Kernel and generates readable MDX under `content/`. The
+existing artifact pipeline then produces DuckDB and manifest snapshots for the Runtime.
 
-## Open questions
-
-- **MDX rendering strategy.** This sprint reads MDX as raw text (`lib/markdown`) and
-  validates frontmatter; it does not compile MDX to React. `next-mdx-remote` and `@next/
-mdx` are both reasonable choices and neither is installed yet — decide once the first
-  route actually needs to render a note's body.
-- ~~**DuckDB schema design.**~~ Resolved in Sprint 4 — a generic, kind-agnostic schema
-  (`knowledge_entity`, `knowledge_relationship`, `knowledge_snapshot`,
-  `knowledge_metadata`), built by `build/`. See build/README.md, "DuckDB schema."
+The public website never reads canonical objects or MDX. It continues to consume only the
+Platform Runtime. See `docs/architecture/AUTHORING-STUDIO.md` for the private authoring
+boundary and transactional publication flow.

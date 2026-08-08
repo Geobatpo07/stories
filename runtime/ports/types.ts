@@ -37,6 +37,7 @@ export interface KnowledgeSourceMetadata {
 export interface PersistencePort {
   save<T>(collection: string, id: string, value: T): Promise<void>;
   load<T>(collection: string, id: string): Promise<T | undefined>;
+  list<T>(collection: string): Promise<readonly T[]>;
   delete(collection: string, id: string): Promise<void>;
 }
 

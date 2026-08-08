@@ -1,8 +1,8 @@
 {
   "name": "stories",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
-  "description": "Stories — Open Research Laboratory. Operating system for a research program: questions, hypotheses, experiments, knowledge objects, software, publications and datasets, with Markdown/MDX as the single source of truth.",
+  "description": "Stories — a Digital Research Laboratory with a Knowledge Model-first authoring studio and generated publication artifacts.",
   "type": "module",
   "engines": {
     "node": ">=20.9.0",

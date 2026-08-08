@@ -40,6 +40,7 @@ const adapters: ApplicationContextAdapters = {
   persistence: {
     save: () => Promise.resolve(),
     load: () => Promise.resolve(undefined),
+    list: () => Promise.resolve([]),
     delete: () => Promise.resolve(),
   } satisfies PersistencePort,
   eventBus: {

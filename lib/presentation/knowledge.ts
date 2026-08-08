@@ -19,6 +19,10 @@ export function getLaboratory(): Promise<LaboratorySnapshot> {
   return laboratoryPromise;
 }
 
+export function resetLaboratory(): void {
+  laboratoryPromise = undefined;
+}
+
 async function loadLaboratory(): Promise<LaboratorySnapshot> {
   const context = await getRuntimeContext();
   const all = context.kernel.entities as readonly LaboratoryEntity[];

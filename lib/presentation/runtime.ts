@@ -15,6 +15,11 @@ export function getRuntimeContext(): Promise<ApplicationContext> {
   return contextPromise;
 }
 
+/** Refresh generated knowledge after a local Studio publication. */
+export function resetRuntimeContext(): void {
+  contextPromise = undefined;
+}
+
 async function startRuntime(): Promise<ApplicationContext> {
   const knowledgeSource = await ArtifactKnowledgeSourceAdapter.create();
   const runtime = createPlatformRuntime({

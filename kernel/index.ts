@@ -55,3 +55,17 @@ export {
   KnowledgeValidationError,
 } from "./errors";
 export type { ValidationIssue } from "./errors";
+
+export {
+  getAuthoringDefinition,
+  listAuthoringDefinitions,
+  materializeAuthoringObjects,
+  validateAuthoringFields,
+} from "./authoring";
+export type {
+  AuthoringEntityDefinition,
+  AuthoringFieldDefinition,
+  AuthoringFieldType,
+  AuthoringValidationResult,
+  FriendlyValidationIssue,
+} from "./authoring";

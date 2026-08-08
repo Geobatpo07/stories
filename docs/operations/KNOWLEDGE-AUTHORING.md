@@ -1,55 +1,72 @@
 # Knowledge authoring
 
-Knowledge is authored under `content/` and validated by the existing domain schemas. A
-published page never reads these files directly; `pnpm build:knowledge` compiles them into
-the manifest and DuckDB snapshot consumed by the Runtime.
+Stories Platform V3 uses canonical Knowledge Objects as its source of truth. The private
+Knowledge Authoring Studio creates and edits those objects; MDX is generated only when an
+object is published.
+
+## Start the Studio
+
+Run `pnpm dev` and open `/studio`. Development mode enables the Studio locally. Public
+production deployments keep it unavailable unless `STORIES_STUDIO_ENABLED=true` is set.
+Only enable it in an access-controlled environment with a durable writable filesystem.
 
 ## Public organization
 
-| Source kind                                  | Public experience     |
-| -------------------------------------------- | --------------------- |
-| Program                                      | Research Program      |
-| Question                                     | Project               |
-| Note                                         | Story                 |
-| Publication, Dataset, Software, Presentation | Artifact              |
-| Hypothesis, Experiment                       | Project investigation |
+| Studio concept | Kernel kind                                          | Publication directory        |
+| -------------- | ---------------------------------------------------- | ---------------------------- |
+| Program        | `program`                                            | `content/programs/`          |
+| Project        | `question`                                           | `content/questions/`         |
+| Story          | `note`                                               | `content/notes/`             |
+| Artifact       | `software`, `publication`, `dataset`, `presentation` | corresponding content folder |
 
-Use slugs as stable public identifiers. Changing a slug changes its URL and every
-relationship that targets it. Titles may evolve without changing identity.
+Hypotheses and experiments remain Project investigations in the underlying Knowledge Model.
 
-## Story formatting
+## Knowledge Object lifecycle
 
-Stories support CommonMark and GitHub-flavored tables, task lists, links, strikethrough,
-and footnotes. Additional scientific patterns:
+1. **Create:** the Studio creates a private object with a UUID and schema defaults.
+2. **Draft:** every edit autosaves canonical JSON under `knowledge/<kind>/`. Partial drafts
+   are allowed and display friendly validation guidance.
+3. **Validate:** the Kernel applies the registered Zod schema, normalization, and closed-world
+   relationship resolution. Relationships are selected visually from published objects.
+4. **Preview:** narrative content is rendered through the same `MarkdownDocument` component
+   used by the public Story experience.
+5. **Publish:** `MDXRenderer` generates deterministic MDX in the existing registered content
+   folder. The Knowledge Artifact Pipeline regenerates DuckDB and the manifest.
+6. **Refresh:** Runtime and presentation caches are invalidated and affected Next.js paths are
+   revalidated without restarting the Studio.
+7. **Version:** commit canonical JSON and generated MDX together. Git remains the official
+   publication history.
 
-```markdown
-Inline mathematics: $u_t + f(u)_x = 0$.
+## Dynamic forms
 
-$$
-u_i^{n+1} = \frac{1}{2}(u_{i+1}^n + u_{i-1}^n)
-$$
+The Kernel authoring API walks every registered Zod object shape. It derives required state,
+defaults, enum choices, arrays, dates, URLs, and text controls. Relationship fields come from
+the existing Kernel registration metadata. The UI never declares a Program, Project, Story,
+or Artifact form manually.
 
-![Radial velocity profile](/images/radial-profile.png "Figure 1. Baseline radial profile")
+Adding a registered schema automatically produces a form. Use Zod `.describe()` metadata when
+a field needs author-facing guidance; validation remains owned by the schema.
 
-The result follows the baseline study.[^baseline]
+## Drafts and validation
 
-[^baseline]: Author, “Study title,” venue, year.
-```
+Drafts may be incomplete. Autosave therefore persists first and reports validation separately.
+Raw Zod errors never reach the UI. Publication requires a fully valid object and relationships
+that resolve to published canonical objects.
 
-Use meaningful alternative text that communicates what a figure contributes. The image
-title becomes its visible caption. Put downloadable local images in `public/images/` and
-optimize their dimensions and compression before committing them.
+The schema `status` describes the research lifecycle (`draft`, `active`, `paused`, or
+`concluded`). Canonical `publicationState` independently records whether MDX was published.
 
-Fenced code blocks should declare a language. Tables require descriptive surrounding
-text and concise column headings. Use a `References` heading for bibliographies and
-footnotes for claims that need local citation context.
+## Rendering and MDX generation
 
-## Relationships
+`KnowledgeRenderer` is the format-neutral renderer contract. V3 registers only `MDXRenderer`.
+It validates and normalizes fields, follows schema field order, emits readable YAML, normalizes
+line endings, and produces a stable final newline.
 
-Use only schema-supported slug fields. Relationships are validated during the knowledge
-build and rendered in both directions through the Knowledge Graph. Do not manually copy
-“related content” lists into page components.
+Future LaTeX, PDF, HTML, JSON, and BibTeX renderers implement the same contract. They must not
+add validation or mutate canonical objects.
 
-Draft content remains visible if present in the generated snapshot because the current
-domain contract treats status as research context, not authorization. Remove content
-from the public build input if it must not be published.
+## Manual MDX maintenance
+
+Generated files remain deliberately readable. An urgent manual correction is possible, but a
+later Studio publication regenerates the file from its canonical Knowledge Object. Apply the
+same correction to the canonical object to prevent divergence.

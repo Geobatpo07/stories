@@ -16,6 +16,10 @@ describe("NullPersistenceAdapter", () => {
     await expect(new NullPersistenceAdapter().delete("collection", "id")).resolves.toBeUndefined();
   });
 
+  it("list() always resolves an empty collection", async () => {
+    await expect(new NullPersistenceAdapter().list("collection")).resolves.toEqual([]);
+  });
+
   it("save() then load() does not return the saved value — it is a genuine no-op", async () => {
     const adapter = new NullPersistenceAdapter();
     await adapter.save("collection", "id", { value: 42 });

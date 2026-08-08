@@ -3,19 +3,19 @@
 Stories is the operating system of a research laboratory — not a blog, not a CMS.
 
 It organizes Research Programs, Scientific Questions, Hypotheses, Experiments, Knowledge
-Objects, Software, Publications, and Datasets as Markdown/MDX, and generates a DuckDB
-index on top for fast querying. See `docs/adr/ADR-001.md` for why.
+Objects, Software, Publications, and Datasets through a canonical Knowledge Model. Publishing
+generates readable MDX, DuckDB, and manifest artifacts. See `docs/adr/ADR-002.md`.
 
-Version 2 is the complete public Digital Research Laboratory: Programs, Projects, Stories,
-and Artifacts are statically presented from the Platform Runtime's verified generated
-snapshot. See `docs/presentation/SPRINT-6.md` and `docs/release/V2-RELEASE-NOTES.md`.
+Version 3 adds a private Knowledge Authoring Studio to the complete public Digital Research
+Laboratory. Programs, Projects, Stories, and Artifacts are authored as canonical Knowledge
+Objects and statically presented from the Platform Runtime's verified generated snapshot.
 
 ## Philosophy
 
-- **MDX is the single source of truth.** Every fact lives in a versioned text file under
-  `content/`. Nothing is only in the database.
+- **Knowledge Objects are the source of truth.** Private drafts live under `knowledge/`;
+  publishing generates deterministic MDX under `content/`.
 - **DuckDB is a generated index**, not a store. It is safe to delete
-  `database/generated/*.duckdb` at any time and rebuild it with `pnpm db:index`.
+  `database/generated/*.duckdb` at any time and rebuild it with `pnpm build:knowledge`.
 - **Domain-Driven Design, narrowly applied.** Business logic lives in `domain/*/service.ts`,
   never in a React component. Components render typed data; they do not fetch or decide.
 - **Strong typing everywhere.** `any` is an ESLint error, not a convention.
@@ -27,7 +27,9 @@ See `docs/architecture/Architecture.md` for the full picture.
 ```
 app/            Next.js App Router routes
 components/     Presentational React, grouped by surface (ui, layout, research, knowledge, shared)
-content/        MDX source of truth — one folder per collection
+authoring/      Knowledge Object lifecycle, repository, and publication renderers
+content/        Generated, Git-versioned MDX publications
+knowledge/      Canonical Knowledge Objects created by Studio autosave
 database/       The generated DuckDB index and the script that builds it
 docs/           Architecture notes, ADRs, roadmap
 lib/            Infrastructure: markdown parsing, DuckDB client, search, metadata, utils
@@ -52,6 +54,9 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+Open [http://localhost:3000/studio](http://localhost:3000/studio) to create, autosave,
+validate, preview, and publish knowledge without manually creating MDX files.
+
 ### Other scripts
 
 ```bash
@@ -62,7 +67,7 @@ pnpm lint:fix        # ESLint with autofix
 pnpm format         # Prettier, write
 pnpm format:check   # Prettier, check only
 pnpm typecheck       # tsc --noEmit
-pnpm db:index        # prepare the DuckDB analytical index
+pnpm build:knowledge # generate DuckDB and manifest publication artifacts
 ```
 
 Husky runs `lint-staged` on every commit (ESLint + Prettier on staged files) — installed
