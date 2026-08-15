@@ -23,6 +23,7 @@
     "build:knowledge": "tsx build/cli.ts",
     "kernel:verify": "tsx scripts/verify-kernel.ts",
     "runtime:verify": "tsx scripts/verify-runtime.ts",
+    "studio:auth:init": "tsx scripts/setup-studio-auth.ts",
     "release:verify": "pnpm build:knowledge && pnpm typecheck && pnpm lint && pnpm test && pnpm build",
     "prepare": "husky"
   },

@@ -57,6 +57,18 @@ export interface ExportPort {
   export(format: string, entities: readonly KnowledgeEntity[]): Promise<string | Buffer>;
 }
 
+export interface EmailMessage {
+  readonly to: string;
+  readonly subject: string;
+  readonly text: string;
+  readonly html?: string;
+}
+
+/** Outbound transactional email — see runtime/adapters/resend-email-adapter.ts, the one implementation. */
+export interface EmailPort {
+  send(message: EmailMessage): Promise<void>;
+}
+
 export interface LoggingPort {
   debug(message: string, meta?: Record<string, unknown>): void;
   info(message: string, meta?: Record<string, unknown>): void;

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { contentTypeSchema } from "@/schemas";
 import { authoringWorkflow, isStudioEnabled, knowledgeObjectRepository } from "@/authoring/server";
+import { getStudioSession } from "@/auth/server";
 
 const draftSchema = z.object({
   id: z.string().uuid(),
@@ -22,11 +23,15 @@ const draftSchema = z.object({
 
 export async function GET() {
   if (!isStudioEnabled()) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  if (!(await getStudioSession()))
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   return NextResponse.json({ documents: await knowledgeObjectRepository.list() });
 }
 
 export async function POST(request: Request) {
   if (!isStudioEnabled()) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  if (!(await getStudioSession()))
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const parsed = draftSchema.safeParse(await request.json());
   if (!parsed.success) {
     return NextResponse.json({ error: "The draft payload is incomplete." }, { status: 400 });

@@ -1,11 +1,14 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { authoringWorkflow, isStudioEnabled } from "@/authoring/server";
+import { getStudioSession } from "@/auth/server";
 import { resetRuntimeContext } from "@/lib/presentation/runtime";
 import { resetLaboratory } from "@/lib/presentation";
 
 export async function POST(_request: Request, context: { params: Promise<{ id: string }> }) {
   if (!isStudioEnabled()) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  if (!(await getStudioSession()))
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const { id } = await context.params;
     const { document, report } = await authoringWorkflow.publish(id);

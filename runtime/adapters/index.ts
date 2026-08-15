@@ -7,3 +7,4 @@ export * from "./kernel-knowledge-source-adapter";
 export * from "./artifact-knowledge-source-adapter";
 export * from "./null-persistence-adapter";
 export * from "./file-system-persistence-adapter";
+export * from "./resend-email-adapter";

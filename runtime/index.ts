@@ -24,6 +24,8 @@ export type {
   BootstrapStage,
   ClockPort,
   ConfigurationPort,
+  EmailMessage,
+  EmailPort,
   EventBusPort,
   EventHandler,
   ExportPort,
@@ -49,5 +51,6 @@ export {
   KernelKnowledgeSourceAdapter,
   NullPersistenceAdapter,
   FileSystemPersistenceAdapter,
+  ResendEmailAdapter,
   SystemClock,
 } from "./adapters";
