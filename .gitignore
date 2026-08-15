@@ -2,13 +2,11 @@
 node_modules
 .pnpm-store
 
-# next.js
+# next.js — Next.js never emits into build/ or dist/; those names are reserved for
+# the Knowledge Artifact Pipeline (build/, tracked source) and are deliberately not
+# ignored here.
 .next
 out
-
-# production
-build
-dist
 
 # duckdb — generated analytical index, never a source of truth
 *.duckdb
@@ -21,6 +19,10 @@ database/generated/*
 .env
 .env.local
 .env.*.local
+
+# studio auth — password hash, sessions, reset tokens. Never Git-tracked,
+# unlike knowledge/ (see auth/server.ts and auth/README.md).
+.studio-auth/
 
 # typescript
 *.tsbuildinfo
