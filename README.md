@@ -84,5 +84,14 @@ and release procedures are documented under `docs/operations/` and `docs/release
 
 ## Deployment
 
-Targets [Vercel](https://vercel.com). No project-specific Vercel configuration exists yet
-— default Next.js detection is sufficient at this stage.
+Targets [Vercel](https://vercel.com). `vercel.json` overrides the install and build commands
+so `pnpm build:knowledge` always runs before `pnpm build` — Vercel's default Next.js
+detection alone would skip it and deploy with a missing manifest. See
+`docs/operations/DEPLOYMENT.md`.
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs `pnpm release:verify`'s sequence (knowledge build,
+typecheck, lint, test, build) on every push to `main` and every pull request — the quality
+gate Vercel's own build step doesn't run. Vercel handles deployment itself once the repo is
+connected there.

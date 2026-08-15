@@ -25,6 +25,12 @@ Both commands must run in the same workspace. Generated knowledge is intentional
 committed; the pipeline creates it before Next.js collects and statically renders pages.
 Do not deploy a previous `.next` directory with a newly generated manifest.
 
+Vercel's zero-config Next.js detection only runs `pnpm build` — it has no way to know
+`build:knowledge` must run first, and a deploy relying on that default fails with a missing
+manifest. `vercel.json` at the repo root overrides both `installCommand` and `buildCommand`
+to the sequence above, so a Vercel project linked to this repo needs no manual dashboard
+configuration.
+
 The host must support the native DuckDB package during build. The deployed server does
 not need a writable database. Preserve the Node and pnpm versions declared in
 `package.json`.

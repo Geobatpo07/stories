@@ -1,0 +1,51 @@
+name: CI
+
+# Vercel handles deployment (build + deploy on every push, preview
+# deployments on pull requests) once the repo is connected there — this
+# workflow is the quality gate Vercel's own build step doesn't run.
+# Vercel only runs `next build`; it never lints, typechecks, or runs the
+# test suite. Mirrors this repo's own `pnpm release:verify` sequence
+# (package.json) so "green in CI" and "green locally" mean the same thing.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      # None of these need to be real for a build/test run: the DuckDB path
+      # is a local file the pipeline creates itself, RESEND_API_KEY is only
+      # ever called from a live login/reset request (never during build or
+      # `pnpm test`, which uses a fake EmailPort — see auth/workflow.test.ts).
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+      DUCKDB_PATH: ./database/generated/knowledge.duckdb
+      STORIES_STUDIO_ENABLED: "false"
+      RESEND_API_KEY: ci-placeholder
+      STUDIO_ADMIN_RESET_FROM_EMAIL: onboarding@resend.dev
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        # No `version:` pin here — reads the `packageManager` field in
+        # package.json (currently pnpm@10.15.1), so CI and local dev can
+        # never drift apart on pnpm version.
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.9"
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Same order as `pnpm release:verify`: the knowledge artifacts must
+      # exist before `pnpm build` (Next.js reads the generated snapshot,
+      # never rebuilds it automatically — see docs/operations/DEVELOPER-WORKFLOW.md).
+      - run: pnpm build:knowledge
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm build
