@@ -2,13 +2,14 @@ import Link from "next/link";
 import type { Route } from "next";
 import type { TimelineEntry } from "@/lib/presentation";
 import { formatDate } from "@/lib/presentation";
+import { groupBy } from "@/lib/utils";
 
 export function ResearchTimeline({
   entries,
   limit,
 }: Readonly<{ entries: readonly TimelineEntry[]; limit?: number }>) {
   const visible = limit ? entries.slice(0, limit) : entries;
-  const groups = Object.groupBy(visible, (entry) => entry.date.slice(0, 4));
+  const groups = groupBy(visible, (entry) => entry.date.slice(0, 4));
   return (
     <div className="research-timeline">
       {Object.entries(groups)

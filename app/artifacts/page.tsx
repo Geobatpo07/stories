@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ArtifactCard, EntityGrid } from "@/components/knowledge/cards";
 import { Breadcrumb, EmptyState } from "@/components/shared/primitives";
 import { artifactLabel, getLaboratory } from "@/lib/presentation";
+import { groupBy } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Research Artifacts",
   description: "Publications, datasets, software, and presentations produced through research.",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 };
 export default async function ArtifactsPage() {
   const lab = await getLaboratory();
-  const groups = Object.groupBy(lab.artifacts, (item) => artifactLabel(item.kind));
+  const groups = groupBy(lab.artifacts, (item) => artifactLabel(item.kind));
   return (
     <main id="main-content" className="shell page">
       <Breadcrumb items={[{ label: "Artifacts" }]} />
