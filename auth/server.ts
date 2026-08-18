@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import {
   EnvironmentConfiguration,
-  FileSystemPersistenceAdapter,
+  SupabasePersistenceAdapter,
   ResendEmailAdapter,
   SystemClock,
 } from "@/runtime";
@@ -11,19 +11,26 @@ import { AuthWorkflow } from "./workflow";
 
 export { SESSION_COOKIE_NAME };
 
+const configuration = new EnvironmentConfiguration(process.env);
+configuration.load();
+
 /**
- * Deliberately NOT under `knowledge/` — that directory is Git-tracked
- * ("committed with their generated MDX publications", knowledge/README.md).
- * Credentials, sessions, and reset tokens must never end up in Git history,
- * so they get their own gitignored root (see .gitignore).
+ * Deliberately not local-filesystem-backed: Vercel's serverless functions
+ * have a read-only deployment filesystem outside `/tmp` (ephemeral, never
+ * shared across invocations), so credentials/sessions/reset tokens need a
+ * real database — see supabase/migrations/0001_persistence_records.sql and
+ * auth/README.md. `namespace: "auth"` keeps this data in its own rows,
+ * distinct from `authoring/server.ts`'s `"knowledge"` namespace in the same
+ * table.
  */
-const persistence = new FileSystemPersistenceAdapter(".studio-auth");
+const persistence = new SupabasePersistenceAdapter(
+  configuration.get("SUPABASE_URL") ?? "",
+  configuration.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+  "auth",
+);
 export const credentialRepository = new CredentialRepository(persistence);
 export const sessionRepository = new SessionRepository(persistence);
 export const resetTokenRepository = new ResetTokenRepository(persistence);
-
-const configuration = new EnvironmentConfiguration(process.env);
-configuration.load();
 
 function resetUrlBase(): string {
   const siteUrl = configuration.get("NEXT_PUBLIC_SITE_URL") ?? "http://localhost:3000";

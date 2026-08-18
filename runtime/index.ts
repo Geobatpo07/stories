@@ -51,6 +51,7 @@ export {
   KernelKnowledgeSourceAdapter,
   NullPersistenceAdapter,
   FileSystemPersistenceAdapter,
+  SupabasePersistenceAdapter,
   ResendEmailAdapter,
   SystemClock,
 } from "./adapters";

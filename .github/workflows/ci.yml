@@ -18,14 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # None of these need to be real for a build/test run: the DuckDB path
-      # is a local file the pipeline creates itself, RESEND_API_KEY is only
-      # ever called from a live login/reset request (never during build or
-      # `pnpm test`, which uses a fake EmailPort — see auth/workflow.test.ts).
+      # is a local file the pipeline creates itself, RESEND_API_KEY and the
+      # Supabase values are only ever called from a live request (never
+      # during build or `pnpm test`, which uses fakes — see
+      # auth/workflow.test.ts, runtime/adapters/supabase-persistence-adapter.test.ts).
       NEXT_PUBLIC_SITE_URL: http://localhost:3000
       DUCKDB_PATH: ./database/generated/knowledge.duckdb
       STORIES_STUDIO_ENABLED: "false"
       RESEND_API_KEY: ci-placeholder
       STUDIO_ADMIN_RESET_FROM_EMAIL: onboarding@resend.dev
+      SUPABASE_URL: https://ci-placeholder.supabase.co
+      SUPABASE_SERVICE_ROLE_KEY: ci-placeholder
     steps:
       - uses: actions/checkout@v4
 

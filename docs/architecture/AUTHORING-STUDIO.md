@@ -9,7 +9,7 @@ public Presentation Layer or make the website read authoring storage.
 Dynamic Studio form
   → KnowledgeObjectRepository
   → Runtime PersistencePort
-  → knowledge/<kind>/<uuid>.json
+  → Supabase persistence_records (namespace "knowledge")
 
 Publish
   → Kernel authoring validation
@@ -22,12 +22,21 @@ Publish
   → public Presentation Layer
 ```
 
+Only pre-publication draft state lives in Supabase. Publishing is unchanged: the final MDX
+still goes straight to `content/` via `writeFile()`, Git-tracked — the permanent research
+record stays a Git history, exactly as ADR-002 describes; only the mutable, work-in-progress
+draft moved off the local filesystem.
+
 ## Modules
 
 - `kernel/authoring.ts`: schema descriptors, friendly validation, normalization, and model
   materialization through the existing registration table.
 - `authoring/repository.ts`: canonical object repository over `PersistencePort`.
-- `runtime/adapters/file-system-persistence-adapter.ts`: local deterministic JSON persistence.
+- `runtime/adapters/supabase-persistence-adapter.ts`: durable persistence over Supabase's
+  PostgREST HTTP API — see `supabase/migrations/0001_persistence_records.sql` and
+  `auth/README.md`'s "Storage" section for why (Vercel's serverless functions can't write to
+  a local filesystem the way `runtime/adapters/file-system-persistence-adapter.ts`, still
+  used in tests, needs).
 - `authoring/renderers/`: renderer contract and MDX implementation.
 - `authoring/workflow.ts`: draft and transactional publication lifecycle.
 - `components/authoring/`: reusable form, editor, picker, preview, status, and validation UI.
@@ -43,8 +52,8 @@ path and time, then invalidates Runtime and presentation caches.
 
 ## Extension points
 
-- Add durable storage by implementing the existing `PersistencePort` contract.
 - Add a publication format by implementing `KnowledgeRenderer`.
 - Add a domain kind through the existing schema and Kernel registration process; its Studio
   form is generated automatically.
-- Authentication and multi-author conflict resolution are intentionally not implemented.
+- Multi-author conflict resolution is intentionally not implemented — single-admin
+  authentication now is (`auth/`, see its README).

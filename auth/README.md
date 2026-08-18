@@ -22,14 +22,23 @@ by `scripts/setup-studio-auth.ts`, run once by the operator, never by a public f
   API directly with `fetch` — not the `resend` npm package, which is a thin wrapper over the
   same one JSON POST. Requires `RESEND_API_KEY` (and `STUDIO_ADMIN_RESET_FROM_EMAIL`) in
   `.env.local`; the operator provisions their own Resend account.
+- **Storage**: `runtime/adapters/supabase-persistence-adapter.ts` calls Supabase's PostgREST
+  HTTP API directly with `fetch` — not the `@supabase/supabase-js` SDK, same reasoning as
+  Resend above (see that file's doc comment; it also keeps the adapter usable from
+  `middleware.ts` on the standard Edge runtime, which the SDK doesn't guarantee).
 
-## Storage: `.studio-auth/`, never `knowledge/`
+## Storage: Supabase, never `knowledge/`
 
 `knowledge/README.md` states canonical Knowledge Objects "should be committed" — that
 directory is Git-tracked by design (ADR-002). Credentials, sessions, and reset tokens must
-never land in Git history, so `auth/server.ts` points `FileSystemPersistenceAdapter` (the
-same `PersistencePort` implementation `authoring/` already uses) at a **separate** root,
-`.studio-auth/`, which `.gitignore` excludes entirely. Three collections:
+never land in Git history, and — separately — Vercel's serverless functions can't write to
+a local filesystem at all outside `/tmp` (ephemeral, never shared across invocations). Both
+rule out `FileSystemPersistenceAdapter` for this data. `auth/server.ts` instead points
+`SupabasePersistenceAdapter` at `namespace: "auth"` in one shared table,
+`persistence_records` (`supabase/migrations/0001_persistence_records.sql` — run manually in
+your Supabase project's SQL Editor; nothing in this repo has direct access to apply it for
+you). `authoring/server.ts` uses the same table under `namespace: "knowledge"` for Studio
+drafts, sharing the schema without the two ever colliding. Three collections under `"auth"`:
 
 - `auth` / id `"admin"` — the one `AdminCredential` record.
 - `auth-sessions` / id = session token — `{ token, createdAt, expiresAt }`. The token is
@@ -38,6 +47,18 @@ same `PersistencePort` implementation `authoring/` already uses) at a **separate
   device) needs the token back to issue the matching `delete()` calls.
 - `auth-reset-tokens` / id = reset token — single-use: `ResetTokenRepository.consume()`
   deletes the record the moment it's read, valid or not.
+
+`SupabasePersistenceAdapter` never validates its `url`/`serviceRoleKey` constructor
+arguments and never throws at construction (see its doc comment) — both `auth/server.ts`
+and `authoring/server.ts` build one at module scope, which every `/studio/**` page imports,
+including ones that must still 404 cleanly via `isStudioEnabled()` when the Studio feature
+itself is off or Supabase isn't configured yet. It fails lazily, only on an actual request,
+the same deliberate choice `ResendEmailAdapter` already makes.
+
+`runtime/adapters/file-system-persistence-adapter.ts` is unused in `server.ts` wiring now
+but still exercised directly in tests (`auth/workflow.test.ts`,
+`authoring/workflow.test.ts`) — fast, deterministic, no network, and those tests only care
+about `PersistencePort`'s contract, never the concrete adapter.
 
 ## `middleware.ts` is load-bearing, not a convenience layer
 
@@ -53,15 +74,20 @@ private data was already on the wire, readable by anything that isn't a browser.
 
 `middleware.ts` at the repo root closes that gap by blocking `/studio/:path*` and
 `/api/studio/:path*` (except `/studio/login` and `/studio/reset-password`) before any
-Server Component or Route Handler runs at all — no partial render, nothing to leak. It
-runs on the **Node.js Middleware runtime** (`export const config = { runtime: "nodejs" }`,
-stable since Next.js 15.2), not the default Edge runtime, since the session store needs
-`node:fs`. It imports `FileSystemPersistenceAdapter` and `SessionRepository` from their
-own files — `@/runtime/adapters/file-system-persistence-adapter`, `@/auth/repository` —
+Server Component or Route Handler runs at all — no partial render, nothing to leak. It runs
+on the **standard Edge runtime** — no special config needed, now that the session store is
+a `fetch` call to Supabase instead of `node:fs`. (An earlier version required the
+experimental Node.js Middleware runtime — `runtime: "nodejs"` plus an
+`experimental.nodeMiddleware` flag in `next.config.ts` — purely because
+`FileSystemPersistenceAdapter` needed `node:fs`; that requirement, and the flag, are gone
+along with it.) It imports `SupabasePersistenceAdapter` and `SessionRepository` from their
+own files — `@/runtime/adapters/supabase-persistence-adapter`, `@/auth/repository` —
 rather than the `@/runtime`/`@/auth` barrels, because the `@/runtime` barrel also
 re-exports `ArtifactKnowledgeSourceAdapter`, which imports the `@duckdb/node-api` native
 binding at module scope; a session check has no reason to pull that into the Middleware
-bundle.
+bundle (and Edge couldn't run it if it were pulled in). It also reads
+`SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY` directly from `process.env` rather than through
+`EnvironmentConfiguration` — see `middleware.ts`'s own doc comment for why.
 
 The layout-level `getStudioSession()` check and each `app/api/studio/**` route's own check
 stay in place as defense-in-depth (matching how `isStudioEnabled()` is already checked at
