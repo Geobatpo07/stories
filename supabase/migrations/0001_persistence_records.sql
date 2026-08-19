@@ -16,5 +16,5 @@ create table if not exists persistence_records (
 );
 
 -- Accessed only server-side, via the service_role key (which bypasses Row Level Security
--- entirely) — never from a browser or an anon key. RLS can stay disabled on this table;
--- enabling it with zero policies also works if you prefer RLS on by default project-wide.
+-- entirely) — never from a browser or an anon key. See 0002_enable_rls_on_persistence_records.sql,
+-- which turns RLS on with zero policies as defense in depth against the anon/authenticated keys.
