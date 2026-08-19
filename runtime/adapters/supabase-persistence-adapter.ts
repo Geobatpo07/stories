@@ -95,7 +95,9 @@ export class SupabasePersistenceAdapter implements PersistencePort {
       const detail = await response.text().catch(() => "");
       throw new Error(`Supabase request failed (${response.status} ${method} ${url}): ${detail}`);
     }
-    if (response.status === 204) return undefined as T;
-    return (await response.json()) as T;
+    // `return=minimal` (used by save()) yields a 201 with an empty body, not
+    // a 204 — status code alone isn't a reliable signal, so check the body.
+    const text = await response.text();
+    return (text ? JSON.parse(text) : undefined) as T;
   }
 }
