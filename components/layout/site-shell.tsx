@@ -64,7 +64,7 @@ export function SiteShell({
               aria-label="Studio access"
               title="Studio"
             >
-              ·
+              ●
             </Link>
           </p>
         </div>

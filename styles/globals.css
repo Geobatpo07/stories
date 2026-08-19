@@ -736,13 +736,20 @@ h1 {
   font-size: 0.78rem;
 }
 .footer-studio-link {
-  opacity: 0.35;
-  padding-inline: 0.35rem;
-  transition: opacity 0.15s ease;
+  display: inline-block;
+  padding: 0.5rem;
+  margin: -0.5rem;
+  font-size: 0.5rem;
+  vertical-align: middle;
+  opacity: 0.5;
+  transition:
+    opacity 0.15s ease,
+    color 0.15s ease;
 }
 .footer-studio-link:hover,
 .footer-studio-link:focus-visible {
   opacity: 1;
+  color: var(--blue);
 }
 .not-found {
   max-width: 720px;
