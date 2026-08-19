@@ -735,6 +735,15 @@ h1 {
   color: var(--muted);
   font-size: 0.78rem;
 }
+.footer-studio-link {
+  opacity: 0.35;
+  padding-inline: 0.35rem;
+  transition: opacity 0.15s ease;
+}
+.footer-studio-link:hover,
+.footer-studio-link:focus-visible {
+  opacity: 1;
+}
 .not-found {
   max-width: 720px;
   padding-block: 9rem;

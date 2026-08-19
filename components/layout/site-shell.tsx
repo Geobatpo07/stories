@@ -57,7 +57,15 @@ export function SiteShell({
         <div className="shell footer-inner">
           <p>Geo&apos;s Stories is the public memory of an evolving research practice.</p>
           <p>
-            <a href="/rss.xml">RSS</a> · <a href="/sitemap.xml">Sitemap</a>
+            <a href="/rss.xml">RSS</a> · <a href="/sitemap.xml">Sitemap</a>{" "}
+            <Link
+              href="/studio"
+              className="footer-studio-link"
+              aria-label="Studio access"
+              title="Studio"
+            >
+              ·
+            </Link>
           </p>
         </div>
       </footer>
