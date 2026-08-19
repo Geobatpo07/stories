@@ -4,7 +4,7 @@ import { Breadcrumb, EmptyState } from "@/components/shared/primitives";
 import { getLaboratory } from "@/lib/presentation";
 export const metadata: Metadata = {
   title: "Research Programs",
-  description: "The major scientific directions pursued by the Stories Research Laboratory.",
+  description: "The major scientific directions pursued by the Geo's Stories Research Laboratory.",
   alternates: { canonical: "/programs" },
 };
 export default async function ProgramsPage() {

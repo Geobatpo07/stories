@@ -112,7 +112,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
             dateModified: story.updatedAt,
             author: program
               ? { "@type": "Person", name: field(program, "leadResearcher") }
-              : { "@type": "Organization", name: "Stories Research Laboratory" },
+              : { "@type": "Organization", name: "Geo's Stories Research Laboratory" },
             isPartOf: program ? { "@type": "ResearchProject", name: program.title } : undefined,
           }),
         }}

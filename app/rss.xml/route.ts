@@ -16,7 +16,7 @@ export async function GET() {
         `<item><title>${escapeXml(story.title)}</title><link>${base}/stories/${story.slug}</link><guid isPermaLink="true">${base}/stories/${story.slug}</guid><description>${escapeXml(story.summary)}</description><pubDate>${new Date(`${story.createdAt}T00:00:00Z`).toUTCString()}</pubDate><category>${escapeXml(field(story, "noteType") ?? "research-story")}</category><content:encoded><![CDATA[${escapeXml(story.content)}]]></content:encoded><readingTime>${readingMinutes(story)} minutes</readingTime></item>`,
     )
     .join("");
-  const xml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Stories Research Laboratory</title><link>${base}</link><description>The public memory of an evolving research practice.</description><language>en</language><lastBuildDate>${new Date(lab.metadata.generatedAt).toUTCString()}</lastBuildDate>${items}</channel></rss>`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Geo's Stories Research Laboratory</title><link>${base}</link><description>The public memory of an evolving research practice.</description><language>en</language><lastBuildDate>${new Date(lab.metadata.generatedAt).toUTCString()}</lastBuildDate>${items}</channel></rss>`;
   return new Response(xml, {
     headers: {
       "Content-Type": "application/rss+xml; charset=utf-8",

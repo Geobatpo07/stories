@@ -17,7 +17,7 @@ import { createTimeline, formatDate, getLaboratory } from "@/lib/presentation";
 export const metadata: Metadata = {
   title: "Laboratory Overview",
   description:
-    "Programs, projects, stories, artifacts, and the evolving timeline of the Stories Research Laboratory.",
+    "Programs, projects, stories, artifacts, and the evolving timeline of the Geo's Stories Research Laboratory.",
   alternates: { canonical: "/laboratory" },
 };
 export default async function LaboratoryPage() {

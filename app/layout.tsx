@@ -10,21 +10,21 @@ export async function generateMetadata(): Promise<Metadata> {
   const lab = await getLaboratory();
   return {
     metadataBase: new URL(siteUrl),
-    title: { default: "Stories — Open Research Laboratory", template: "%s · Stories" },
+    title: { default: "Geo's Stories — Open Research Laboratory", template: "%s · Geo's Stories" },
     description:
       "A living digital research laboratory where programs become projects, stories, and scientific artifacts.",
     alternates: { canonical: "/" },
-    generator: `Stories ${lab.metadata.platformVersion}`,
+    generator: `Geo's Stories ${lab.metadata.platformVersion}`,
     openGraph: {
       type: "website",
-      siteName: "Stories Research Laboratory",
-      title: "Stories — Digital Research Laboratory",
+      siteName: "Geo's Stories Research Laboratory",
+      title: "Geo's Stories — Digital Research Laboratory",
       description: "The public memory of an evolving research practice.",
       url: "/",
     },
     twitter: {
       card: "summary",
-      title: "Stories — Digital Research Laboratory",
+      title: "Geo's Stories — Digital Research Laboratory",
       description: "The public memory of an evolving research practice.",
     },
     other: {

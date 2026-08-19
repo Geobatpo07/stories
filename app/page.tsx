@@ -33,8 +33,8 @@ export default async function HomePage() {
           <p className="eyebrow">Digital Research Laboratory</p>
           <h1>Ideas become evidence.</h1>
           <p className="intro">
-            Stories is the public memory of a research practice—following questions as they become
-            projects, narratives, experiments, and durable scientific artifacts.
+            Geo&apos;s Stories is the public memory of a research practice—following questions as
+            they become projects, narratives, experiments, and durable scientific artifacts.
           </p>
           <div className="hero-rule">Open notebook · evolving work</div>
         </div>
