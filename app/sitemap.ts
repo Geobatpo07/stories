@@ -4,13 +4,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const lab = await getLaboratory();
   const staticRoutes = [
+    // "/search" is deliberately excluded — it's `noindex` (a query-driven
+    // utility page, not indexable landing content), and Google recommends
+    // against listing noindex URLs in a sitemap.
     "",
     "/laboratory",
     "/programs",
     "/projects",
     "/stories",
     "/artifacts",
-    "/search",
   ];
   return [
     ...staticRoutes.map((path) => ({
