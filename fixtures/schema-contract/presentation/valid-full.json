@@ -1,0 +1,36 @@
+{
+  "description": "every field supplied",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "venue": "A venue",
+    "slidesUrl": "https://example.org/x",
+    "videoUrl": "https://example.org/x",
+    "programSlug": "some-program",
+    "questionSlug": "some-question",
+    "status": "active",
+    "tags": [
+      "a",
+      "b"
+    ]
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "venue": "A venue",
+    "slidesUrl": "https://example.org/x",
+    "videoUrl": "https://example.org/x",
+    "programSlug": "some-program",
+    "questionSlug": "some-question",
+    "status": "active",
+    "tags": [
+      "a",
+      "b"
+    ]
+  }
+}

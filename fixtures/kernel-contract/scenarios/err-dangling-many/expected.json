@@ -1,0 +1,10 @@
+{
+  "outcome": "error",
+  "error": {
+    "name": "KnowledgeRelationshipError",
+    "sourceId": "program:lab",
+    "field": "relatedQuestionSlugs",
+    "danglingTargetId": "question:missing-q",
+    "message": "Entity \"program:lab\" has a dangling reference in \"relatedQuestionSlugs\": target \"question:missing-q\" does not exist."
+  }
+}

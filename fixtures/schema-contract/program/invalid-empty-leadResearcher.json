@@ -1,0 +1,12 @@
+{
+  "description": "leadResearcher empty string",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "theme": "Climate",
+    "leadResearcher": ""
+  },
+  "valid": false
+}

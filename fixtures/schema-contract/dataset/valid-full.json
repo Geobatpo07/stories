@@ -1,0 +1,30 @@
+{
+  "description": "every field supplied",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "sourceUrl": "https://example.org/x",
+    "license": "CC-BY-4.0",
+    "status": "active",
+    "tags": [
+      "a",
+      "b"
+    ]
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "sourceUrl": "https://example.org/x",
+    "license": "CC-BY-4.0",
+    "status": "active",
+    "tags": [
+      "a",
+      "b"
+    ]
+  }
+}

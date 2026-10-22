@@ -1,0 +1,14 @@
+{
+  "outcome": "error",
+  "error": {
+    "name": "KnowledgeValidationError",
+    "filePath": "content/datasets/s.mdx",
+    "issues": [
+      {
+        "path": "(root)",
+        "message": "Expected object, received string",
+        "hint": "expected object, received string"
+      }
+    ]
+  }
+}

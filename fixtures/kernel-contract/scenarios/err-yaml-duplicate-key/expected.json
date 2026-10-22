@@ -1,0 +1,7 @@
+{
+  "outcome": "error",
+  "error": {
+    "name": "KnowledgeParseError",
+    "filePath": "content/datasets/dup.mdx"
+  }
+}

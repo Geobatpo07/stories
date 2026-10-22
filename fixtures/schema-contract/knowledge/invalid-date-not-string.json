@@ -1,0 +1,11 @@
+{
+  "description": "date is a number",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": 20261022,
+    "noteType": "research-note"
+  },
+  "valid": false
+}

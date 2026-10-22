@@ -1,0 +1,10 @@
+{
+  "outcome": "error",
+  "error": {
+    "name": "KnowledgeRelationshipError",
+    "sourceId": "experiment:e",
+    "field": "hypothesisSlug",
+    "danglingTargetId": "hypothesis:shared",
+    "message": "Entity \"experiment:e\" has a dangling reference in \"hypothesisSlug\": target \"hypothesis:shared\" does not exist."
+  }
+}

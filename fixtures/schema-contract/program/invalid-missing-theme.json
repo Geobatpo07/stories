@@ -1,0 +1,11 @@
+{
+  "description": "required field theme missing",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "leadResearcher": "A. Person"
+  },
+  "valid": false
+}

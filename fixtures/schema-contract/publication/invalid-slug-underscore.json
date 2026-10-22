@@ -1,0 +1,10 @@
+{
+  "description": "underscore in slug",
+  "input": {
+    "title": "A title",
+    "slug": "bad_slug",
+    "description": "A description",
+    "date": "2026-10-22"
+  },
+  "valid": false
+}

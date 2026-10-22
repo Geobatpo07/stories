@@ -1,0 +1,117 @@
+{
+  "outcome": "ok",
+  "entities": [
+    {
+      "id": "dataset:bom",
+      "kind": "dataset",
+      "slug": "bom",
+      "title": "T",
+      "summary": "D",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "body",
+      "filePath": "content/datasets/bom.mdx"
+    },
+    {
+      "id": "dataset:comments",
+      "kind": "dataset",
+      "slug": "comments",
+      "title": "T",
+      "summary": "D",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "body",
+      "filePath": "content/datasets/comments.mdx"
+    },
+    {
+      "id": "dataset:json-lang",
+      "kind": "dataset",
+      "slug": "json-lang",
+      "title": "T",
+      "summary": "D",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "body",
+      "filePath": "content/datasets/json-lang.mdx"
+    },
+    {
+      "id": "dataset:long-close",
+      "kind": "dataset",
+      "slug": "long-close",
+      "title": "T",
+      "summary": "D",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "-\nbody after",
+      "filePath": "content/datasets/long-close.mdx"
+    },
+    {
+      "id": "dataset:no-close",
+      "kind": "dataset",
+      "slug": "no-close",
+      "title": "T",
+      "summary": "D",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "",
+      "filePath": "content/datasets/no-close.mdx"
+    },
+    {
+      "id": "dataset:trim-python-only",
+      "kind": "dataset",
+      "slug": "trim-python-only",
+      "title": "T",
+      "summary": "D",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "body\u001f",
+      "filePath": "content/datasets/trim-python-only.mdx"
+    },
+    {
+      "id": "dataset:trim",
+      "kind": "dataset",
+      "slug": "trim",
+      "title": "T",
+      "summary": "D",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "body",
+      "filePath": "content/datasets/trim.mdx"
+    }
+  ]
+}

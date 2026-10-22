@@ -1,0 +1,2 @@
+# Contract fixtures are byte-exact inputs: never convert line endings
+fixtures/** -text

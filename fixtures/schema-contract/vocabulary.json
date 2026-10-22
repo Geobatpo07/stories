@@ -1,0 +1,28 @@
+{
+  "contentStatus": [
+    "draft",
+    "active",
+    "paused",
+    "concluded"
+  ],
+  "contentType": [
+    "program",
+    "question",
+    "hypothesis",
+    "note",
+    "experiment",
+    "software",
+    "publication",
+    "dataset",
+    "presentation"
+  ],
+  "knowledgeObjectType": [
+    "research-note",
+    "development-log",
+    "reading-note",
+    "tutorial",
+    "conference-note",
+    "book-review",
+    "essay"
+  ]
+}

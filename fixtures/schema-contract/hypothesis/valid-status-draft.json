@@ -1,0 +1,21 @@
+{
+  "description": "status draft",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "questionSlug": "some-question",
+    "status": "draft"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "questionSlug": "some-question",
+    "status": "draft",
+    "tags": []
+  }
+}

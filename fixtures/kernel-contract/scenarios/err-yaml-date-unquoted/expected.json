@@ -1,0 +1,14 @@
+{
+  "outcome": "error",
+  "error": {
+    "name": "KnowledgeValidationError",
+    "filePath": "content/datasets/dated.mdx",
+    "issues": [
+      {
+        "path": "date",
+        "message": "Expected string, received date",
+        "hint": "expected string, received date"
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "description": "empty slug",
+  "input": {
+    "title": "A title",
+    "slug": "",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "research-note"
+  },
+  "valid": false
+}

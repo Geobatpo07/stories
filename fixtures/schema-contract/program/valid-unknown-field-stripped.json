@@ -1,0 +1,27 @@
+{
+  "description": "unknown keys are stripped, not rejected",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "theme": "Climate",
+    "leadResearcher": "A. Person",
+    "mystery": 1,
+    "nested": {
+      "x": 1
+    }
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "theme": "Climate",
+    "leadResearcher": "A. Person",
+    "status": "draft",
+    "tags": [],
+    "relatedQuestionSlugs": []
+  }
+}

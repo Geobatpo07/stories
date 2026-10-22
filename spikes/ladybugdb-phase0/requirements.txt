@@ -1,0 +1,2 @@
+duckdb==1.5.2
+ladybug==0.21.2

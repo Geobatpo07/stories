@@ -1,0 +1,20 @@
+{
+  "description": "any WHATWG-parsable URL passes",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "videoUrl": "mailto:a@b.c"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "status": "draft",
+    "tags": [],
+    "videoUrl": "mailto:a@b.c"
+  }
+}

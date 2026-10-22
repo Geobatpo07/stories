@@ -1,0 +1,11 @@
+{
+  "description": "required field date missing",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "theme": "Climate",
+    "leadResearcher": "A. Person"
+  },
+  "valid": false
+}

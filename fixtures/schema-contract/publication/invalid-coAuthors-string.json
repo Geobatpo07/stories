@@ -1,0 +1,11 @@
+{
+  "description": "coAuthors must be a list",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "coAuthors": "x"
+  },
+  "valid": false
+}

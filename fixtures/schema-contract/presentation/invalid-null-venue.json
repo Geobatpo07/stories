@@ -1,0 +1,11 @@
+{
+  "description": "optional venue rejects explicit null",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "venue": null
+  },
+  "valid": false
+}
