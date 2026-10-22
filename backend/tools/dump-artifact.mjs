@@ -4,6 +4,7 @@
 //
 //   node dump-artifact.mjs <artifact directory> [--tables a,b] [--exclude-file-path] [--physical]
 //
+// --ignore-search-tables leaves the Python-only knowledge_search_* tables out of the table list.
 // Sections: schema (information_schema + constraints), each requested table in the order the
 // adapter reads it (or physical insertion order with --physical), and the manifest with its
 // run-dependent fields (generatedAt, generationDuration, artifact checksum) blanked out.
@@ -21,6 +22,7 @@ const option = (name) => {
 const tables = (option("--tables") ?? "knowledge_entity,knowledge_relationship").split(",");
 const excludeFilePath = flag("--exclude-file-path");
 const physical = flag("--physical");
+const ignoreSearchTables = flag("--ignore-search-tables");
 
 const ADAPTER_ORDER = {
   knowledge_entity: "ORDER BY created_at DESC, id ASC",
@@ -51,6 +53,7 @@ out.push("== table list");
 for (const r of await rows(
   "SELECT table_name FROM information_schema.tables WHERE table_schema = 'main' ORDER BY table_name",
 )) {
+  if (ignoreSearchTables && String(r.table_name).startsWith("knowledge_search_")) continue;
   out.push(r.table_name);
 }
 

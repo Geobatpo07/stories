@@ -21,6 +21,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "build:knowledge": "tsx build/cli.ts",
+    "build:knowledge:parity": "bash backend/tools/artifact-parity.sh --repo",
     "kernel:verify": "tsx scripts/verify-kernel.ts",
     "runtime:verify": "tsx scripts/verify-runtime.ts",
     "studio:auth:init": "tsx scripts/setup-studio-auth.ts",

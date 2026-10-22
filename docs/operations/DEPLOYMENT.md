@@ -25,6 +25,10 @@ Both commands must run in the same workspace. Generated knowledge is intentional
 committed; the pipeline creates it before Next.js collects and statically renders pages.
 Do not deploy a previous `.next` directory with a newly generated manifest.
 
+`build:knowledge` uses the TypeScript producer unless `STORIES_BUILD_PRODUCER=python` is set;
+production sets nothing, so it always runs the TypeScript producer. The Python producer is a
+dev/CI validation path (see `build/README.md`), not a deployment option.
+
 Vercel's zero-config Next.js detection only runs `pnpm build` — it has no way to know
 `build:knowledge` must run first, and a deploy relying on that default fails with a missing
 manifest. `vercel.json` at the repo root overrides both `installCommand` and `buildCommand`
