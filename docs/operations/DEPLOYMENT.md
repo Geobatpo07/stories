@@ -39,6 +39,21 @@ The host must support the native DuckDB package during build. The deployed serve
 not need a writable database. Preserve the Node and pnpm versions declared in
 `package.json`.
 
+## Publishing from the Studio (Python API)
+
+The Python Studio API (`backend/`, ADR-004 phase 4) publishes by committing to GitHub, because the
+deployed filesystem is read-only. It first fetches the branch head, builds the content tree with
+the change applied using the real build pipeline, and only then creates one tree, one commit and
+one fast-forward ref update (a slug change writes the new file and deletes the old one in that same
+commit). Vercel builds the commit on its own; the API reports it as `deployment: pending` and does
+not yet follow or revert that deployment.
+
+Environment (Python service): `GITHUB_PUBLISH_TOKEN` (fine-grained token, this repository only,
+"Contents: Read and write"), `GITHUB_REPOSITORY`, optional `GITHUB_PUBLISH_BRANCH` (default
+`main`), and `REVALIDATE_SECRET`. Environment (Next.js app): `REVALIDATE_SECRET`, the same value;
+`app/api/internal/revalidate` rejects every call without it (503 when it is unset). A person must
+create the token and the secret; if `main` is protected, the token's owner must be allowed to push.
+
 ## Failure behavior
 
 Production generation stops when:

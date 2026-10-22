@@ -5,8 +5,10 @@ validation / rendering / path-guard half of `publish`. NOT ported here, on purpo
 
   * the filesystem write + local build + `restore()` rollback of `AuthoringWorkflow.publish`:
     the Python service has no writable project root. Publication goes through a
-    `PublicationTarget` (the GitHub-API commit, next phase), which is stubbed;
-  * `revalidatePath` / cache resets, which the API layer calls through a hook (also stubbed).
+    `PublicationTarget` (`publication/github.py`: validate the build first, then one atomic
+    GitHub commit, so there is nothing to roll back);
+  * `revalidatePath` / cache resets, which the API layer calls through a hook
+    (`publication/revalidate.py`).
 
 Quirk kept on purpose: the TypeScript `friendlyRelationshipMessage` looks for the text
 `field "x" points to missing target "y"`, but the Kernel's real error says `has a dangling
@@ -36,15 +38,6 @@ class PublicationTarget(Protocol):
     async def publish(
         self, rendered: RenderedDocument, previous_path: str | None
     ) -> JsonObject: ...
-
-
-class UnimplementedPublicationTarget:
-    async def publish(self, rendered: RenderedDocument, previous_path: str | None) -> JsonObject:
-        # TODO(ADR-004 phase 4, next step): commit `rendered` to Git through the GitHub API.
-        raise NotImplementedError(
-            "Publishing is not implemented in the Python service yet "
-            "(GitHub-API commit: next phase 4 step)."
-        )
 
 
 def normalize_slug(text: str) -> str:

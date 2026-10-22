@@ -404,12 +404,15 @@ def test_publish_hands_the_previous_path_to_the_target_when_the_slug_changed():
     assert h.fakes.published[0][1] == "content/software/old-name.mdx"
 
 
-def test_publish_with_the_default_stub_answers_422_and_leaves_the_draft_unchanged():
+def test_publish_without_github_configuration_answers_422_and_leaves_the_draft_unchanged():
     h = signed_in()
     h.fakes.put_row("knowledge", "software", ID_A, stored())
     response = h.post(publish_url(), cookie=SESSION)
     assert response.status_code == 422
-    assert "not implemented" in response.json()["error"]
+    assert response.json() == {
+        "error": "GitHub publishing is not configured: "
+        "set GITHUB_PUBLISH_TOKEN and GITHUB_REPOSITORY."
+    }
     assert h.fakes.rows_of("knowledge")[f"knowledge/software/{ID_A}"] == stored()
 
 
@@ -432,12 +435,20 @@ def test_publish_when_the_target_fails_answers_422_saves_nothing_and_refreshes_n
     assert revalidated == []
 
 
-def test_publish_with_the_default_revalidate_stub_answers_422():
-    h = signed_in(publication=lambda fakes: RecordingPublication(fakes))
+def test_publish_succeeds_even_when_revalidation_fails_because_the_commit_already_happened(caplog):
+    async def broken():
+        raise RuntimeError("Next is down")
+
+    h = signed_in(publication=lambda fakes: RecordingPublication(fakes), revalidate=broken)
     h.fakes.put_row("knowledge", "software", ID_A, stored())
-    response = h.post(publish_url(), cookie=SESSION)
-    assert response.status_code == 422
-    assert "revalidation is not implemented" in response.json()["error"]
+    with caplog.at_level("ERROR", logger="stories.publish"):
+        response = h.post(publish_url(), cookie=SESSION)
+    assert response.status_code == 200
+    assert (
+        h.fakes.rows_of("knowledge")[f"knowledge/software/{ID_A}"]["publicationState"]
+        == "published"
+    )
+    assert "Site revalidation failed" in caplog.text
 
 
 def test_publish_refuses_a_recorded_publication_path_that_leaves_the_project_root():

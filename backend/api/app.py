@@ -6,6 +6,7 @@ serialization. Where the TypeScript lets an exception escape (malformed JSON, a 
 a failing email provider) this does too, so the framework answers 500.
 """
 
+import logging
 from datetime import UTC, datetime
 from email.utils import format_datetime
 from typing import Any
@@ -13,6 +14,7 @@ from typing import Any
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, Response
 from pydantic import ValidationError
+from starlette.background import BackgroundTask
 
 from auth import (
     SESSION_COOKIE_NAME,
@@ -37,6 +39,7 @@ from .bodies import (
 from .deps import AppDependencies, build_default_dependencies, reset_url_base
 from .settings import Settings
 
+logger = logging.getLogger("stories.publish")
 MAX_ATTEMPTS = 10
 WINDOW_MS = 15 * 60 * 1000
 UNIDENTIFIED_CLIENT = "unidentified-client"
@@ -129,6 +132,12 @@ def create_app(dependencies: AppDependencies | None = None) -> FastAPI:
         if not await has_session(request):
             return _json(401, {"error": "Unauthorized"})
         return None
+
+    async def revalidate_quietly() -> None:
+        try:
+            await deps.revalidate()
+        except Exception:  # noqa: BLE001 - logged, never raised: it runs after the response
+            logger.exception("Site revalidation failed after a successful publication")
 
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 
@@ -224,10 +233,17 @@ def create_app(dependencies: AppDependencies | None = None) -> FastAPI:
             return blocked
         try:
             result = await authoring.publish(id)
-            await deps.revalidate()
-            return _json(200, {"document": result["document"].to_row(), "report": result["report"]})
         except Exception as error:  # noqa: BLE001 - the TypeScript route turns every failure into 422
             return _json(422, {"error": str(error) or "Publication failed."})
+        report = result["report"]
+        body: dict[str, Any] = {"document": result["document"].to_row(), "report": report}
+        if isinstance(report, dict) and "deployment" in report:
+            # "committed, deployment pending": the commit is on GitHub, Vercel has not built it yet.
+            body["deployment"] = report["deployment"]
+        response = _json(200, body)
+        # Revalidation never decides the outcome: the commit already happened.
+        response.background = BackgroundTask(revalidate_quietly)
+        return response
 
     # ---- /api/authoring/* (new: replaces kernel/authoring.ts) --------------------------------
 
