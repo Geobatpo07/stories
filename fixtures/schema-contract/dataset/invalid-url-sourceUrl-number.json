@@ -1,0 +1,11 @@
+{
+  "description": "sourceUrl non-string",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "sourceUrl": 5
+  },
+  "valid": false
+}

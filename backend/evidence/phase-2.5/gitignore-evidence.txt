@@ -1,0 +1,232 @@
+$ find . -name ".gitignore" -not -path "*/node_modules/*"
+./.gitignore
+./.husky/_/.gitignore
+./backend/.gitignore
+./backend/.pytest_cache/.gitignore
+./backend/.venv/.gitignore
+./spikes/ladybugdb-phase0/.gitignore
+./spikes/ladybugdb-phase0/.venv/.gitignore
+
+$ cat .gitignore
+# dependencies
+node_modules
+.pnpm-store
+
+# next.js — Next.js never emits into build/ or dist/; those names are reserved for
+# the Knowledge Artifact Pipeline (build/, tracked source) and are deliberately not
+# ignored here.
+.next
+out
+
+# duckdb — generated analytical index, never a source of truth
+*.duckdb
+*.duckdb.wal
+*.wal
+database/generated/*
+!database/generated/.gitkeep
+
+# env
+.env
+.env.local
+.env.*.local
+
+# studio auth — password hash, sessions, reset tokens. Never Git-tracked,
+# unlike knowledge/ (see auth/server.ts and auth/README.md).
+.studio-auth/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+$ cat backend/.gitignore
+.venv/
+__pycache__/
+.pytest_cache/
+
+$ cat spikes/ladybugdb-phase0/.gitignore
+.venv/
+out/
+__pycache__/
+
+$ git check-ignore -v <path>   (no output + exit 1 = not ignored)
+build/pipeline.ts -> (not ignored, exit 1)
+build/duckdb/connect.ts -> (not ignored, exit 1)
+build/targets/duckdb-target.ts -> (not ignored, exit 1)
+build/targets/round-trip.test.ts -> (not ignored, exit 1)
+backend/build/x.whl -> (not ignored, exit 1)
+backend/schemas/common.py -> (not ignored, exit 1)
+backend/.venv/pyvenv.cfg -> backend/.gitignore:1:.venv/	backend/.venv/pyvenv.cfg
+
+$ git status --ignored --short | grep "^!!"
+!! .husky/_/
+!! .next/
+!! .vscode/
+!! backend/.pytest_cache/
+!! backend/.venv/
+!! backend/kernel/__pycache__/
+!! backend/kernel/loaders/__pycache__/
+!! backend/kernel/parsers/__pycache__/
+!! backend/kernel/pipeline/__pycache__/
+!! backend/kernel/registry/__pycache__/
+!! backend/schemas/__pycache__/
+!! backend/tests/__pycache__/
+!! database/generated/knowledge.duckdb
+!! database/generated/manifest.json
+!! next-env.d.ts
+!! node_modules/
+!! spikes/ladybugdb-phase0/.venv/
+!! spikes/ladybugdb-phase0/__pycache__/
+!! spikes/ladybugdb-phase0/out/
+!! tsconfig.tsbuildinfo
+
+$ git show e297e27:.gitignore | sed -n 1,14p   (stale local main read in Phases 0-1)
+# dependencies
+node_modules
+.pnpm-store
+
+# next.js
+.next
+out
+
+# production
+build
+dist
+
+# duckdb — generated analytical index, never a source of truth
+*.duckdb
+
+$ git show 1b84f98 -- .gitignore
+commit 1b84f982b1e7d2a1c2f4a251e11591deab47112f
+Author: Geobatpo07 <lgeobatpo98@gmail.com>
+Date:   Sat Aug 15 06:14:25 2026 +0200
+
+    Add the Knowledge Artifact Pipeline and fix the .gitignore collision that erased it
+    
+    .gitignore's generic `build`/`dist` rule (leftover boilerplate for a
+    non-Next output directory) was silently swallowing build/, the actual
+    source directory for the Knowledge Artifact Pipeline described throughout
+    the architecture docs — it had never once been committed, breaking
+    `pnpm build:knowledge` and typecheck (authoring/workflow.ts already
+    imports from @/build). Reconstructed the pipeline to the exact contract
+    already fixed by its one reader, runtime/adapters/artifact-knowledge-source-adapter.ts,
+    and locked that contract with a round-trip test.
+    
+    Also restores the nine content/<collection>/ directories (as empty,
+    .gitkeep-only folders): the "empty laboratory" commit deleted their sole
+    placeholder file each, and since nothing else tracked the directories,
+    Git dropped them entirely — breaking the Kernel's directory scan the same
+    way, independent of the build/ issue.
+
+diff --git a/.gitignore b/.gitignore
+index 31108a1..9f4e91f 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -2,14 +2,12 @@
+ node_modules
+ .pnpm-store
+ 
+-# next.js
++# next.js — Next.js never emits into build/ or dist/; those names are reserved for
++# the Knowledge Artifact Pipeline (build/, tracked source) and are deliberately not
++# ignored here.
+ .next
+ out
+ 
+-# production
+-build
+-dist
+-
+ # duckdb — generated analytical index, never a source of truth
+ *.duckdb
+ *.duckdb.wal
+@@ -22,6 +20,10 @@ database/generated/*
+ .env.local
+ .env.*.local
+ 
++# studio auth — password hash, sessions, reset tokens. Never Git-tracked,
++# unlike knowledge/ (see auth/server.ts and auth/README.md).
++.studio-auth/
++
+ # typescript
+ *.tsbuildinfo
+ next-env.d.ts
+
+$ git ls-files build | wc -l ; git ls-files --others --exclude-standard build | wc -l
+20
+39
+
+$ git ls-files build
+build/README.md
+build/cli.ts
+build/duckdb/connect.ts
+build/index.ts
+build/pipeline.chain.test.ts
+build/pipeline.kernel-failure.test.ts
+build/pipeline.test.ts
+build/pipeline.ts
+build/report.test.ts
+build/report.ts
+build/targets/duckdb-target.test.ts
+build/targets/duckdb-target.ts
+build/targets/manifest-target.test.ts
+build/targets/manifest-target.ts
+build/targets/registry.test.ts
+build/targets/registry.ts
+build/targets/round-trip.test.ts
+build/targets/types.ts
+build/types.ts
+build/version.ts
+
+$ git ls-files --others --exclude-standard build   (untracked, stale local files)
+build/duckdb/extra-fields.test.ts
+build/duckdb/extra-fields.ts
+build/duckdb/populate.test.ts
+build/duckdb/populate.ts
+build/duckdb/schema.ts
+build/errors.test.ts
+build/errors.ts
+build/hash/canonical-json.test.ts
+build/hash/canonical-json.ts
+build/hash/checksum.test.ts
+build/hash/checksum.ts
+build/hash/content-hash.test.ts
+build/hash/content-hash.ts
+build/manifest/build-manifest.test.ts
+build/manifest/build-manifest.ts
+build/manifest/types.ts
+build/pipeline/checks/broken-references.test.ts
+build/pipeline/checks/broken-references.ts
+build/pipeline/checks/circular-dependencies.test.ts
+build/pipeline/checks/circular-dependencies.ts
+build/pipeline/checks/duplicate-ids.test.ts
+build/pipeline/checks/duplicate-ids.ts
+build/pipeline/checks/duplicate-slugs.test.ts
+build/pipeline/checks/duplicate-slugs.ts
+build/pipeline/checks/missing-metadata.test.ts
+build/pipeline/checks/missing-metadata.ts
+build/pipeline/load.test.ts
+build/pipeline/load.ts
+build/pipeline/orchestrator.test.ts
+build/pipeline/orchestrator.ts
+build/pipeline/report.test.ts
+build/pipeline/report.ts
+build/pipeline/types.ts
+build/pipeline/validate-artifacts.test.ts
+build/pipeline/validate-artifacts.ts
+build/pipeline/validate-graph.test.ts
+build/pipeline/validate-graph.ts
+build/targets/registrations.ts
+build/version.test.ts

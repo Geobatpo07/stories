@@ -1,0 +1,161 @@
+### program/invalid-missing-theme  — IDENTICAL
+  issue[0].path
+    TS: 'theme'
+    PY: 'theme'
+  issue[0].message
+    TS: 'Required'
+    PY: 'Required'
+  issue[0].hint
+    TS: 'this field is required'
+    PY: 'this field is required'
+  full message (TS):
+    | Invalid frontmatter in "f.mdx":
+    |   - theme: Required (this field is required)
+  full message (PY):
+    | Invalid frontmatter in "f.mdx":
+    |   - theme: Required (this field is required)
+
+### question/invalid-slug-casing  — IDENTICAL
+  issue[0].path
+    TS: 'slug'
+    PY: 'slug'
+  issue[0].message
+    TS: 'Slug must be lowercase kebab-case (e.g. cyclone-modeling)'
+    PY: 'Slug must be lowercase kebab-case (e.g. cyclone-modeling)'
+  issue[0].hint
+    TS: 'check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)'
+    PY: 'check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)'
+  full message (TS):
+    | Invalid frontmatter in "f.mdx":
+    |   - slug: Slug must be lowercase kebab-case (e.g. cyclone-modeling) (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+  full message (PY):
+    | Invalid frontmatter in "f.mdx":
+    |   - slug: Slug must be lowercase kebab-case (e.g. cyclone-modeling) (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+
+### dataset/invalid-date-format  — IDENTICAL
+  issue[0].path
+    TS: 'date'
+    PY: 'date'
+  issue[0].message
+    TS: 'Date must be in YYYY-MM-DD format'
+    PY: 'Date must be in YYYY-MM-DD format'
+  issue[0].hint
+    TS: 'check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)'
+    PY: 'check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)'
+  full message (TS):
+    | Invalid frontmatter in "f.mdx":
+    |   - date: Date must be in YYYY-MM-DD format (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+  full message (PY):
+    | Invalid frontmatter in "f.mdx":
+    |   - date: Date must be in YYYY-MM-DD format (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+
+### knowledge/invalid-noteType-unknown  — IDENTICAL
+  issue[0].path
+    TS: 'noteType'
+    PY: 'noteType'
+  issue[0].message
+    TS: "Invalid enum value. Expected 'research-note' | 'development-log' | 'reading-note' | 'tutorial' | 'conference-note' | 'book-review' | 'essay', received 'blog'"
+    PY: "Invalid enum value. Expected 'research-note' | 'development-log' | 'reading-note' | 'tutorial' | 'conference-note' | 'book-review' | 'essay', received 'blog'"
+  issue[0].hint
+    TS: 'must be one of: research-note, development-log, reading-note, tutorial, conference-note, book-review, essay'
+    PY: 'must be one of: research-note, development-log, reading-note, tutorial, conference-note, book-review, essay'
+  full message (TS):
+    | Invalid frontmatter in "f.mdx":
+    |   - noteType: Invalid enum value. Expected 'research-note' | 'development-log' | 'reading-note' | 'tutorial' | 'conference-note' | 'book-review' | 'essay', received 'blog' (must be one of: research-note, development-log, reading-note, tutorial, conference-note, book-review, essay)
+  full message (PY):
+    | Invalid frontmatter in "f.mdx":
+    |   - noteType: Invalid enum value. Expected 'research-note' | 'development-log' | 'reading-note' | 'tutorial' | 'conference-note' | 'book-review' | 'essay', received 'blog' (must be one of: research-note, development-log, reading-note, tutorial, conference-note, book-review, essay)
+
+### hypothesis/invalid-rel-questionSlug-empty  — IDENTICAL
+  issue[0].path
+    TS: 'questionSlug'
+    PY: 'questionSlug'
+  issue[0].message
+    TS: 'String must contain at least 1 character(s)'
+    PY: 'String must contain at least 1 character(s)'
+  issue[0].hint
+    TS: 'must be at least 1 character(s)'
+    PY: 'must be at least 1 character(s)'
+  issue[1].path
+    TS: 'questionSlug'
+    PY: 'questionSlug'
+  issue[1].message
+    TS: 'Slug must be lowercase kebab-case (e.g. cyclone-modeling)'
+    PY: 'Slug must be lowercase kebab-case (e.g. cyclone-modeling)'
+  issue[1].hint
+    TS: 'check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)'
+    PY: 'check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)'
+  full message (TS):
+    | Invalid frontmatter in "f.mdx":
+    |   - questionSlug: String must contain at least 1 character(s) (must be at least 1 character(s))
+    |   - questionSlug: Slug must be lowercase kebab-case (e.g. cyclone-modeling) (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+  full message (PY):
+    | Invalid frontmatter in "f.mdx":
+    |   - questionSlug: String must contain at least 1 character(s) (must be at least 1 character(s))
+    |   - questionSlug: Slug must be lowercase kebab-case (e.g. cyclone-modeling) (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+
+### presentation/invalid-url-slidesUrl  — IDENTICAL
+  issue[0].path
+    TS: 'slidesUrl'
+    PY: 'slidesUrl'
+  issue[0].message
+    TS: 'Invalid url'
+    PY: 'Invalid url'
+  issue[0].hint
+    TS: 'check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)'
+    PY: 'check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)'
+  full message (TS):
+    | Invalid frontmatter in "f.mdx":
+    |   - slidesUrl: Invalid url (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+  full message (PY):
+    | Invalid frontmatter in "f.mdx":
+    |   - slidesUrl: Invalid url (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+
+### program/invalid-status  — IDENTICAL
+  issue[0].path
+    TS: 'status'
+    PY: 'status'
+  issue[0].message
+    TS: "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'"
+    PY: "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'"
+  issue[0].hint
+    TS: 'must be one of: draft, active, paused, concluded'
+    PY: 'must be one of: draft, active, paused, concluded'
+  full message (TS):
+    | Invalid frontmatter in "f.mdx":
+    |   - status: Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published' (must be one of: draft, active, paused, concluded)
+  full message (PY):
+    | Invalid frontmatter in "f.mdx":
+    |   - status: Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published' (must be one of: draft, active, paused, concluded)
+
+### file:err-validation-many  — IDENTICAL
+  full message (TS):
+    | Invalid frontmatter in "content/programs/bad.mdx":
+    |   - title: String must contain at least 1 character(s) (must be at least 1 character(s))
+    |   - slug: Slug must be lowercase kebab-case (e.g. cyclone-modeling) (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+    |   - description: Required (this field is required)
+    |   - date: Date must be in YYYY-MM-DD format (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+    |   - status: Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published' (must be one of: draft, active, paused, concluded)
+    |   - tags.1: String must contain at least 1 character(s) (must be at least 1 character(s))
+    |   - theme: Required (this field is required)
+    |   - leadResearcher: Required (this field is required)
+    |   - relatedQuestionSlugs: Expected array, received string (expected array, received string)
+  full message (PY):
+    | Invalid frontmatter in "content/programs/bad.mdx":
+    |   - title: String must contain at least 1 character(s) (must be at least 1 character(s))
+    |   - slug: Slug must be lowercase kebab-case (e.g. cyclone-modeling) (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+    |   - description: Required (this field is required)
+    |   - date: Date must be in YYYY-MM-DD format (check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL))
+    |   - status: Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published' (must be one of: draft, active, paused, concluded)
+    |   - tags.1: String must contain at least 1 character(s) (must be at least 1 character(s))
+    |   - theme: Required (this field is required)
+    |   - leadResearcher: Required (this field is required)
+    |   - relatedQuestionSlugs: Expected array, received string (expected array, received string)
+
+### relationship:dangling-one  — IDENTICAL
+  full message (TS):
+    | Entity "question:orphan" has a dangling reference in "programSlug": target "program:no-such-program" does not exist.
+  full message (PY):
+    | Entity "question:orphan" has a dangling reference in "programSlug": target "program:no-such-program" does not exist.
+
+ALL 9 PAIRS CHARACTER-IDENTICAL: True

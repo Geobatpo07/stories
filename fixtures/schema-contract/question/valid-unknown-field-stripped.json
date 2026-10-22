@@ -1,0 +1,24 @@
+{
+  "description": "unknown keys are stripped, not rejected",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "programSlug": "some-program",
+    "mystery": 1,
+    "nested": {
+      "x": 1
+    }
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "programSlug": "some-program",
+    "status": "draft",
+    "tags": []
+  }
+}

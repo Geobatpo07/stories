@@ -1,0 +1,10 @@
+{
+  "description": "empty title",
+  "input": {
+    "title": "",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22"
+  },
+  "valid": false
+}

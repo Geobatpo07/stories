@@ -1,0 +1,14 @@
+{
+  "description": "programSlug is a list (cardinality one)",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "research-note",
+    "programSlug": [
+      "a-b"
+    ]
+  },
+  "valid": false
+}

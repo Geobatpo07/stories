@@ -1,0 +1,37 @@
+
+> stories@3.0.0 typecheck C:\Users\gblaguerre\Documents\Data Analytics Projects\stories
+> tsc --noEmit
+
+.next/types/app/studio/documents/[id]/page.ts(2,24): error TS2307: Cannot find module '../../../../../../app/studio/documents/[id]/page.js' or its corresponding type declarations.
+.next/types/app/studio/documents/[id]/page.ts(5,29): error TS2307: Cannot find module '../../../../../../app/studio/documents/[id]/page.js' or its corresponding type declarations.
+.next/types/app/studio/new/[kind]/page.ts(2,24): error TS2307: Cannot find module '../../../../../../app/studio/new/[kind]/page.js' or its corresponding type declarations.
+.next/types/app/studio/new/[kind]/page.ts(5,29): error TS2307: Cannot find module '../../../../../../app/studio/new/[kind]/page.js' or its corresponding type declarations.
+.next/types/app/studio/page.ts(2,24): error TS2307: Cannot find module '../../../../app/studio/page.js' or its corresponding type declarations.
+.next/types/app/studio/page.ts(5,29): error TS2307: Cannot find module '../../../../app/studio/page.js' or its corresponding type declarations.
+.next/types/validator.ts(152,39): error TS2307: Cannot find module '../../app/studio/documents/[id]/page.js' or its corresponding type declarations.
+.next/types/validator.ts(161,39): error TS2307: Cannot find module '../../app/studio/new/[kind]/page.js' or its corresponding type declarations.
+.next/types/validator.ts(170,39): error TS2307: Cannot find module '../../app/studio/page.js' or its corresponding type declarations.
+app/studio/(protected)/layout.tsx(9,45): error TS2345: Argument of type '"/studio/login"' is not assignable to parameter of type 'RouteImpl<"/studio/login">'.
+build/manifest/build-manifest.test.ts(4,15): error TS2305: Module '"../targets/types"' has no exported member 'BuildTargetResult'.
+build/manifest/build-manifest.ts(2,15): error TS2305: Module '"../targets/types"' has no exported member 'BuildTargetResult'.
+build/manifest/build-manifest.ts(3,57): error TS2724: '"../version"' has no exported member named 'getPlatformVersion'. Did you mean 'PLATFORM_VERSION'?
+build/pipeline/orchestrator.test.ts(4,28): error TS2305: Module '"../targets/types"' has no exported member 'BuildTargetResult'.
+build/pipeline/orchestrator.test.ts(33,3): error TS2322: Type '{ name: string; execute: Mock<() => Promise<BuildTargetResult>>; }' is not assignable to type 'BuildTarget & { execute: Mock<Procedure>; }'.
+  Property 'run' is missing in type '{ name: string; execute: Mock<() => Promise<BuildTargetResult>>; }' but required in type 'BuildTarget'.
+build/pipeline/orchestrator.test.ts(88,7): error TS2353: Object literal may only specify known properties, and 'execute' does not exist in type 'BuildTarget'.
+build/pipeline/orchestrator.test.ts(88,23): error TS7006: Parameter 'context' implicitly has an 'any' type.
+build/pipeline/orchestrator.ts(5,28): error TS2305: Module '"../targets/types"' has no exported member 'BuildTargetResult'.
+build/pipeline/orchestrator.ts(66,35): error TS2339: Property 'execute' does not exist on type 'BuildTarget'.
+build/pipeline/validate-artifacts.test.ts(10,15): error TS2305: Module '"../targets/types"' has no exported member 'BuildTargetResult'.
+build/pipeline/validate-artifacts.ts(3,10): error TS2305: Module '"../duckdb/connect"' has no exported member 'connectToKnowledgeDatabase'.
+build/pipeline/validate-artifacts.ts(6,15): error TS2305: Module '"../targets/types"' has no exported member 'BuildTargetResult'.
+build/targets/registrations.ts(1,10): error TS2724: '"./duckdb-target"' has no exported member named 'DuckDBBuildTarget'. Did you mean 'duckDBBuildTarget'?
+build/targets/registrations.ts(2,10): error TS2724: '"./manifest-target"' has no exported member named 'ManifestBuildTarget'. Did you mean 'manifestBuildTarget'?
+build/version.test.ts(2,57): error TS2724: '"./version"' has no exported member named 'getPlatformVersion'. Did you mean 'PLATFORM_VERSION'?
+components/authoring/auth-forms.tsx(61,13): error TS2322: Type '"/studio/reset-password"' is not assignable to type 'UrlObject | RouteImpl<"/studio/reset-password">'.
+components/authoring/auth-forms.tsx(106,13): error TS2322: Type '"/studio/login"' is not assignable to type 'UrlObject | RouteImpl<"/studio/login">'.
+components/authoring/auth-forms.tsx(138,34): error TS2345: Argument of type '"/studio/login"' is not assignable to parameter of type 'RouteImpl<"/studio/login">'.
+spikes/ladybugdb-phase0/artifact-contract.spike.test.ts(30,80): error TS18048: 'expected' is possibly 'undefined'.
+spikes/ladybugdb-phase0/artifact-contract.spike.test.ts(31,82): error TS18048: 'expected' is possibly 'undefined'.
+spikes/ladybugdb-phase0/artifact-contract.spike.test.ts(32,80): error TS18048: 'expected' is possibly 'undefined'.
+ ELIFECYCLE  Command failed with exit code 2.

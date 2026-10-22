@@ -1,0 +1,75 @@
+$ git grep -n -E "filePath|file_path|sourcePath" -- "*.ts" "*.tsx" ":!*.test.ts"   (tracked files only)
+build/targets/duckdb-target.ts:32:        "CREATE TABLE knowledge_entity (id VARCHAR, kind VARCHAR, slug VARCHAR, title VARCHAR, summary VARCHAR, status VARCHAR, created_at VARCHAR, updated_at VARCHAR, content VARCHAR, file_path VARCHAR, metadata JSON);",
+build/targets/duckdb-target.ts:80:    sqlString(entity.filePath),
+kernel/authoring.ts:101:        sourcePath: `knowledge/${object.kind}/${String(validation.data.slug)}.json`,
+kernel/errors.ts:6:    readonly filePath: string,
+kernel/errors.ts:10:      `Failed to read or parse "${filePath}": ${cause instanceof Error ? cause.message : String(cause)}`,
+kernel/errors.ts:32:    readonly filePath: string,
+kernel/errors.ts:39:    super(`Invalid frontmatter in "${filePath}":\n${body}`);
+kernel/loaders/load-all.ts:17:    discoverSourceFiles(registration, parser).map((sourcePath) => {
+kernel/loaders/load-all.ts:18:      const parsed = parseSource(sourcePath, parser);
+kernel/parsers/markdown-parser.ts:26:  parse(sourcePath: string): ParsedSource {
+kernel/parsers/markdown-parser.ts:28:      const raw = readFileSync(sourcePath, "utf-8");
+kernel/parsers/markdown-parser.ts:30:      const slug = extractSlug(data, sourcePath);
+kernel/parsers/markdown-parser.ts:31:      return { slug, data, content: content.trim(), sourcePath };
+kernel/parsers/markdown-parser.ts:33:      throw new KnowledgeParseError(sourcePath, cause);
+kernel/parsers/parser.ts:6:  readonly sourcePath: string;
+kernel/parsers/parser.ts:19:  parse(sourcePath: string): ParsedSource;
+kernel/pipeline/factory.ts:41:    filePath: parsed.sourcePath,
+kernel/pipeline/parsing.ts:4:export function parseSource(sourcePath: string, parser: Parser): ParsedSource {
+kernel/pipeline/parsing.ts:5:  return parser.parse(sourcePath);
+kernel/pipeline/validation.ts:18:    throw new KnowledgeValidationError(parsed.sourcePath, result.error as ZodError);
+kernel/types.ts:47:  readonly filePath: string;
+lib/markdown/read-content-file.ts:18:  filePath: string,
+lib/markdown/read-content-file.ts:21:  const raw = readFileSync(filePath, "utf-8");
+lib/markdown/read-content-file.ts:24:  const slug = extractSlug(frontmatter, filePath);
+lib/markdown/read-content-file.ts:26:  return { slug, frontmatter, content: content.trim(), filePath };
+lib/markdown/read-content-file.ts:34:export function extractSlug(frontmatter: unknown, filePath: string): string {
+lib/markdown/read-content-file.ts:43:  return basename(filePath).replace(/\.mdx?$/, "");
+lib/markdown/types.ts:6:  readonly filePath: string;
+runtime/adapters/artifact-knowledge-source-adapter.ts:33:  readonly file_path: string;
+runtime/adapters/artifact-knowledge-source-adapter.ts:87:        "SELECT id, kind, slug, title, summary, status, created_at, updated_at, content, file_path, metadata FROM knowledge_entity ORDER BY created_at DESC, id ASC",
+runtime/adapters/artifact-knowledge-source-adapter.ts:163:      filePath: row.file_path,
+
+$ git grep -n -E "\.filePath|\.file_path" -- app components lib runtime domain authoring auth build
+build/targets/duckdb-target.ts:80:    sqlString(entity.filePath),
+runtime/adapters/artifact-knowledge-source-adapter.ts:163:      filePath: row.file_path,
+
+$ git grep -n -i -E "path|sep\b" -- authoring ":!*.test.ts"
+authoring/renderers/mdx-renderer.ts:27:      relativePath: `${definition.contentDir}/${String(validation.data.slug)}.mdx`,
+authoring/types.ts:20:      path: z.string().min(1),
+authoring/types.ts:47:  readonly relativePath: string;
+authoring/workflow.ts:2:import { dirname, resolve, sep } from "node:path";
+authoring/workflow.ts:109:    const target = this.publicationPath(rendered.relativePath);
+authoring/workflow.ts:110:    const previous = document.publication?.path
+authoring/workflow.ts:111:      ? this.publicationPath(document.publication.path)
+authoring/workflow.ts:138:        path: rendered.relativePath.replace(/\\/g, "/"),
+authoring/workflow.ts:146:  private publicationPath(relativePath: string): string {
+authoring/workflow.ts:147:    const path = resolve(this.root, relativePath);
+authoring/workflow.ts:148:    if (!path.startsWith(`${this.root}${sep}`))
+authoring/workflow.ts:149:      throw new Error("Publication path leaves the project root.");
+authoring/workflow.ts:150:    return path;
+authoring/workflow.ts:154:async function optionalRead(path: string): Promise<string | undefined> {
+authoring/workflow.ts:156:    return await readFile(path, "utf8");
+authoring/workflow.ts:163:async function optionalDelete(path: string): Promise<void> {
+authoring/workflow.ts:165:    await unlink(path);
+authoring/workflow.ts:171:async function restore(path: string, content: string | undefined): Promise<void> {
+authoring/workflow.ts:172:  if (content === undefined) return optionalDelete(path);
+authoring/workflow.ts:173:  await mkdir(dirname(path), { recursive: true });
+authoring/workflow.ts:174:  await writeFile(path, content, "utf8");
+
+$ sed -n 60,70p build/targets/manifest-target.ts   (real contentHash: no filePath)
+
+/** Deterministic, order-independent fingerprint of source content — changes iff any entity's identity, update time, or body changes. */
+function contentHash(entities: readonly KnowledgeEntity[]): string {
+  const material = [...entities]
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .map((entity) => `${entity.id}|${entity.updatedAt}|${entity.content}`)
+    .join("\n");
+  return createHash("sha256").update(material).digest("hex");
+}
+
+$ git grep -n "metadata" -- kernel/pipeline/factory.ts build/targets/duckdb-target.ts
+build/targets/duckdb-target.ts:32:        "CREATE TABLE knowledge_entity (id VARCHAR, kind VARCHAR, slug VARCHAR, title VARCHAR, summary VARCHAR, status VARCHAR, created_at VARCHAR, updated_at VARCHAR, content VARCHAR, file_path VARCHAR, metadata JSON);",
+build/targets/duckdb-target.ts:81:    sqlString(JSON.stringify(entity.metadata)),
+kernel/pipeline/factory.ts:38:    metadata: Object.freeze({ tags: frontmatter.tags }),

@@ -1,0 +1,20 @@
+{
+  "description": "required fields only; defaults filled",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "programSlug": "some-program"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "programSlug": "some-program",
+    "status": "draft",
+    "tags": []
+  }
+}

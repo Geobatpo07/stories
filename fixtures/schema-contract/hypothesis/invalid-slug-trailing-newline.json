@@ -1,0 +1,11 @@
+{
+  "description": "trailing newline ($ must not match before it)",
+  "input": {
+    "title": "A title",
+    "slug": "bad-slug\n",
+    "description": "A description",
+    "date": "2026-10-22",
+    "questionSlug": "some-question"
+  },
+  "valid": false
+}

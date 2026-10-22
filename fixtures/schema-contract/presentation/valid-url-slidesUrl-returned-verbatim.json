@@ -1,0 +1,20 @@
+{
+  "description": "URL accepted and returned un-normalised",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "slidesUrl": "HTTPS://Example.ORG"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "status": "draft",
+    "tags": [],
+    "slidesUrl": "HTTPS://Example.ORG"
+  }
+}

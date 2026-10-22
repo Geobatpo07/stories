@@ -1,0 +1,20 @@
+{
+  "description": "noteType=development-log",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "development-log"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "development-log",
+    "status": "draft",
+    "tags": []
+  }
+}

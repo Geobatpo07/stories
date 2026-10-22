@@ -1,0 +1,9 @@
+{
+  "description": "required field slug missing",
+  "input": {
+    "title": "A title",
+    "description": "A description",
+    "date": "2026-10-22"
+  },
+  "valid": false
+}

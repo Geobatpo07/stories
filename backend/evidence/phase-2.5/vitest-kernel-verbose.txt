@@ -1,0 +1,31 @@
+
+ RUN  v3.2.7 C:/Users/gblaguerre/Documents/Data Analytics Projects/stories
+
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-dangling-many 8ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-dangling-one 3ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-empty-file 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-frontmatter-comment-only 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-frontmatter-dashes-not-delimiter 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-frontmatter-list 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-frontmatter-null 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-frontmatter-scalar 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-malformed-yaml 3ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-missing-collection-dir 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-no-frontmatter 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-unknown-language 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-validation-many 1ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-wrong-target-kind 4ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-yaml-date-unquoted 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > err-yaml-duplicate-key 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > ok-duplicate-slug 2ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > ok-empty 1ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > ok-frontmatter-edges 6ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > ok-full 9ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > kernel pipeline scenarios > ok-yaml-quirks 3ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts > validation issue contract > matches the committed golden issues 5ms
+
+ Test Files  1 passed (1)
+      Tests  22 passed (22)
+   Start at  15:42:37
+   Duration  1.48s (transform 248ms, setup 0ms, collect 501ms, tests 69ms, environment 0ms, prepare 328ms)
+

@@ -1,0 +1,4 @@
+
+> stories@3.0.0 typecheck C:\Users\gblaguerre\Documents\Data Analytics Projects\stories-clean
+> tsc --noEmit
+

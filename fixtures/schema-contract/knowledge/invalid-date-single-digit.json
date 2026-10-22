@@ -1,0 +1,11 @@
+{
+  "description": "unpadded",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-1-5",
+    "noteType": "research-note"
+  },
+  "valid": false
+}

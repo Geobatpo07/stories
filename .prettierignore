@@ -3,3 +3,7 @@ node_modules
 pnpm-lock.yaml
 database/generated
 *.duckdb
+
+# Contract fixtures must stay byte-exact (CRLF, BOM, trailing whitespace are test inputs)
+fixtures/kernel-contract/scenarios
+fixtures/**/*.json

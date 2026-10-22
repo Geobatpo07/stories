@@ -1,0 +1,29 @@
+{
+  "outcome": "error",
+  "error": {
+    "name": "KnowledgeValidationError",
+    "filePath": "content/datasets/empty.mdx",
+    "issues": [
+      {
+        "path": "title",
+        "message": "Required",
+        "hint": "this field is required"
+      },
+      {
+        "path": "slug",
+        "message": "Required",
+        "hint": "this field is required"
+      },
+      {
+        "path": "description",
+        "message": "Required",
+        "hint": "this field is required"
+      },
+      {
+        "path": "date",
+        "message": "Required",
+        "hint": "this field is required"
+      }
+    ]
+  }
+}
