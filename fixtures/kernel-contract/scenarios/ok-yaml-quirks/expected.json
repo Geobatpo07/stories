@@ -27,7 +27,8 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "coAuthors": []
       },
       "relationships": [],
       "content": "body",
@@ -44,7 +45,8 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "license": "on"
       },
       "relationships": [],
       "content": "quirks",

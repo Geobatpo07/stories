@@ -1,0 +1,81 @@
+
+> stories@3.0.0 test C:\Users\gblaguerre\Documents\Data Analytics Projects\stories-p3
+> vitest run
+
+
+ RUN  v3.2.7 C:/Users/gblaguerre/Documents/Data Analytics Projects/stories-p3
+
+ ✓ runtime/adapters/supabase-persistence-adapter.test.ts (7 tests) 17ms
+ ✓ runtime/platform-runtime.test.ts (12 tests) 23ms
+ ✓ build/targets/manifest-target.test.ts (3 tests) 48ms
+ ✓ runtime/adapters/artifact-knowledge-source-adapter.test.ts (2 tests) 263ms
+ ✓ fixtures/build-contract/build-contract.test.ts (2 tests) 171ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts (22 tests) 203ms
+ ✓ build/targets/duckdb-target.test.ts (3 tests) 790ms
+   ✓ duckDBBuildTarget > writes the exact schema and rows ArtifactKnowledgeSourceAdapter expects  325ms
+   ✓ duckDBBuildTarget > DROPs and recreates cleanly on a second run, and tolerates zero entities  328ms
+ ✓ kernel/pipeline/relationships.test.ts (3 tests) 10ms
+ ✓ build/targets/round-trip.test.ts (1 test) 356ms
+   ✓ DuckDB + Manifest targets round-tripped through ArtifactKnowledgeSourceAdapter > reads back the same entities and relationships that were written  352ms
+ ✓ runtime/context.test.ts (2 tests) 13ms
+ ✓ build/targets/metadata-persistence.test.ts (1 test) 423ms
+   ✓ kind-specific frontmatter survives the real build pipeline > persists program.theme, program.leadResearcher and question.programSlug through DuckDB  421ms
+ ✓ runtime/composition-root.test.ts (7 tests) 14ms
+ ✓ kernel/api.test.ts (6 tests) 29ms
+ ✓ fixtures/schema-contract/schema-contract.test.ts (421 tests) 443ms
+ ✓ kernel/pipeline/factory.test.ts (2 tests) 10ms
+ ✓ kernel/pipeline/graph.test.ts (3 tests) 10ms
+ ✓ authoring/workflow.test.ts (3 tests) 351ms
+ ↓ spikes/ladybugdb-phase0/artifact-contract.spike.test.ts (1 test | 1 skipped)
+ ✓ kernel/pipeline/validation.test.ts (3 tests) 13ms
+ ✓ app/presentation.test.ts (5 tests) 63ms
+ ✓ lib/presentation/knowledge.test.ts (2 tests) 29ms
+ ✓ runtime/adapters/in-memory-event-bus.test.ts (5 tests) 11ms
+ ✓ kernel/authoring.test.ts (3 tests) 27ms
+ ✓ kernel/errors.test.ts (4 tests) 15ms
+ ✓ kernel/parsers/markdown-parser.test.ts (4 tests) 36ms
+ ✓ build/report.test.ts (4 tests) 11ms
+ ✓ runtime/errors.test.ts (4 tests) 9ms
+ ✓ runtime/adapters/environment-configuration.test.ts (5 tests) 11ms
+ ✓ build/pipeline.test.ts (2 tests) 293ms
+ ✓ build/pipeline.chain.test.ts (1 test) 543ms
+   ✓ runBuildPipeline — target chain > skips remaining targets once one fails, without ever rejecting  539ms
+ ✓ lib/presentation/search.test.ts (3 tests) 42ms
+ ✓ runtime/adapters/file-system-persistence-adapter.test.ts (2 tests) 70ms
+ ✓ auth/workflow.test.ts (11 tests) 4322ms
+   ✓ AuthWorkflow.login > succeeds with the correct email and password, and the session validates  352ms
+   ✓ AuthWorkflow.login > fails with the wrong password  365ms
+   ✓ AuthWorkflow.login > fails for an unregistered email  353ms
+   ✓ AuthWorkflow.logout / validateSession > destroys the session so it no longer validates  418ms
+   ✓ AuthWorkflow.logout / validateSession > rejects an unknown session token  307ms
+   ✓ AuthWorkflow.confirmPasswordReset > updates the password, signs out every session, and consumes the token  1261ms
+   ✓ AuthWorkflow.confirmPasswordReset > rejects an expired token without changing the password  416ms
+ ✓ runtime/adapters/identifier-service.test.ts (6 tests) 13ms
+ ✓ auth/passwords.test.ts (5 tests) 1171ms
+   ✓ hashPassword / verifyPassword > rejects a hash computed under a different salt  377ms
+ ✓ runtime/adapters/console-logger.test.ts (2 tests) 11ms
+ ✓ kernel/cache.test.ts (3 tests) 10ms
+ ✓ runtime/adapters/null-persistence-adapter.test.ts (5 tests) 11ms
+ ✓ kernel/registry/registrations.test.ts (4 tests) 15ms
+ ✓ runtime/adapters/kernel-knowledge-source-adapter.test.ts (2 tests) 13ms
+ ✓ runtime/lifecycle.test.ts (13 tests) 10ms
+ ✓ authoring/renderers/mdx-renderer.test.ts (2 tests) 88ms
+ ✓ kernel/pipeline/normalization.test.ts (2 tests) 10ms
+ ✓ lib/utils/group-by.test.ts (3 tests) 7ms
+ ✓ components/authoring/studio-editor.test.tsx (2 tests) 82ms
+ ✓ runtime/adapters/clock.test.ts (2 tests) 7ms
+ ✓ build/pipeline.kernel-failure.test.ts (1 test) 448ms
+   ✓ runBuildPipeline — Kernel failure > never rejects; a Kernel error becomes a validationIssue and success: false  445ms
+ ✓ build/targets/registry.test.ts (1 test) 7ms
+ ✓ components/knowledge/reading.test.ts (2 tests) 116ms
+ ✓ build/targets/python-artifact.test.ts (4 tests) 8172ms
+   ✓ Python-built artifact read by the real Node reader > is accepted by ArtifactKnowledgeSourceAdapter, with kind-specific fields and the graph intact  2291ms
+   ✓ Python-built artifact read by the real Node reader > carries graph-derived search signals in the same static file  2691ms
+   ✓ Python-built artifact read by the real Node reader > builds an empty laboratory  2109ms
+   ✓ Python-built artifact read by the real Node reader > refuses a duplicate id, naming both files, and writes no artifact  1077ms
+
+ Test Files  49 passed | 1 skipped (50)
+      Tests  617 passed | 1 skipped (618)
+   Start at  18:41:53
+   Duration  10.70s (transform 6.40s, setup 0ms, collect 33.06s, tests 18.86s, environment 27ms, prepare 21.01s)
+

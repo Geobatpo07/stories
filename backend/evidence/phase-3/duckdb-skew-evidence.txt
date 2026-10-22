@@ -1,0 +1,20 @@
+### duckdb 2.0.0 (written) vs the pinned Node reader: the skew the pin and CI job exist to catch
+written by python duckdb 2.0.0
+$ node backend/tools/dump-artifact.mjs <that file>
+[Error: IO Error: Trying to read a database file with version number 999, but we can only read versions between 64 and 68.
+
+### same call with the pinned pair (duckdb 1.5.2 writes, @duckdb/node-api 1.5.5-r.1 reads): test_duckdb_pin.py::test_node_reader_opens_a_python_written_artifact
+tests/test_duckdb_pin.py::test_python_pin_in_pyproject_matches_the_compat_file PASSED [ 25%]
+tests/test_duckdb_pin.py::test_node_pin_in_package_json_matches_the_compat_file PASSED [ 50%]
+tests/test_duckdb_pin.py::test_installed_python_duckdb_is_the_pinned_version PASSED [ 75%]
+tests/test_duckdb_pin.py::test_node_reader_opens_a_python_written_artifact PASSED [100%]
+============================== 4 passed in 1.73s ==============================
+
+### the pins
+18:    "duckdb==1.5.2",
+31:    "@duckdb/node-api": "1.5.5-r.1",
+{
+  "_comment": "The DuckDB pair validated against each other: knowledge.duckdb is WRITTEN by the Python `duckdb` package and READ by `@duckdb/node-api` (ArtifactKnowledgeSourceAdapter). Change either pin only together with this file, after the `python-artifact` CI job (Python writes, Node reads) passes with the new pair. duckdb 2.0.0 wrote a storage format this reader rejected.",
+  "python": "1.5.2",
+  "node": "1.5.5-r.1"
+}

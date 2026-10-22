@@ -1,0 +1,21 @@
+### NEGATIVE CONTROL 1: Python factory reverted to the pre-fix metadata ({"tags"} only)
+FAILED tests/test_artifact_contract.py::test_metadata_column_carries_kind_specific_fields
+FAILED tests/test_artifact_contract.py::test_metadata_json_text_matches_javascript_json_stringify
+FAILED tests/test_kernel_contract.py::test_scenario_matches_typescript_kernel[ok-full]
+FAILED tests/test_kernel_contract.py::test_scenario_matches_typescript_kernel[ok-yaml-quirks]
+4 failed, 813 passed in 10.76s
+--- parity script:
+PARITY FAIL ok-full
+
+### NEGATIVE CONTROL 2: DDL drift (add a PRIMARY KEY to the Python CREATE TABLE)
+FAILED tests/test_artifact_contract.py::test_ddl_is_copied_verbatim_from_duckdb_target_ts
+FAILED tests/test_artifact_contract.py::test_artifact_has_exactly_two_tables_and_no_constraints
+2 failed, 8 passed in 2.34s
+
+### NEGATIVE CONTROL 3: node pin bumped without the compat file
+FAILED tests/test_duckdb_pin.py::test_node_pin_in_package_json_matches_the_compat_file
+1 failed, 3 passed in 1.31s
+
+### restored: full pytest
+817 passed in 9.57s
+(package.json diff empty = restored)

@@ -1,0 +1,31 @@
+$ git ls-remote https://github.com/Geobatpo07/stories.git
+29695127f732570ff16f1260b55a20a1eb4fbe97	HEAD
+29695127f732570ff16f1260b55a20a1eb4fbe97	refs/heads/main
+60d30a2ac109e3a7a707a616ba4ce831d311ec0e	refs/heads/migration/phase-2.5-reconciliation
+af1834ee57bd8082e1628c1541096a83fdd17e5b	refs/pull/1/head
+
+$ git log --oneline -8   (fresh clone of origin/main + merge of origin/migration/phase-2.5-reconciliation)
+cb175d2 Merge remote-tracking branch 'origin/migration/phase-2.5-reconciliation' into migration/phase3-build-pipeline
+2969512 Merge pull request #1 from Geobatpo07/fix/kind-specific-metadata-loss
+60d30a2 Add Python backend: Pydantic schema contract and Kernel load pipeline (ADR-004 phases 1-2)
+bc93d53 Add LadybugDB Phase 0 spike (isolated, throwaway)
+fbae102 Add ADR-003 and ADR-004 for the Python backend migration
+af1834e Fix kind-specific frontmatter fields being dropped from the generated artifact
+48c2145 Add migration to enable RLS on persistence_records, zero policies
+3f7b874 Make the footer Studio link actually discoverable
+
+$ grep -n "metadata:" kernel/pipeline/factory.ts   (the fix from af1834e is in the base)
+38:    metadata: Object.freeze({ tags: frontmatter.tags, ...extra }),
+
+$ git ls-tree -r --name-only origin/main -- backend | wc -l   (backend/ is not on main)
+0
+$ git diff origin/migration/phase-2.5-reconciliation --stat -- backend fixtures spikes docs   (before my Phase 3 edits: the merged backend is byte-identical to the pushed branch)
+warning: in the working copy of 'backend/kernel/pipeline/factory.py', LF will be replaced by CRLF the next time Git touches it
+ backend/kernel/pipeline/factory.py                 |  4 +-
+ .../scenarios/ok-full/expected.json                | 55 +++++++++++++++++-----
+ .../scenarios/ok-yaml-quirks/expected.json         |  6 ++-
+ 3 files changed, 50 insertions(+), 15 deletions(-)
+
+$ git -C ../stories rev-parse HEAD   (the earlier local checkout used for phases 1-2.5)
+60d30a2ac109e3a7a707a616ba4ce831d311ec0e
+60d30a2ac109e3a7a707a616ba4ce831d311ec0e
