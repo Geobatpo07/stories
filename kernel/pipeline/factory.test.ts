@@ -50,7 +50,12 @@ describe("createEntity", () => {
   it("puts tags in metadata and spreads every non-base field generically", () => {
     const entity = createEntity(registration, parsed, frontmatter);
 
-    expect(entity.metadata).toEqual({ tags: ["b", "a"] });
+    expect(entity.metadata).toEqual({
+      tags: ["b", "a"],
+      theme: "Applied math",
+      leadResearcher: "Geovany",
+      relatedQuestionSlugs: ["q1"],
+    });
     expect(entity.theme).toBe("Applied math");
     expect(entity.leadResearcher).toBe("Geovany");
     expect(entity.relatedQuestionSlugs).toEqual(["q1"]);

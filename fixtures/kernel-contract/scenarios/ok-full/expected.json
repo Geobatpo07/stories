@@ -16,6 +16,12 @@
           "zeta",
           "😀",
           "ﬁ"
+        ],
+        "theme": "Climate",
+        "leadResearcher": "A. Person",
+        "relatedQuestionSlugs": [
+          "q-two",
+          "q-one"
         ]
       },
       "relationships": [
@@ -59,7 +65,10 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "theme": "Misc",
+        "leadResearcher": "B. Person",
+        "relatedQuestionSlugs": []
       },
       "relationships": [],
       "content": "Sandbox.",
@@ -81,7 +90,8 @@
         "tags": [
           "a",
           "b"
-        ]
+        ],
+        "programSlug": "lab"
       },
       "relationships": [
         {
@@ -109,7 +119,8 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "programSlug": "lab"
       },
       "relationships": [
         {
@@ -137,7 +148,8 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "questionSlug": "q-one"
       },
       "relationships": [
         {
@@ -165,7 +177,9 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "questionSlug": "q-two",
+        "hypothesisSlug": "h-one"
       },
       "relationships": [
         {
@@ -204,7 +218,8 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "questionSlug": "q-one"
       },
       "relationships": [
         {
@@ -232,7 +247,9 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "noteType": "essay",
+        "programSlug": "lab"
       },
       "relationships": [
         {
@@ -261,7 +278,8 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "noteType": "tutorial"
       },
       "relationships": [],
       "content": "Note two.",
@@ -294,7 +312,9 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "repositoryUrl": "https://example.org/repo",
+        "license": "MIT"
       },
       "relationships": [],
       "content": "S.",
@@ -312,7 +332,13 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "venue": "A Venue",
+        "doi": "10.1000/xyz",
+        "coAuthors": [
+          "C. Author",
+          "D. Author"
+        ]
       },
       "relationships": [],
       "content": "P.",
@@ -334,7 +360,8 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "sourceUrl": "https://example.org/data"
       },
       "relationships": [],
       "content": "D.",
@@ -367,7 +394,11 @@
       "createdAt": "2026-03-01",
       "updatedAt": "2026-03-01",
       "metadata": {
-        "tags": []
+        "tags": [],
+        "venue": "A Conf",
+        "slidesUrl": "https://example.org/s",
+        "programSlug": "lab",
+        "questionSlug": "q-one"
       },
       "relationships": [
         {
