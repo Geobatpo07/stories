@@ -108,7 +108,7 @@ Studio itself is disabled.
 
 - **Multi-user / roles.** One admin, by design — see above.
 - **Persistent rate limiting.** Login attempts are throttled with an in-memory counter
-  (`app/api/auth/login/route.ts`) that resets on server restart — acceptable for a
+  (`app/api/auth/login/route.ts`, keyed by client IP, never by email) that resets on server restart — acceptable for a
   single-admin tool; a `PersistencePort`-backed limiter is the natural extension if this
   Studio is ever exposed more broadly.
 - **CSRF tokens.** The session cookie is `sameSite: "lax"`, which already blocks

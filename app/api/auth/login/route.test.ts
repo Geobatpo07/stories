@@ -27,8 +27,10 @@ async function load() {
   return { support, POST: route.POST };
 }
 
-function login(support: typeof Support, body: unknown) {
-  return support.jsonRequest("http://localhost/api/auth/login", body);
+function login(support: typeof Support, body: unknown, ip: string | null = "203.0.113.1") {
+  const request = support.jsonRequest("http://localhost/api/auth/login", body);
+  if (ip !== null) request.headers.set("x-real-ip", ip);
+  return request;
 }
 
 beforeEach(() => {
@@ -37,6 +39,7 @@ beforeEach(() => {
   vi.stubEnv("SUPABASE_URL", "https://project.supabase.test");
   vi.stubEnv("SUPABASE_SERVICE_ROLE_KEY", "service-role-key");
   vi.stubEnv("NODE_ENV", "test");
+  vi.stubEnv("VERCEL", "1");
 });
 afterEach(() => {
   vi.useRealTimers();
@@ -195,11 +198,15 @@ describe("POST /api/auth/login: rejections", () => {
   });
 });
 
-describe("POST /api/auth/login: in-memory rate limit", () => {
-  const wrong = (support: typeof Support) =>
-    login(support, { email: support.ADMIN_EMAIL, password: "wrong" });
+describe("POST /api/auth/login: in-memory rate limit, keyed by client IP", () => {
+  const ADMIN_IP = "198.51.100.7";
+  const ATTACKER_IP = "203.0.113.66";
+  const wrong = (support: typeof Support, ip: string | null = ATTACKER_IP, email?: string) =>
+    login(support, { email: email ?? support.ADMIN_EMAIL, password: "wrong" }, ip);
+  const right = (support: typeof Support, ip: string | null = ADMIN_IP) =>
+    login(support, { email: support.ADMIN_EMAIL, password: support.ADMIN_PASSWORD }, ip);
 
-  it("allows 10 failed attempts (401) and answers 429 from the 11th", async () => {
+  it("allows 10 failed attempts (401) from one IP and answers 429 from the 11th", async () => {
     const { support, POST } = await load();
     for (let i = 0; i < 10; i += 1) expect((await POST(wrong(support))).status).toBe(401);
     const limited = await POST(wrong(support));
@@ -209,49 +216,63 @@ describe("POST /api/auth/login: in-memory rate limit", () => {
     });
   });
 
-  it("applies the limit before checking the password: the right password is refused too", async () => {
+  it("(a) trips on 11 requests from one IP against DIFFERENT emails (credential stuffing)", async () => {
     const { support, POST } = await load();
-    for (let i = 0; i < 11; i += 1) await POST(wrong(support));
-    const response = await POST(
-      login(support, { email: support.ADMIN_EMAIL, password: support.ADMIN_PASSWORD }),
-    );
+    for (let i = 0; i < 10; i += 1) {
+      expect((await POST(wrong(support, ATTACKER_IP, `victim${i}@stories.test`))).status).toBe(401);
+    }
+    expect((await POST(wrong(support, ATTACKER_IP, "victim11@stories.test"))).status).toBe(429);
+  });
+
+  it("(b) does NOT lock the admin out when 11+ requests against the admin email come from other IPs", async () => {
+    const { support, POST } = await load();
+    for (let i = 0; i < 11; i += 1) {
+      const response = await POST(wrong(support, `203.0.113.${100 + i}`));
+      expect(response.status).toBe(401);
+    }
+    for (let i = 0; i < 25; i += 1) await POST(wrong(support, `192.0.2.${i}`));
+    const admin = await POST(right(support, ADMIN_IP));
+    expect(admin.status).toBe(200);
+    expect(await admin.json()).toEqual({ success: true });
+  });
+
+  it("(b2) the attacker IP is still throttled while the admin IP is not", async () => {
+    const { support, POST } = await load();
+    for (let i = 0; i < 11; i += 1) await POST(wrong(support, ATTACKER_IP));
+    expect((await POST(wrong(support, ATTACKER_IP))).status).toBe(429);
+    expect((await POST(right(support, ADMIN_IP))).status).toBe(200);
+  });
+
+  it("applies the limit before checking the password: the right password from a throttled IP is refused", async () => {
+    const { support, POST } = await load();
+    for (let i = 0; i < 11; i += 1) await POST(wrong(support, ADMIN_IP));
+    const response = await POST(right(support, ADMIN_IP));
     expect(response.status).toBe(429);
     expect(support.setCookieHeaders()).toEqual([]);
     expect(support.rowsOf("auth", "auth-sessions")).toEqual({});
   });
 
-  it("counts per submitted email, including emails that do not exist", async () => {
-    const { support, POST } = await load();
-    for (let i = 0; i < 11; i += 1) {
-      await POST(login(support, { email: "ghost@stories.test", password: "x" }));
-    }
-    expect(
-      (await POST(login(support, { email: "ghost@stories.test", password: "x" }))).status,
-    ).toBe(429);
-    expect(
-      (await POST(login(support, { email: support.ADMIN_EMAIL, password: support.ADMIN_PASSWORD })))
-        .status,
-    ).toBe(200);
-  });
-
   it("does not count malformed requests (400 returns before the limiter)", async () => {
     const { support, POST } = await load();
-    for (let i = 0; i < 15; i += 1) await POST(login(support, { email: "bad", password: "x" }));
-    expect(
-      (await POST(login(support, { email: support.ADMIN_EMAIL, password: support.ADMIN_PASSWORD })))
-        .status,
-    ).toBe(200);
+    for (let i = 0; i < 15; i += 1) {
+      await POST(login(support, { email: "bad", password: "x" }, ADMIN_IP));
+    }
+    expect((await POST(right(support, ADMIN_IP))).status).toBe(200);
   });
 
-  it("forgets the failures after a successful login", async () => {
+  it("(c) a successful login clears that IP counter", async () => {
     const { support, POST } = await load();
-    for (let i = 0; i < 9; i += 1) await POST(wrong(support));
-    expect(
-      (await POST(login(support, { email: support.ADMIN_EMAIL, password: support.ADMIN_PASSWORD })))
-        .status,
-    ).toBe(200);
-    for (let i = 0; i < 10; i += 1) expect((await POST(wrong(support))).status).toBe(401);
-    expect((await POST(wrong(support))).status).toBe(429);
+    for (let i = 0; i < 9; i += 1) await POST(wrong(support, ADMIN_IP));
+    expect((await POST(right(support, ADMIN_IP))).status).toBe(200);
+    for (let i = 0; i < 10; i += 1) expect((await POST(wrong(support, ADMIN_IP))).status).toBe(401);
+    expect((await POST(wrong(support, ADMIN_IP))).status).toBe(429);
+  });
+
+  it("a successful login from one IP does not clear another IP counter", async () => {
+    const { support, POST } = await load();
+    for (let i = 0; i < 11; i += 1) await POST(wrong(support, ATTACKER_IP));
+    expect((await POST(right(support, ADMIN_IP))).status).toBe(200);
+    expect((await POST(wrong(support, ATTACKER_IP))).status).toBe(429);
   });
 
   it("keeps the window open for exactly 15 minutes, then starts a new one", async () => {
@@ -261,5 +282,49 @@ describe("POST /api/auth/login: in-memory rate limit", () => {
     expect((await POST(wrong(support))).status).toBe(429);
     vi.setSystemTime(new Date(NOW.getTime() + 15 * 60 * 1000 + 1));
     expect((await POST(wrong(support))).status).toBe(401);
+  });
+
+  it("uses x-real-ip only; a client-supplied x-forwarded-for is ignored on Vercel", async () => {
+    const { support, POST } = await load();
+    for (let i = 0; i < 11; i += 1) {
+      const request = wrong(support, ATTACKER_IP);
+      request.headers.set("x-forwarded-for", `10.0.0.${i}`);
+      await POST(request);
+    }
+    const spoofed = wrong(support, ATTACKER_IP);
+    spoofed.headers.set("x-forwarded-for", "10.9.9.9");
+    expect((await POST(spoofed)).status).toBe(429);
+  });
+});
+
+describe("POST /api/auth/login: rate limit when no trustworthy client IP exists", () => {
+  const wrong = (support: typeof Support, ip: string | null) =>
+    login(support, { email: support.ADMIN_EMAIL, password: "wrong" }, ip);
+
+  it("in development (no VERCEL) the limiter is skipped, even if a client sets x-real-ip", async () => {
+    vi.stubEnv("VERCEL", "");
+    const { support, POST } = await load();
+    for (let i = 0; i < 15; i += 1) {
+      expect((await POST(wrong(support, `203.0.113.${i % 2}`))).status).toBe(401);
+    }
+  });
+
+  it("in production without VERCEL, a spoofed x-real-ip cannot dodge the limit: one shared bucket", async () => {
+    vi.stubEnv("VERCEL", "");
+    vi.stubEnv("NODE_ENV", "production");
+    const { support, POST } = await load();
+    for (let i = 0; i < 10; i += 1) {
+      expect((await POST(wrong(support, `203.0.113.${i}`))).status).toBe(401);
+    }
+    expect((await POST(wrong(support, "203.0.113.200"))).status).toBe(429);
+  });
+
+  it("on Vercel with a missing or blank x-real-ip in production, falls back to the shared bucket, never to the email", async () => {
+    vi.stubEnv("NODE_ENV", "production");
+    const { support, POST } = await load();
+    for (let i = 0; i < 5; i += 1) await POST(wrong(support, null));
+    for (let i = 0; i < 5; i += 1) await POST(wrong(support, "   "));
+    expect((await POST(wrong(support, null))).status).toBe(429);
+    expect((await POST(wrong(support, "198.51.100.9"))).status).toBe(401);
   });
 });
