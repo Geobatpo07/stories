@@ -1,0 +1,5 @@
+{
+  "_comment": "The DuckDB pair validated against each other: knowledge.duckdb is WRITTEN by the Python `duckdb` package and READ by `@duckdb/node-api` (ArtifactKnowledgeSourceAdapter). Change either pin only together with this file, after the `python-artifact` CI job (Python writes, Node reads) passes with the new pair. duckdb 2.0.0 wrote a storage format this reader rejected.",
+  "python": "1.5.2",
+  "node": "1.5.5-r.1"
+}

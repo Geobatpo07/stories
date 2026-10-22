@@ -1,0 +1,125 @@
+$ backend/tools/artifact-parity.sh   (all buildable ok-* scenarios)
+PARITY OK   ok-full  (68 lines, sha256 f6e5c6a1e94bf9b3)
+PARITY OK   ok-empty  (42 lines, sha256 6d9990213088c963)
+PARITY OK   ok-yaml-quirks  (45 lines, sha256 db6f511509ac60ac)
+PARITY OK   ok-frontmatter-edges  (49 lines, sha256 3e70fee1f5064b99)
+
+### scenario ok-full, TypeScript-built (tsx build/cli.ts) vs Python-built (python -m pipeline.cli --no-search-index)
+$ sha256sum ts.dump py.dump   (schema + constraints + table list + both tables in adapter order, file_path excluded + manifest with run-dependent fields blanked)
+f6e5c6a1e94bf9b3f6a18b98c64a8715904bd6b09fad50565bac10a866896bb0 *ts.dump
+f6e5c6a1e94bf9b3f6a18b98c64a8715904bd6b09fad50565bac10a866896bb0 *py.dump
+$ diff ts.dump py.dump
+(no output: IDENTICAL)
+
+### the dump being compared (Python side), first 24 lines, then the manifest section
+== schema
+{"table_name":"knowledge_entity","column_name":"id","ordinal_position":1,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"kind","ordinal_position":2,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"slug","ordinal_position":3,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"title","ordinal_position":4,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"summary","ordinal_position":5,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"status","ordinal_position":6,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"created_at","ordinal_position":7,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"updated_at","ordinal_position":8,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"content","ordinal_position":9,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"file_path","ordinal_position":10,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"metadata","ordinal_position":11,"data_type":"JSON","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"source_id","ordinal_position":1,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"target_id","ordinal_position":2,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"field","ordinal_position":3,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"cardinality","ordinal_position":4,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+== constraints
+== table list
+knowledge_entity
+knowledge_relationship
+== knowledge_entity (adapter order)
+{"id":"dataset:d-one","kind":"dataset","slug":"d-one","title":"Title of d-one","summary":"Description of d-one","status":"draft","created_at":"2026-03-01","updated_at":"2026-03-01","content":"D.","metadata":"{\"tags\":[],\"sourceU
+{"id":"dataset:d-two","kind":"dataset","slug":"d-two","title":"Title of d-two","summary":"Description of d-two","status":"draft","created_at":"2026-03-01","updated_at":"2026-03-01","content":"Different filename.","metadata":"{\"ta
+{"id":"experiment:e-one","kind":"experiment","slug":"e-one","title":"Title of e-one","summary":"Description of e-one","status":"draft","created_at":"2026-03-01","updated_at":"2026-03-01","content":"E one.","metadata":"{\"tags\":[]
+== manifest (run-dependent fields blanked)
+{
+  "platformVersion": "3.0.0",
+  "kernelVersion": "1.0.0",
+  "buildVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "generatedAt": "<blank>",
+  "contentHash": "cb21f8d013ef67eff8d572c109d1961705d3e6b435ebbe14b84f4530af9ffc7c",
+  "generationDuration": "<blank>",
+  "knowledge": {
+    "entities": 15,
+    "relationships": 11
+  },
+  "artifacts": {
+    "knowledgeDatabase": {
+      "file": "database/generated/knowledge.duckdb",
+      "checksum": "<blank>"
+    }
+  }
+}
+
+### file_path column INCLUDED: differs on this Windows host (TypeScript stores backslashes), hence excluded above
+differing lines: 30
+"id":"dataset:d-one"	"file_path":"content\\datasets\\d-one.mdx"
+"id":"dataset:d-two"	"file_path":"content\\datasets\\file-name-differs.mdx"
+"id":"experiment:e-one"	"file_path":"content\\experiments\\e-one.mdx"
+"id":"experiment:e-two"	"file_path":"content\\experiments\\e-two.mdx"
+
+### physical row order differs (Python inserts in the adapter order, TypeScript in Kernel order); adapter-ordered reads are identical
+differing lines in physical-order dump: 30
+
+### raw .duckdb file bytes are NOT identical
+51b71726484c7a07ce8ef987be3e6e31ad1900ba40c5d7291801a12158c8fe0b *ts/database/generated/knowledge.duckdb
+10acb615f9ce6350d77ee152208a0756e57d1c90fc85b1c2c03b2fcfaaeed53c *py/database/generated/knowledge.duckdb
+798720 py/database/generated/knowledge.duckdb
+798720 ts/database/generated/knowledge.duckdb
+bytes that differ (cmp -l | wc -l): 2420
+first 16 bytes TS:
+00000000: 06d7 6f27 c2da b3b9 4455 434b 4000 0000  ..o'....DUCK@...
+first 16 bytes PY:
+00000000: 52f6 0daa d087 a1ad 4455 434b 4000 0000  R.......DUCK@...
+
+### contentHash, TS manifest vs Python manifest
+  "contentHash": "cb21f8d013ef67eff8d572c109d1961705d3e6b435ebbe14b84f4530af9ffc7c",
+  "contentHash": "cb21f8d013ef67eff8d572c109d1961705d3e6b435ebbe14b84f4530af9ffc7c",
+
+### manifests side by side (raw)
+--- TS
+{
+  "platformVersion": "3.0.0",
+  "kernelVersion": "1.0.0",
+  "buildVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-10-22T16:42:29.261Z",
+  "contentHash": "cb21f8d013ef67eff8d572c109d1961705d3e6b435ebbe14b84f4530af9ffc7c",
+  "generationDuration": 166,
+  "knowledge": {
+    "entities": 15,
+    "relationships": 11
+  },
+  "artifacts": {
+    "knowledgeDatabase": {
+      "file": "database/generated/knowledge.duckdb",
+      "checksum": "51b71726484c7a07ce8ef987be3e6e31ad1900ba40c5d7291801a12158c8fe0b"
+    }
+  }
+}
+--- PY
+{
+  "platformVersion": "3.0.0",
+  "kernelVersion": "1.0.0",
+  "buildVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-10-22T16:42:30.471Z",
+  "contentHash": "cb21f8d013ef67eff8d572c109d1961705d3e6b435ebbe14b84f4530af9ffc7c",
+  "generationDuration": 283,
+  "knowledge": {
+    "entities": 15,
+    "relationships": 11
+  },
+  "artifacts": {
+    "knowledgeDatabase": {
+      "file": "database/generated/knowledge.duckdb",
+      "checksum": "10acb615f9ce6350d77ee152208a0756e57d1c90fc85b1c2c03b2fcfaaeed53c"
+    }
+  }
+}

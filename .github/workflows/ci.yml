@@ -52,3 +52,49 @@ jobs:
       - run: pnpm lint
       - run: pnpm test
       - run: pnpm build
+
+  # ADR-004 Phase 3. knowledge.duckdb is WRITTEN by the Python pipeline (backend/pipeline, pinned
+  # `duckdb`) and READ by Node (`@duckdb/node-api`, pinned in package.json). This job exercises that
+  # exact pair on every run, so a DuckDB storage-format skew (duckdb 2.0.0 already caused one) or a
+  # drift between the Python and TypeScript producers fails here, not in production.
+  python-artifact:
+    runs-on: ubuntu-latest
+    env:
+      STORIES_PYTHON: ${{ github.workspace }}/backend/.venv/bin/python
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.9"
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - uses: astral-sh/setup-uv@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install backend dependencies (pinned by backend/uv.lock)
+        working-directory: backend
+        run: uv sync --frozen
+
+      - name: Python tests (schemas, kernel port, LadybugDB graph, export, search index, DuckDB pin)
+        working-directory: backend
+        run: uv run --frozen pytest -v
+
+      - name: Python writes, Node reads (round-trip + real-content artifact + contract fixtures)
+        env:
+          STORIES_ARTIFACT_PRODUCER: python
+        run: >
+          pnpm exec vitest run
+          build/targets/round-trip.test.ts
+          build/targets/python-artifact.test.ts
+          fixtures
+
+      - name: TypeScript-built vs Python-built artifact parity
+        run: backend/tools/artifact-parity.sh

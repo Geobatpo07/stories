@@ -1,12 +1,21 @@
 [project]
 name = "stories-backend"
 version = "0.1.0"
-description = "Python backend for Stories (ADR-004). Phase 1: Pydantic schema contract."
+description = "Python backend for Stories (ADR-004): Pydantic schema contract, Kernel load pipeline, LadybugDB-backed build pipeline."
 requires-python = ">=3.12"
 dependencies = [
     "pydantic>=2.9,<3",
     # YAML 1.2 (like js-yaml 3 behind gray-matter): `yes`/`no`/`on`/`off` stay strings.
     "ruamel.yaml>=0.18,<0.19",
+    # LadybugDB (PyPI name is `ladybug`, NOT `ladybugdb` / `real-ladybug`). Pinned to the Phase 0
+    # spike's version; the working graph is rebuilt every run, so only the Python API matters.
+    "ladybug==0.21.2",
+    # PINNED TO THE NODE READER, do not bump alone. knowledge.duckdb is written here and read by
+    # `@duckdb/node-api` (package.json, pinned 1.5.5-r.1) through ArtifactKnowledgeSourceAdapter.
+    # duckdb 2.0.0 wrote a storage format that reader rejected ("database file with version number
+    # 999"). The pair is recorded in backend/duckdb-compat.json and enforced by
+    # backend/tests/test_duckdb_pin.py and the `python-artifact` CI job.
+    "duckdb==1.5.2",
 ]
 
 [dependency-groups]
