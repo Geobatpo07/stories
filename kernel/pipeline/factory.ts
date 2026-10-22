@@ -35,7 +35,7 @@ export function createEntity(
     status: frontmatter.status,
     createdAt: frontmatter.date,
     updatedAt: frontmatter.date,
-    metadata: Object.freeze({ tags: frontmatter.tags }),
+    metadata: Object.freeze({ tags: frontmatter.tags, ...extra }),
     relationships: [],
     content: parsed.content,
     filePath: parsed.sourcePath,

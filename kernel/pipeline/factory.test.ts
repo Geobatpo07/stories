@@ -47,10 +47,18 @@ describe("createEntity", () => {
     expect(entity.relationships).toEqual([]);
   });
 
-  it("puts tags in metadata and spreads every non-base field generically", () => {
+  it("puts tags and every non-base field in metadata, and spreads those fields onto the entity too", () => {
     const entity = createEntity(registration, parsed, frontmatter);
 
-    expect(entity.metadata).toEqual({ tags: ["b", "a"] });
+    // metadata is what build/targets/duckdb-target.ts persists; it must carry the kind-specific
+    // fields or they are silently lost from the generated artifact.
+    expect(entity.metadata).toEqual({
+      tags: ["b", "a"],
+      theme: "Applied math",
+      leadResearcher: "Geovany",
+      relatedQuestionSlugs: ["q1"],
+    });
+    // Regression guard: the top-level spread must stay (the Kernel's own consumers read it).
     expect(entity.theme).toBe("Applied math");
     expect(entity.leadResearcher).toBe("Geovany");
     expect(entity.relatedQuestionSlugs).toEqual(["q1"]);
