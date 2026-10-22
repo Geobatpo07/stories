@@ -730,6 +730,83 @@ Two fixture contracts now exist for step 2 to honor exactly: `fixtures/auth-cont
 validation cases from `kernel/authoring.ts`) — each has a TODO pointing at
 `backend/PHASE4-AUDIT.md` for the Python-side test step 2 must add against them.
 
+## Phase 4, step 2a results — Python auth/authoring core, publish still stubbed
+
+Done on `migration/phase4-auth-port` (`9af1ba6`, on top of `0ab37d8` = `a7732bf` +
+cherry-picked `282f4de`), not pushed — `backend/PHASE4B-FINDINGS.md`, evidence in
+`backend/evidence/phase-4b/`. No existing TypeScript file changed (`pnpm test`: 766
+passed/1 skipped before and after — the 7-test increase over step 1's 759 is the
+rate-limiter hotfix's expanded login test file, already accounted for). New: `auth/`
+(passwords, types, repository, workflow), `authoring/` (definitions, validation, MDX
+rendering, repository, workflow — publish stops short of the file write), `runtime/`'s
+Supabase/Resend adapters over `httpx`, and `api/app.py` serving all six routes plus the new
+`GET /api/authoring/definitions`. `pytest`: 1,096 passed (817 before). `ruff`/`mypy --strict`
+clean on all new code — not configured at all before this phase, now is; the pre-existing
+Python code from earlier phases does NOT pass this new configuration (65 ruff findings, 22
+mypy errors) and was deliberately left untouched, a gap to close later rather than silently
+fixed here.
+
+Beyond porting the existing characterization tests, this phase added independent
+cross-language contract checks: 98 generated cases for `email`/`datetime`/`uuid`/min-length
+validators checked against the real Zod output (0 mismatches); 8 MDX-rendering cases
+byte-identical to the real `MDXRenderer` (line endings, BOM, NBSP, quotes, control
+characters, emoji, empty bodies, one error case); the full 9-kind/4-case authoring contract,
+key order included; all 6 scrypt vectors. Fifteen negative controls (cookie attribute
+order, rate-limiter keyed by email again, missing-IP fallback removed, limiter moved after
+password check, reset token not consumed, sessions not destroyed, unknown-email disclosure,
+logout not destroying the session, 400-before-401, salt decoded from hex, 32-byte key
+length, `strip()` swapped in for JS's `trim()` semantics, a definition label changed, the
+path guard removed) each broke at least one test before being reverted.
+
+**Three further findings, independently re-verified directly against `origin/main`:**
+
+- **A second real, pre-existing TypeScript bug, now confirmed.**
+  `authoring/workflow.ts`'s `friendlyRelationshipMessage()` matches responses against
+  `/field "([^"]+)" points to missing target "([^"]+)"/` — but the real error it's matching
+  against, `KnowledgeRelationshipError` (`kernel/errors.ts`), produces `Entity "..." has a
+dangling reference in "field": target "..." does not exist.` — a string the regex can
+  never match. Every relationship-validation failure in the Studio has always fallen
+  through to a generic message instead of naming the field and target. Confirmed by reading
+  both the regex and the real error format side by side — the regex genuinely cannot match
+  that message. Low severity (UX only, no functional or security impact); ported faithfully
+  with a test, left as a separate decision rather than silently fixed.
+- **Password minimum length counts UTF-16 code units, confirmed in
+  `app/api/auth/reset-password/confirm/route.ts`:** `z.string().min(8)`, and JavaScript
+  string length counts UTF-16 units — so four astral-plane emoji (each a surrogate pair)
+  satisfy `min(8)` as "8 characters." Reproduced and checked against real Zod.
+  Low severity, simply worth knowing before anyone is tempted to "fix" it as an
+  inconsistency during the port.
+- **The publish stub's blanket 422 matches real behavior exactly:** confirmed directly in
+  `app/api/studio/documents/[id]/publish/route.ts` — any thrown error, of any kind, becomes
+  `{ error: message }` at status 422. The Python stub's `NotImplementedError` → 422 is not a
+  workaround, it's what the real route already does on any failure.
+
+Documented adaptations, not TypeScript-behavior claims: Python reads `STORIES_ENV`
+(`production`/`development`/`test`, defaulting by `VERCEL` presence) in place of
+`NODE_ENV`, driving the cookie's `Secure` flag, Studio enablement, and the rate-limiter
+fallback — same IP-only design as the hotfix, never email, shared deny-by-default bucket
+without a trusted IP source. `GET /api/authoring/definitions` was given the same
+404-then-401 guard as the documents routes, a judgment call since nothing specified it.
+Two `NotImplementedError` stubs mark where Phase 2b plugs in:
+`PublicationTarget.publish(rendered, previous_path) -> report` (the GitHub commit) and an
+async revalidation callback. `materialize_authoring_objects` does not build the knowledge
+graph, unlike the TypeScript version, because nothing reads it on this path. Draft sorting
+approximates `localeCompare` — exact for UUIDs and ISO timestamps, unverified against ICU
+for arbitrary strings.
+
+Coverage, from the report's own table: login, logout, reset-password, confirm, and
+documents GET/POST are fully ported (31/6/12/19/27 tests). `publish` has only its guard and
+validation tests (4) — the file write, real build, and rollback (3 TS tests) don't exist in
+Python yet; they return once the real publish target lands. `middleware.ts` stays
+TypeScript, untouched; this phase checked a Python-written session row has the expected
+shape but did not run the real middleware against one. Not done or observed, same caveats
+as every phase before it: nothing has run against a real Supabase or Resend; routes were
+exercised via Starlette's `TestClient`, not `uvicorn` or a real Vercel deployment; only
+Python 3.13 was used; the `python-artifact` CI job will pick these tests up but hasn't run
+on GitHub itself; login tests take ~50s since each does a real scrypt computation.
+
+## Phase 4 — Authoring and auth
+
 Step 1: write characterization tests against the real, current behavior of the six
 `app/api/studio/**` / `app/api/auth/**` routes and `middleware.ts` — none exist today. Lock
 their actual request/response shapes, status codes, and cookie behavior before changing
