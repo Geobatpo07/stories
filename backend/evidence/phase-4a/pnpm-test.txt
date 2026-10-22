@@ -1,0 +1,237 @@
+
+> stories@3.0.0 test C:\Users\gblaguerre\Documents\Data Analytics Projects\stories-p3
+> vitest run
+
+
+ RUN  v3.2.7 C:/Users/gblaguerre/Documents/Data Analytics Projects/stories-p3
+
+ ✓ fixtures/authoring-contract/authoring-contract.test.ts (4 tests) 54ms
+ ✓ middleware.test.ts (34 tests) 1244ms
+ ✓ fixtures/auth-contract/auth-contract.test.ts (3 tests) 3219ms
+   ✓ scrypt vectors > are committed and match a fresh derivation  861ms
+   ✓ scrypt vectors > verify with the real verifyPassword, and fail for any other password  2011ms
+   ✓ scrypt vectors > describe the shape hashPassword really emits (32-hex salt, 128-hex hash)  343ms
+ ✓ app/api/auth/logout/route.test.ts (6 tests) 4156ms
+   ✓ POST /api/auth/logout > answers 200 {success:true}, deletes only the caller's session row, keeps others  1902ms
+   ✓ POST /api/auth/logout > clears the browser cookie with an empty value and an epoch expiry, dropping HttpOnly/SameSite  476ms
+   ✓ POST /api/auth/logout > without a cookie still answers 200, clears the cookie, and deletes nothing  452ms
+   ✓ POST /api/auth/logout > with an unknown token still answers 200 and leaves every real session in place  458ms
+   ✓ POST /api/auth/logout > deletes an already-expired session row too (no expiry check on logout)  446ms
+   ✓ POST /api/auth/logout > ignores a cookie with an empty value (nothing deleted, cookie still cleared)  417ms
+ ✓ auth/passwords.test.ts (5 tests) 1635ms
+   ✓ hashPassword / verifyPassword > verifies the correct password against its own hash  344ms
+   ✓ hashPassword / verifyPassword > rejects a wrong password  376ms
+   ✓ hashPassword / verifyPassword > salts independently, so the same password hashes differently each time  360ms
+   ✓ hashPassword / verifyPassword > rejects a hash computed under a different salt  545ms
+{
+  "success": true,
+  "report": {
+    "countsByKind": {
+      "program": 2,
+      "question": 2,
+      "hypothesis": 1,
+      "experiment": 2,
+      "note": 2,
+      "software": 2,
+      "publication": 1,
+      "dataset": 2,
+      "presentation": 1
+    },
+    "entityCount": 15,
+    "relationshipCount": 11,
+    "targetResults": [
+      {
+        "name": "ladybug-graph",
+        "success": true,
+        "message": "Loaded 15 entities into the LadybugDB working graph.",
+        "durationMs": 156
+      },
+      {
+        "name": "duckdb",
+        "success": true,
+        "message": "Wrote 15 entities to database/generated/knowledge.duckdb.",
+        "durationMs": 458
+      },
+      {
+        "name": "manifest",
+        "success": true,
+        "message": "Wrote manifest.json (15 entities, 11 relationships).",
+        "durationMs": 2
+      }
+    ],
+    "validationIssues": [],
+    "elapsedMs": 807,
+    "success": true
+  }
+}
+ ✓ build/pipeline.chain.test.ts (1 test) 374ms
+   ✓ runBuildPipeline — target chain > skips remaining targets once one fails, without ever rejecting  370ms
+ ✓ app/api/studio/documents/[id]/publish/route.test.ts (10 tests) 5289ms
+   ✓ publish: gates > answers 404 {error:'Not found'} when the Studio is disabled, before looking at the session  1873ms
+   ✓ publish: gates > answers 401 {error:'Unauthorized'} without a session and writes nothing  453ms
+   ✓ publish: gates > answers 422 with the plain message when the draft does not exist  336ms
+   ✓ publish: gates > answers 422 with 'field: message' pairs joined by '; ' when the draft is incomplete  364ms
+   ✓ publish: success > writes the MDX, rebuilds the artifact, marks the draft published and refreshes the caches  493ms
+   ✓ publish: success > moves the file and deletes the previous one when the slug changed since the last publication  392ms
+   ✓ publish: rollback when the artifact build fails > deletes a newly written file, answers 422 with the build report, and refreshes nothing  301ms
+   ✓ publish: rollback when the artifact build fails > restores the previous bytes of an overwritten file  366ms
+   ✓ publish: rollback when the artifact build fails > restores the previous file and removes the new one when a slug change fails to build  411ms
+ ✓ auth/workflow.test.ts (11 tests) 4273ms
+   ✓ AuthWorkflow.login > succeeds with the correct email and password, and the session validates  423ms
+   ✓ AuthWorkflow.login > fails with the wrong password  373ms
+   ✓ AuthWorkflow.login > fails for an unregistered email  369ms
+   ✓ AuthWorkflow.logout / validateSession > destroys the session so it no longer validates  389ms
+   ✓ AuthWorkflow.confirmPasswordReset > updates the password, signs out every session, and consumes the token  1250ms
+   ✓ AuthWorkflow.confirmPasswordReset > rejects an expired token without changing the password  396ms
+ ✓ build/pipeline.kernel-failure.test.ts (1 test) 558ms
+   ✓ runBuildPipeline — Kernel failure > never rejects; a Kernel error becomes a validationIssue and success: false  555ms
+[duplicate-id] Duplicate entity "dataset:same": defined in both "content/datasets/a-first.mdx" and "content/datasets/b-second.mdx". Each kind + slug must be unique: change the `slug` in one of the two files (or delete the one you no longer want).
+{
+  "success": false,
+  "report": {
+    "countsByKind": {},
+    "entityCount": 0,
+    "relationshipCount": 0,
+    "targetResults": [],
+    "validationIssues": [
+      {
+        "check": "duplicate-id",
+        "message": "Duplicate entity \"dataset:same\": defined in both \"content/datasets/a-first.mdx\" and \"content/datasets/b-second.mdx\". Each kind + slug must be unique: change the `slug` in one of the two files (or delete the one you no longer want)."
+      }
+    ],
+    "elapsedMs": 101,
+    "success": false
+  }
+}
+ ✓ build/python-producer.test.ts (4 tests) 4207ms
+   ✓ runPythonProducer > writes the artifact at database/generated and returns 0  2269ms
+   ✓ runPythonProducer > propagates a duplicate-id failure as a non-zero code and writes nothing  1926ms
+ ✓ app/api/auth/reset-password/route.test.ts (12 tests) 6661ms
+   ✓ POST /api/auth/reset-password > answers 400 for missing email without storing or sending anything  1964ms
+   ✓ POST /api/auth/reset-password > answers 400 for malformed email without storing or sending anything  535ms
+   ✓ POST /api/auth/reset-password > answers 400 for non-string email without storing or sending anything  408ms
+   ✓ POST /api/auth/reset-password > for the admin email: answers 200 {success:true}, stores a 1 h single-use token, sends one email  420ms
+   ✓ POST /api/auth/reset-password > defaults the link base to http://localhost:3000 and the sender to onboarding@resend.dev  442ms
+   ✓ POST /api/auth/reset-password > answers an unknown email with the same 200 {success:true}, storing no token and sending no email  397ms
+   ✓ POST /api/auth/reset-password > matches the email case-sensitively (an upper-cased admin email is treated as unknown)  446ms
+   ✓ POST /api/auth/reset-password > answers 200 when no admin credential exists  485ms
+   ✓ POST /api/auth/reset-password > does not invalidate earlier tokens: every request adds another valid one  394ms
+   ✓ POST /api/auth/reset-password > does not touch existing sessions or the credential  378ms
+   ✓ POST /api/auth/reset-password > when the email provider fails: the error escapes (500) and the token row is already stored  399ms
+   ✓ POST /api/auth/reset-password > lets a malformed JSON body escape as an exception (Next turns it into a 500)  389ms
+ ✓ build/targets/duckdb-target.test.ts (3 tests) 1116ms
+   ✓ duckDBBuildTarget > writes the exact schema and rows ArtifactKnowledgeSourceAdapter expects  432ms
+   ✓ duckDBBuildTarget > DROPs and recreates cleanly on a second run, and tolerates zero entities  413ms
+ ✓ fixtures/schema-contract/schema-contract.test.ts (421 tests) 991ms
+ ✓ build/targets/metadata-persistence.test.ts (1 test) 648ms
+   ✓ kind-specific frontmatter survives the real build pipeline > persists program.theme, program.leadResearcher and question.programSlug through DuckDB  645ms
+ ✓ build/targets/round-trip.test.ts (1 test) 575ms
+   ✓ DuckDB + Manifest targets round-tripped through ArtifactKnowledgeSourceAdapter > reads back the same entities and relationships that were written  572ms
+ ✓ authoring/workflow.test.ts (3 tests) 440ms
+ ✓ fixtures/build-contract/build-contract.test.ts (2 tests) 218ms
+ ✓ runtime/adapters/artifact-knowledge-source-adapter.test.ts (2 tests) 435ms
+   ✓ ArtifactKnowledgeSourceAdapter > hydrates entities, graph relationships, and manifest metadata without the Kernel  361ms
+ ✓ build/pipeline.test.ts (2 tests) 335ms
+ ✓ app/api/studio/documents/route.test.ts (27 tests) 10027ms
+   ✓ studio documents: feature flag and session gate (GET and POST) > answers 404 {error:'Not found'} in production unless STORIES_STUDIO_ENABLED is exactly 'true'  2972ms
+   ✓ studio documents: feature flag and session gate (GET and POST) > is enabled in production with STORIES_STUDIO_ENABLED=true  321ms
+   ✓ studio documents: feature flag and session gate (GET and POST) > checks the feature flag before the session (404 even without a cookie)  319ms
+   ✓ studio documents: feature flag and session gate (GET and POST) > checks the session before validating the body (401 beats 400)  327ms
+   ✓ GET /api/studio/documents > answers 200 {documents: []} when nothing is stored  304ms
+   ✓ GET /api/studio/documents > lists drafts of every kind, newest updatedAt first, ties broken by id  334ms
+   ✓ POST /api/studio/documents: validation of the payload > answers 400 for unknown kind and stores nothing  303ms
+   ✓ POST /api/studio/documents: validation of the payload > answers 400 for missing content and stores nothing  309ms
+   ✓ POST /api/studio/documents: saving > stores a partial draft and reports friendly validation issues instead of failing  362ms
+   ✓ POST /api/studio/documents: saving > keeps the original createdAt and publicationState on a re-save, bumping updatedAt  311ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts (22 tests) 223ms
+ ✓ build/targets/manifest-target.test.ts (3 tests) 45ms
+ ✓ app/api/auth/reset-password/confirm/route.test.ts (18 tests) 10643ms
+   ✓ POST /api/auth/reset-password/confirm: input validation > answers 400 for missing token and consumes nothing  1831ms
+   ✓ POST /api/auth/reset-password/confirm: input validation > answers 400 for empty token and consumes nothing  491ms
+   ✓ POST /api/auth/reset-password/confirm: input validation > answers 400 for missing password and consumes nothing  444ms
+   ✓ POST /api/auth/reset-password/confirm: input validation > answers 400 for 7-character password and consumes nothing  463ms
+   ✓ POST /api/auth/reset-password/confirm: input validation > answers 400 for non-string token and consumes nothing  454ms
+   ✓ POST /api/auth/reset-password/confirm: input validation > accepts an 8-character password (the minimum counts characters, not bytes)  602ms
+   ✓ POST /api/auth/reset-password/confirm: input validation > lets a malformed JSON body escape as an exception (Next turns it into a 500)  419ms
+   ✓ POST /api/auth/reset-password/confirm: success > answers 200 {success:true}, replaces the credential, and consumes the token  1093ms
+   ✓ POST /api/auth/reset-password/confirm: success > signs out every session, including ones other than the requester's  601ms
+   ✓ POST /api/auth/reset-password/confirm: success > does not set or clear any cookie  588ms
+   ✓ POST /api/auth/reset-password/confirm: success > is single-use: replaying the same token answers 400 and keeps the new password  699ms
+   ✓ POST /api/auth/reset-password/confirm: failures > answers 400 with the generic message for an unknown token, changing nothing  340ms
+   ✓ POST /api/auth/reset-password/confirm: failures > answers 400 'expired' for an expired token, burns it, and keeps the old password and sessions  468ms
+   ✓ POST /api/auth/reset-password/confirm: failures > treats a token expiring exactly now as expired (strict comparison)  328ms
+   ✓ POST /api/auth/reset-password/confirm: failures > accepts a token expiring one millisecond from now  605ms
+   ✓ POST /api/auth/reset-password/confirm: failures > answers the generic 400 and still burns the token when it was issued for another email  388ms
+   ✓ POST /api/auth/reset-password/confirm: failures > answers the generic 400 when the admin credential no longer exists  376ms
+   ✓ POST /api/auth/reset-password/confirm: failures > lets a corrupt stored token row escape as an exception, after deleting it  449ms
+ ✓ lib/presentation/search.test.ts (3 tests) 44ms
+ ✓ kernel/api.test.ts (6 tests) 46ms
+ ✓ build/targets/python-artifact.test.ts (4 tests) 9952ms
+   ✓ Python-built artifact read by the real Node reader > is accepted by ArtifactKnowledgeSourceAdapter, with kind-specific fields and the graph intact  3181ms
+   ✓ Python-built artifact read by the real Node reader > carries graph-derived search signals in the same static file  2694ms
+   ✓ Python-built artifact read by the real Node reader > builds an empty laboratory  2283ms
+   ✓ Python-built artifact read by the real Node reader > refuses a duplicate id, naming both files, and writes no artifact  1790ms
+ ✓ runtime/adapters/file-system-persistence-adapter.test.ts (2 tests) 53ms
+ ✓ kernel/parsers/markdown-parser.test.ts (4 tests) 47ms
+ ✓ app/presentation.test.ts (5 tests) 75ms
+ ✓ kernel/authoring.test.ts (3 tests) 30ms
+ ✓ runtime/adapters/supabase-persistence-adapter.test.ts (7 tests) 34ms
+ ✓ runtime/composition-root.test.ts (7 tests) 18ms
+ ✓ runtime/platform-runtime.test.ts (12 tests) 34ms
+ ✓ components/authoring/studio-editor.test.tsx (2 tests) 72ms
+ ✓ components/knowledge/reading.test.ts (2 tests) 185ms
+ ✓ lib/presentation/knowledge.test.ts (2 tests) 45ms
+ ✓ runtime/adapters/console-logger.test.ts (2 tests) 14ms
+ ✓ runtime/adapters/clock.test.ts (2 tests) 9ms
+ ✓ authoring/renderers/mdx-renderer.test.ts (2 tests) 91ms
+ ✓ kernel/errors.test.ts (4 tests) 20ms
+ ✓ kernel/pipeline/validation.test.ts (3 tests) 17ms
+ ✓ runtime/adapters/kernel-knowledge-source-adapter.test.ts (2 tests) 17ms
+ ✓ kernel/registry/registrations.test.ts (4 tests) 19ms
+ ✓ runtime/adapters/in-memory-event-bus.test.ts (5 tests) 14ms
+ ✓ runtime/adapters/identifier-service.test.ts (6 tests) 15ms
+ ✓ kernel/cache.test.ts (3 tests) 18ms
+ ✓ runtime/adapters/null-persistence-adapter.test.ts (5 tests) 12ms
+ ✓ runtime/lifecycle.test.ts (13 tests) 14ms
+ ✓ runtime/adapters/environment-configuration.test.ts (5 tests) 14ms
+ ✓ kernel/pipeline/relationships.test.ts (3 tests) 13ms
+ ✓ runtime/errors.test.ts (4 tests) 13ms
+ ✓ kernel/pipeline/normalization.test.ts (2 tests) 10ms
+ ✓ build/report.test.ts (4 tests) 11ms
+ ✓ runtime/context.test.ts (2 tests) 11ms
+ ✓ kernel/pipeline/factory.test.ts (2 tests) 12ms
+ ✓ kernel/pipeline/graph.test.ts (3 tests) 11ms
+ ✓ lib/utils/group-by.test.ts (3 tests) 11ms
+ ✓ build/targets/registry.test.ts (1 test) 5ms
+ ↓ spikes/ladybugdb-phase0/artifact-contract.spike.test.ts (1 test | 1 skipped)
+ ✓ app/api/auth/login/route.test.ts (24 tests) 19761ms
+   ✓ POST /api/auth/login: success > answers 200 {success:true} and sets exactly one session cookie  2014ms
+   ✓ POST /api/auth/login: success > serializes the cookie as HttpOnly, SameSite=lax, Path=/, expiring 12 h after login  697ms
+   ✓ POST /api/auth/login: success > adds Secure only when NODE_ENV is production (Next serializes it before HttpOnly)  603ms
+   ✓ POST /api/auth/login: success > persists one session row whose id, token and cookie value are the same 64-hex string  625ms
+   ✓ POST /api/auth/login: success > leaves the admin credential row untouched  693ms
+   ✓ POST /api/auth/login: success > creates an independent session for every login (no single-session rule)  941ms
+   ✓ POST /api/auth/login: wiring > reads the auth namespace of the Supabase table with the configured URL and service key  358ms
+   ✓ POST /api/auth/login: rejections > answers 400 for missing password, before touching storage or cookies  438ms
+   ✓ POST /api/auth/login: rejections > answers 400 for missing email, before touching storage or cookies  393ms
+   ✓ POST /api/auth/login: rejections > answers 400 for malformed email, before touching storage or cookies  369ms
+   ✓ POST /api/auth/login: rejections > answers 400 for empty password, before touching storage or cookies  380ms
+   ✓ POST /api/auth/login: rejections > answers 400 for non-string password, before touching storage or cookies  354ms
+   ✓ POST /api/auth/login: rejections > answers 400 for empty object, before touching storage or cookies  487ms
+   ✓ POST /api/auth/login: rejections > answers 400 for JSON null, before touching storage or cookies  358ms
+   ✓ POST /api/auth/login: rejections > answers 401 with the same body for a wrong password and for an unknown email  802ms
+   ✓ POST /api/auth/login: rejections > compares the email case-sensitively  555ms
+   ✓ POST /api/auth/login: rejections > answers 401 when no admin credential exists at all  653ms
+   ✓ POST /api/auth/login: rejections > lets a malformed JSON body escape as an exception (Next turns it into a 500)  430ms
+   ✓ POST /api/auth/login: in-memory rate limit > allows 10 failed attempts (401) and answers 429 from the 11th  2013ms
+   ✓ POST /api/auth/login: in-memory rate limit > applies the limit before checking the password: the right password is refused too  2146ms
+   ✓ POST /api/auth/login: in-memory rate limit > counts per submitted email, including emails that do not exist  1672ms
+   ✓ POST /api/auth/login: in-memory rate limit > forgets the failures after a successful login  1588ms
+   ✓ POST /api/auth/login: in-memory rate limit > keeps the window open for exactly 15 minutes, then starts a new one  932ms
+
+ Test Files  59 passed | 1 skipped (60)
+      Tests  759 passed | 1 skipped (760)
+   Start at  23:20:36
+   Duration  21.32s (transform 5.91s, setup 0ms, collect 32.98s, tests 88.14s, environment 34ms, prepare 29.46s)
+
+test exit 0

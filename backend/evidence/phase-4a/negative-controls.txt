@@ -1,0 +1,13 @@
+Each line: one temporary source mutation (reverted with git checkout afterwards), then the affected test file(s).
+middleware: expiry '>' -> '>='                         -> 1 failed | 33 passed (34)
+middleware: 401 -> 403                                  -> 5 failed | 29 passed (34)
+login: MAX_ATTEMPTS 10 -> 11                            -> 2 failed | 22 passed (24)
+login: 401 error wording changed                        -> 1 failed | 23 passed (24)
+auth/server.ts: cookie sameSite lax -> strict           -> 2 failed | 22 passed (24)
+auth/workflow.ts: logout no longer destroys the session -> 2 failed | 4 passed (6)
+auth/workflow.ts: confirm no longer destroyAll sessions -> 1 failed | 17 passed (18)
+publish route: revalidatePath("/", "layout") -> ("/")   -> 1 failed | 9 passed (10)
+authoring/workflow.ts: restore(target) removed          -> 3 failed | 7 passed (10)
+documents route: slug auto-generation removed           -> 1 failed | 26 passed (27)
+auth/passwords.ts: KEY_LENGTH 64 -> 32                  -> 2 failed | 1 passed (3)
+kernel/authoring.ts: publicKind forced to "Program"     -> 1 failed | 3 passed (4)

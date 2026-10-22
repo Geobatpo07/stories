@@ -1,0 +1,5 @@
+
+> stories@3.0.0 lint C:\Users\gblaguerre\Documents\Data Analytics Projects\stories-p3
+> eslint .
+
+lint exit 0
