@@ -1,0 +1,29 @@
+old exit 0
+new exit 0
+--- report diff (durations masked)
+identical
+Build succeeded.
+Entities: 15  Relationships: 11  Elapsed: Nms
+By kind:
+  dataset: 2
+  experiment: 2
+  hypothesis: 1
+  note: 2
+  presentation: 1
+  program: 2
+  publication: 1
+  question: 2
+  software: 2
+Targets:
+  ✓ duckdb (Nms) — Wrote 15 entities to database/generated/knowledge.duckdb.
+  ✓ manifest (Nms) — Wrote manifest.json (15 entities, 11 relationships).
+--- full dump diff (incl file_path, manifest run-dependent fields blanked)
+identical
+   68 /tmp/tmp.mI3AKdXbtA/old.dump
+   68 /tmp/tmp.mI3AKdXbtA/new.dump
+  136 total
+2c7c5fca9d1ab22d42c423735f2c97078a7ae33aeaa3fed5728072d91ecfd259 */tmp/tmp.mI3AKdXbtA/old.dump
+2c7c5fca9d1ab22d42c423735f2c97078a7ae33aeaa3fed5728072d91ecfd259 */tmp/tmp.mI3AKdXbtA/new.dump
+--- invalid STORIES_BUILD_PRODUCER
+exit 1
+Error: STORIES_BUILD_PRODUCER must be "typescript" or "python" (got "bogus"). Unset it for the default.

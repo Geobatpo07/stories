@@ -98,3 +98,6 @@ jobs:
 
       - name: TypeScript-built vs Python-built artifact parity
         run: backend/tools/artifact-parity.sh
+
+      - name: Real content parity (build:knowledge under both producers)
+        run: pnpm build:knowledge:parity

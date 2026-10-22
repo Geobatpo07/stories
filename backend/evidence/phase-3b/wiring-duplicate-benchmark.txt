@@ -1,0 +1,20 @@
+=== 1. duplicate id through STORIES_BUILD_PRODUCER=python (exit code must propagate)
+python exit 1
+stderr:
+[duplicate-id] Duplicate entity "dataset:same": defined in both "content/datasets/a-first.mdx" and "content/datasets/b-second.mdx". Each kind + slug must be unique: change the `slug` in one of the two files (or delete the one you no longer want).
+ls: cannot access '/tmp/tmp.fozRFEzMYp/database/generated': No such file or directory
+typescript exit 0 (same content, for contrast)
+Build succeeded.
+Entities: 2  Relationships: 0  Elapsed: 109ms
+By kind:
+  dataset: 2
+Targets:
+  ✓ duckdb (80ms) — Wrote 2 entities to database/generated/knowledge.duckdb.
+  ✓ manifest (16ms) — Wrote manifest.json (2 entities, 0 relationships).
+=== 2. non-empty parity through the wiring (ok-full, search tables ignored)
+PARITY OK ok-full via cli.ts wiring (68 lines)
+=== 3. wall-clock, full cli.ts run, 5 runs each (ms)
+real repo (0 entities) typescript: 1784 1867 1891 1836 2058
+real repo (0 entities) python: 2764 2655 2494 2642 2494
+ok-full fixture (15 entities) typescript: 1842 1696 1734 1817 1679
+ok-full fixture (15 entities) python: 2394 2932 2390 2585 2507
