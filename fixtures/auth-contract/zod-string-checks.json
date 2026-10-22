@@ -1,0 +1,404 @@
+{
+  "email": [
+    {
+      "value": "admin@stories.test",
+      "ok": true
+    },
+    {
+      "value": "a@b.co",
+      "ok": true
+    },
+    {
+      "value": "a@localhost",
+      "ok": false
+    },
+    {
+      "value": "not-an-email",
+      "ok": false
+    },
+    {
+      "value": "",
+      "ok": false
+    },
+    {
+      "value": "a@b",
+      "ok": false
+    },
+    {
+      "value": "a@b.c",
+      "ok": false
+    },
+    {
+      "value": "A@B.CO",
+      "ok": true
+    },
+    {
+      "value": ".a@b.co",
+      "ok": false
+    },
+    {
+      "value": "a.@b.co",
+      "ok": false
+    },
+    {
+      "value": "a..b@b.co",
+      "ok": false
+    },
+    {
+      "value": "a.b@b.co",
+      "ok": true
+    },
+    {
+      "value": "a+tag@b.co",
+      "ok": true
+    },
+    {
+      "value": "a_b@b.co",
+      "ok": true
+    },
+    {
+      "value": "a-b@b-c.co",
+      "ok": true
+    },
+    {
+      "value": "a@-b.co",
+      "ok": false
+    },
+    {
+      "value": "a@b-.co",
+      "ok": true
+    },
+    {
+      "value": "a b@b.co",
+      "ok": false
+    },
+    {
+      "value": "a@b .co",
+      "ok": false
+    },
+    {
+      "value": "a@b.co ",
+      "ok": false
+    },
+    {
+      "value": " a@b.co",
+      "ok": false
+    },
+    {
+      "value": "a@b.co\n",
+      "ok": false
+    },
+    {
+      "value": "é@b.co",
+      "ok": false
+    },
+    {
+      "value": "a@é.co",
+      "ok": false
+    },
+    {
+      "value": "a@b.c0",
+      "ok": false
+    },
+    {
+      "value": "a@b.company",
+      "ok": true
+    },
+    {
+      "value": "a@sub.domain.example.org",
+      "ok": true
+    },
+    {
+      "value": "a@b..co",
+      "ok": false
+    },
+    {
+      "value": "@b.co",
+      "ok": false
+    },
+    {
+      "value": "a@",
+      "ok": false
+    },
+    {
+      "value": "a@b@c.co",
+      "ok": false
+    },
+    {
+      "value": "'quoted'@b.co",
+      "ok": false
+    },
+    {
+      "value": "a!b@b.co",
+      "ok": false
+    },
+    {
+      "value": "a/b@b.co",
+      "ok": false
+    },
+    {
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@b.co",
+      "ok": true
+    }
+  ],
+  "datetime": [
+    {
+      "value": "2026-08-15T12:00:00.000Z",
+      "ok": true
+    },
+    {
+      "value": "2026-08-15T12:00:00Z",
+      "ok": true
+    },
+    {
+      "value": "2026-08-15T12:00Z",
+      "ok": true
+    },
+    {
+      "value": "2026-08-15T12:00:00.1Z",
+      "ok": true
+    },
+    {
+      "value": "2026-08-15T12:00:00.1234567Z",
+      "ok": true
+    },
+    {
+      "value": "2026-08-15T12:00:00+00:00",
+      "ok": false
+    },
+    {
+      "value": "2026-08-15T12:00:00",
+      "ok": false
+    },
+    {
+      "value": "2026-08-15",
+      "ok": false
+    },
+    {
+      "value": "2026-08-15 12:00:00Z",
+      "ok": false
+    },
+    {
+      "value": "2026-08-15t12:00:00z",
+      "ok": false
+    },
+    {
+      "value": "2024-02-29T00:00:00Z",
+      "ok": true
+    },
+    {
+      "value": "2026-02-29T00:00:00Z",
+      "ok": false
+    },
+    {
+      "value": "2026-13-01T00:00:00Z",
+      "ok": false
+    },
+    {
+      "value": "2026-00-10T00:00:00Z",
+      "ok": false
+    },
+    {
+      "value": "2026-04-31T00:00:00Z",
+      "ok": false
+    },
+    {
+      "value": "2026-08-15T24:00:00Z",
+      "ok": false
+    },
+    {
+      "value": "2026-08-15T23:59:59Z",
+      "ok": true
+    },
+    {
+      "value": "2026-08-15T12:60:00Z",
+      "ok": false
+    },
+    {
+      "value": "2026-08-15T12:00:60Z",
+      "ok": false
+    },
+    {
+      "value": "2100-02-29T00:00:00Z",
+      "ok": false
+    },
+    {
+      "value": "2000-02-29T00:00:00Z",
+      "ok": true
+    },
+    {
+      "value": "",
+      "ok": false
+    },
+    {
+      "value": "yesterday",
+      "ok": false
+    },
+    {
+      "value": "2026-8-15T12:00:00Z",
+      "ok": false
+    },
+    {
+      "value": "2026-08-15T12:00:00.Z",
+      "ok": false
+    },
+    {
+      "value": "2026-08-15T12:00:00Z\n",
+      "ok": false
+    },
+    {
+      "value": "٢٠٢٦-08-15T12:00:00Z",
+      "ok": false
+    }
+  ],
+  "uuid": [
+    {
+      "value": "11111111-1111-4111-8111-111111111111",
+      "ok": true
+    },
+    {
+      "value": "ABCDEFAB-1111-4111-8111-111111111111",
+      "ok": true
+    },
+    {
+      "value": "11111111-1111-1111-1111-111111111111",
+      "ok": true
+    },
+    {
+      "value": "00000000-0000-0000-0000-000000000000",
+      "ok": true
+    },
+    {
+      "value": "11111111-1111-4111-8111-11111111111",
+      "ok": false
+    },
+    {
+      "value": "11111111-1111-4111-8111-1111111111111",
+      "ok": false
+    },
+    {
+      "value": "11111111-1111-4111-8111-11111111111g",
+      "ok": false
+    },
+    {
+      "value": "11111111111141118111111111111111",
+      "ok": false
+    },
+    {
+      "value": "",
+      "ok": false
+    },
+    {
+      "value": "not-a-uuid",
+      "ok": false
+    },
+    {
+      "value": "11111111-1111-4111-8111-111111111111\n",
+      "ok": false
+    },
+    {
+      "value": " 11111111-1111-4111-8111-111111111111",
+      "ok": false
+    },
+    {
+      "value": "{11111111-1111-4111-8111-111111111111}",
+      "ok": false
+    },
+    {
+      "value": "urn:uuid:11111111-1111-4111-8111-111111111111",
+      "ok": false
+    }
+  ],
+  "min1": [
+    {
+      "value": "",
+      "ok": false
+    },
+    {
+      "value": "a",
+      "ok": true
+    },
+    {
+      "value": "1234567",
+      "ok": true
+    },
+    {
+      "value": "12345678",
+      "ok": true
+    },
+    {
+      "value": "😀😀😀",
+      "ok": true
+    },
+    {
+      "value": "😀😀😀😀",
+      "ok": true
+    },
+    {
+      "value": "😀😀😀a",
+      "ok": true
+    },
+    {
+      "value": "éééééééé",
+      "ok": true
+    },
+    {
+      "value": "éééé",
+      "ok": true
+    },
+    {
+      "value": "日本語日本語日本",
+      "ok": true
+    },
+    {
+      "value": "日本語日本語日",
+      "ok": true
+    }
+  ],
+  "min8": [
+    {
+      "value": "",
+      "ok": false
+    },
+    {
+      "value": "a",
+      "ok": false
+    },
+    {
+      "value": "1234567",
+      "ok": false
+    },
+    {
+      "value": "12345678",
+      "ok": true
+    },
+    {
+      "value": "😀😀😀",
+      "ok": false
+    },
+    {
+      "value": "😀😀😀😀",
+      "ok": true
+    },
+    {
+      "value": "😀😀😀a",
+      "ok": false
+    },
+    {
+      "value": "éééééééé",
+      "ok": true
+    },
+    {
+      "value": "éééé",
+      "ok": true
+    },
+    {
+      "value": "日本語日本語日本",
+      "ok": true
+    },
+    {
+      "value": "日本語日本語日",
+      "ok": false
+    }
+  ]
+}

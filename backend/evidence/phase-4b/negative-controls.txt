@@ -1,0 +1,17 @@
+cookie: Secure placed after HttpOnly -> 1 failed, 2 passed, 1 warning in 2.73s
+login: rate limit keyed by email (the old vulnerability) -> 1 failed, 19 passed, 1 warning in 9.98s
+login: no-IP fallback removed (always skip) -> 1 failed, 29 passed, 1 warning in 43.00s
+login: limiter after password check -> 1 failed, 18 passed, 1 warning in 6.53s
+reset-confirm: token not consumed -> 1 failed, 26 passed, 1 warning in 3.03s
+reset-confirm: sessions not destroyed -> 1 failed, 27 passed, 1 warning in 2.53s
+reset-request: unknown email reveals itself (400) -> 1 failed, 11 passed, 1 warning in 1.85s
+logout: session not destroyed server-side -> 1 failed, 1 warning in 1.10s
+documents: 400 checked before 401 -> 1 failed, 1 warning in 1.12s
+passwords: salt hex-decoded -> 1 failed, 1 passed in 0.75s
+passwords: key length 32 -> 1 failed, 1 passed in 0.53s
+renderer: str.strip instead of JS trim -> 1 failed, 19 passed in 0.44s
+definitions: humanize label changed -> 1 failed in 0.45s
+publish: path guard removed -> 1 failed, 43 passed, 1 warning in 1.39s
+zod email regex loosened -> 1 failed, 10 passed in 0.35s
+ M backend/pyproject.toml
+ M backend/uv.lock

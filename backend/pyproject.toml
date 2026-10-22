@@ -16,11 +16,33 @@ dependencies = [
     # 999"). The pair is recorded in backend/duckdb-compat.json and enforced by
     # backend/tests/test_duckdb_pin.py and the `python-artifact` CI job.
     "duckdb==1.5.2",
+    "fastapi>=0.115,<1",
+    "httpx>=0.27,<1",
 ]
 
 [dependency-groups]
-dev = ["pytest>=8"]
+dev = [
+    "mypy>=1.11",
+    "pytest>=8",
+    "ruff>=0.6",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+# Lint and types are enforced on the Studio API port (ADR-004 phase 4); the older Kernel / build
+# packages predate this configuration and are not yet held to it.
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+mypy_path = "."
+explicit_package_bases = true

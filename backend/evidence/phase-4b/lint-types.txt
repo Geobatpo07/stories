@@ -1,0 +1,10 @@
+$ ruff format --check <new files>
+31 files already formatted
+$ ruff check <new files>
+All checks passed!
+$ mypy --follow-imports=silent auth authoring runtime api main.py schemas/zod_strings.py
+Success: no issues found in 23 source files
+--- informational: older code, not held to this config
+Found 65 errors.
+[*] 2 fixable with `--fix` (1 unsafe fix available with `--fix --unsafe-fixes`).
+Found 22 errors in 9 files (checked 43 source files)

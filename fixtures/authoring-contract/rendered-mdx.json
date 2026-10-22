@@ -1,0 +1,208 @@
+[
+  {
+    "name": "note with CRLF body and unsorted tags",
+    "document": {
+      "version": 1,
+      "id": "13d964b8-4206-45d0-a6cb-195beb8b0c21",
+      "publicationState": "draft",
+      "createdAt": "2026-08-03T12:00:00.000Z",
+      "updatedAt": "2026-08-03T12:00:00.000Z",
+      "kind": "note",
+      "fields": {
+        "description": "Renderer contract",
+        "date": "2026-08-03",
+        "status": "active",
+        "title": "A deterministic story",
+        "slug": "deterministic-story",
+        "tags": [
+          "rendering",
+          "authoring"
+        ],
+        "noteType": "research-note"
+      },
+      "content": "## Finding\r\n\r\nThe result is **stable**.\r\n"
+    },
+    "rendered": {
+      "relativePath": "content/notes/deterministic-story.mdx",
+      "content": "---\ntitle: \"A deterministic story\"\nslug: \"deterministic-story\"\ndescription: \"Renderer contract\"\ndate: \"2026-08-03\"\nstatus: \"active\"\ntags: [\"authoring\", \"rendering\"]\nnoteType: \"research-note\"\n---\n\n## Finding\n\nThe result is **stable**.\n"
+    }
+  },
+  {
+    "name": "unicode, quotes, backslash and a control character in strings",
+    "document": {
+      "version": 1,
+      "id": "13d964b8-4206-45d0-a6cb-195beb8b0c21",
+      "publicationState": "draft",
+      "createdAt": "2026-08-03T12:00:00.000Z",
+      "updatedAt": "2026-08-03T12:00:00.000Z",
+      "kind": "software",
+      "fields": {
+        "description": "line1\nline2 end",
+        "date": "2026-08-03",
+        "status": "active",
+        "title": "Café \"É–日本語🙂\" \\ tab\there",
+        "slug": "cafe",
+        "tags": [
+          "é",
+          "z",
+          "a",
+          "日本"
+        ],
+        "repositoryUrl": "https://example.com/a?b=c&d=é",
+        "license": "MIT"
+      },
+      "content": "x"
+    },
+    "rendered": {
+      "relativePath": "content/software/cafe.mdx",
+      "content": "---\ntitle: \"Café \\\"É–日本語🙂\\\" \\\\ tab\\there\"\nslug: \"cafe\"\ndescription: \"line1\\nline2 end\"\ndate: \"2026-08-03\"\nstatus: \"active\"\ntags: [\"a\", \"z\", \"é\", \"日本\"]\nrepositoryUrl: \"https://example.com/a?b=c&d=é\"\nlicense: \"MIT\"\n---\n\nx\n"
+    }
+  },
+  {
+    "name": "empty body",
+    "document": {
+      "version": 1,
+      "id": "13d964b8-4206-45d0-a6cb-195beb8b0c21",
+      "publicationState": "draft",
+      "createdAt": "2026-08-03T12:00:00.000Z",
+      "updatedAt": "2026-08-03T12:00:00.000Z",
+      "kind": "dataset",
+      "fields": {
+        "description": "Renderer contract",
+        "date": "2026-08-03",
+        "status": "active",
+        "title": "Empty",
+        "slug": "empty",
+        "tags": []
+      },
+      "content": ""
+    },
+    "rendered": {
+      "relativePath": "content/datasets/empty.mdx",
+      "content": "---\ntitle: \"Empty\"\nslug: \"empty\"\ndescription: \"Renderer contract\"\ndate: \"2026-08-03\"\nstatus: \"active\"\ntags: []\n---\n\n"
+    }
+  },
+  {
+    "name": "body of whitespace only",
+    "document": {
+      "version": 1,
+      "id": "13d964b8-4206-45d0-a6cb-195beb8b0c21",
+      "publicationState": "draft",
+      "createdAt": "2026-08-03T12:00:00.000Z",
+      "updatedAt": "2026-08-03T12:00:00.000Z",
+      "kind": "dataset",
+      "fields": {
+        "description": "Renderer contract",
+        "date": "2026-08-03",
+        "status": "active",
+        "title": "Blank",
+        "slug": "blank",
+        "tags": []
+      },
+      "content": " \n\t \r\n "
+    },
+    "rendered": {
+      "relativePath": "content/datasets/blank.mdx",
+      "content": "---\ntitle: \"Blank\"\nslug: \"blank\"\ndescription: \"Renderer contract\"\ndate: \"2026-08-03\"\nstatus: \"active\"\ntags: []\n---\n\n"
+    }
+  },
+  {
+    "name": "body trimmed with JavaScript whitespace (BOM, NBSP, line separator)",
+    "document": {
+      "version": 1,
+      "id": "13d964b8-4206-45d0-a6cb-195beb8b0c21",
+      "publicationState": "draft",
+      "createdAt": "2026-08-03T12:00:00.000Z",
+      "updatedAt": "2026-08-03T12:00:00.000Z",
+      "kind": "dataset",
+      "fields": {
+        "description": "Renderer contract",
+        "date": "2026-08-03",
+        "status": "active",
+        "title": "Trim",
+        "slug": "trim",
+        "tags": []
+      },
+      "content": "﻿   text  　﻿"
+    },
+    "rendered": {
+      "relativePath": "content/datasets/trim.mdx",
+      "content": "---\ntitle: \"Trim\"\nslug: \"trim\"\ndescription: \"Renderer contract\"\ndate: \"2026-08-03\"\nstatus: \"active\"\ntags: []\n---\n\ntext\n"
+    }
+  },
+  {
+    "name": "lone CR line endings inside the body",
+    "document": {
+      "version": 1,
+      "id": "13d964b8-4206-45d0-a6cb-195beb8b0c21",
+      "publicationState": "draft",
+      "createdAt": "2026-08-03T12:00:00.000Z",
+      "updatedAt": "2026-08-03T12:00:00.000Z",
+      "kind": "publication",
+      "fields": {
+        "description": "Renderer contract",
+        "date": "2026-08-03",
+        "status": "active",
+        "title": "Paper",
+        "slug": "paper",
+        "tags": [
+          "x"
+        ],
+        "coAuthors": [
+          "A. Person",
+          "B \"Quoted\""
+        ],
+        "venue": "Journal",
+        "doi": "10.1000/xyz"
+      },
+      "content": "a\rb\r\nc\n\n\nd"
+    },
+    "rendered": {
+      "relativePath": "content/publications/paper.mdx",
+      "content": "---\ntitle: \"Paper\"\nslug: \"paper\"\ndescription: \"Renderer contract\"\ndate: \"2026-08-03\"\nstatus: \"active\"\ntags: [\"x\"]\nvenue: \"Journal\"\ndoi: \"10.1000/xyz\"\ncoAuthors: [\"A. Person\", \"B \\\"Quoted\\\"\"]\n---\n\na\nb\nc\n\n\nd\n"
+    }
+  },
+  {
+    "name": "presentation with relationships and optional urls",
+    "document": {
+      "version": 1,
+      "id": "13d964b8-4206-45d0-a6cb-195beb8b0c21",
+      "publicationState": "draft",
+      "createdAt": "2026-08-03T12:00:00.000Z",
+      "updatedAt": "2026-08-03T12:00:00.000Z",
+      "kind": "presentation",
+      "fields": {
+        "description": "Renderer contract",
+        "date": "2026-08-03",
+        "status": "active",
+        "title": "Talk",
+        "slug": "talk",
+        "tags": [],
+        "slidesUrl": "https://example.com/s",
+        "programSlug": "lab",
+        "questionSlug": "q-one"
+      },
+      "content": "Slides"
+    },
+    "rendered": {
+      "relativePath": "content/presentations/talk.mdx",
+      "content": "---\ntitle: \"Talk\"\nslug: \"talk\"\ndescription: \"Renderer contract\"\ndate: \"2026-08-03\"\nstatus: \"active\"\ntags: []\nslidesUrl: \"https://example.com/s\"\nprogramSlug: \"lab\"\nquestionSlug: \"q-one\"\n---\n\nSlides\n"
+    }
+  },
+  {
+    "name": "invalid fields raise",
+    "document": {
+      "version": 1,
+      "id": "13d964b8-4206-45d0-a6cb-195beb8b0c21",
+      "publicationState": "draft",
+      "createdAt": "2026-08-03T12:00:00.000Z",
+      "updatedAt": "2026-08-03T12:00:00.000Z",
+      "kind": "software",
+      "fields": {
+        "title": "No slug"
+      },
+      "content": "x"
+    },
+    "error": "slug: This field is required.; description: This field is required.; date: This field is required."
+  }
+]
