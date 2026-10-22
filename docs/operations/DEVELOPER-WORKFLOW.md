@@ -31,6 +31,26 @@ pnpm build
 
 Use `pnpm release:verify` for the complete release sequence, including artifact rebuild.
 
+### Working on the Studio (needs the Python service)
+
+The Studio pages read documents and field definitions from the Python API, so Studio work needs
+two processes side by side:
+
+```bash
+# terminal 1 — Python API, port 8000 (from the repository root)
+cd backend && uv sync && uv run uvicorn main:app --port 8000
+
+# terminal 2 — Next.js, port 3000
+pnpm dev
+```
+
+Set `PYTHON_API_BASE_URL`, `NEXT_PUBLIC_PYTHON_API_BASE_URL` and `STORIES_STUDIO_ENABLED=true` in
+`.env.local`, and `STUDIO_ALLOWED_ORIGINS=http://localhost:3000` in the environment of the Python
+service (see `.env.example`; both services also need the same `SUPABASE_*` values). Session
+validation (`middleware.ts`, `auth/server.ts`) still reads Supabase directly from Next.js. If the
+Python service is down, Studio pages show the app error page (`app/error.tsx`), not an empty list.
+Public pages do not need the Python service.
+
 ## Presentation boundaries
 
 - `app/` composes Runtime data and components.

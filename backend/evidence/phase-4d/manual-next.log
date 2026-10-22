@@ -1,0 +1,80 @@
+> stories@3.0.0 dev C:\Users\gblaguerre\Documents\Data Analytics Projects\stories-p3
+> next dev
+ ⚠ Port 3000 is in use by process 10356, using available port 3001 instead.
+   ▲ Next.js 15.5.21
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.1.6:3001
+ ✓ Starting...
+ ✓ Ready in 5.1s
+ ○ Compiling /api/auth/login ...
+ ✓ Compiled /api/auth/login in 6.8s (422 modules)
+ POST /api/auth/login 200 in 8194ms
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 1245ms (128 modules)
+ ○ Compiling /studio ...
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (128kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled /studio in 7s (908 modules)
+ GET /studio 200 in 10828ms
+ ✓ Compiled in 1661ms (248 modules)
+ ○ Compiling /studio/new/[kind] ...
+ ✓ Compiled /studio/new/[kind] in 9.5s (1484 modules)
+ GET /studio/new/note 200 in 12480ms
+ GET /studio/new/experiment 200 in 205ms
+ GET /studio/new/experiment 200 in 219ms
+ GET /studio 200 in 430ms
+ ○ Compiling /studio/documents/[id] ...
+ ✓ Compiled /studio/documents/[id] in 987ms (1472 modules)
+ GET /studio/documents/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa 200 in 3890ms
+ GET /studio/documents/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb 200 in 694ms
+ ⨯ Error [PythonApiError]: The Python API is unreachable at http://127.0.0.1:8000.
+    at pythonApiGet (lib\python-api.ts:39:11)
+    at async listStudioDocuments (lib\studio-data.ts:6:25)
+    at async StudioPage (app\studio\(protected)\page.tsx:16:39)
+  37 |     });
+  38 |   } catch (cause) {
+> 39 |     throw new PythonApiError(`The Python API is unreachable at ${base}.`, undefined, { cause });
+     |           ^
+  40 |   }
+  41 |
+  42 |   if (response.status === 401) redirect("/studio/login"); {
+  status: undefined,
+  digest: '861036677',
+  [cause]: TypeError: fetch failed
+      at async pythonApiGet (lib\python-api.ts:33:16)
+      at async listStudioDocuments (lib\studio-data.ts:6:25)
+      at async StudioPage (app\studio\(protected)\page.tsx:16:39)
+    31 |   let response: Response;
+    32 |   try {
+  > 33 |     response = await fetch(`${base}${path}`, {
+       |                ^
+    34 |       cache: "no-store",
+    35 |       headers: token ? { cookie: `${SESSION_COOKIE_NAME}=${token}` } : {},
+    36 |       signal: AbortSignal.timeout(TIMEOUT_MS), {
+    [cause]: Error: connect ECONNREFUSED 127.0.0.1:8000
+        at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8000) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 8000
+    }
+  }
+}
+ GET /studio 200 in 307ms
+ ⨯ Error [PythonApiError]: The Python API is unreachable at http://127.0.0.1:8000.
+    at pythonApiGet (lib\python-api.ts:39:11)
+    at async listStudioDocuments (lib\studio-data.ts:6:25)
+    at async StudioDocumentPage (app\studio\(protected)\documents\[id]\page.tsx:11:36)
+  37 |     });
+  38 |   } catch (cause) {
+> 39 |     throw new PythonApiError(`The Python API is unreachable at ${base}.`, undefined, { cause });
+     |           ^
+  40 |   }
+  41 |
+  42 |   if (response.status === 401) redirect("/studio/login"); {
+  status: undefined,
+  digest: '3827543317',
+  [cause]: TypeError: fetch failed
+      at async pythonApiGet (lib\python-api.ts:33:16)
+      at async listStudioDocuments (lib\studio-data.ts:6:25)
+      at async StudioDocumentPage (app\studio\(protected)\documents\[id]\page.tsx:11:36)

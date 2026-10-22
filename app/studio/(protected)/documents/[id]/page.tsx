@@ -1,30 +1,27 @@
 import { notFound } from "next/navigation";
-import { getAuthoringDefinition } from "@/kernel";
-import { knowledgeObjectRepository } from "@/authoring/server";
-import { StudioEditor, type RelationshipOption } from "@/components/authoring/studio-editor";
+import { StudioEditor } from "@/components/authoring/studio-editor";
+import {
+  listStudioDefinitions,
+  listStudioDocuments,
+  publishedRelationshipOptions,
+} from "@/lib/studio-data";
 
 export default async function StudioDocumentPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const document = await knowledgeObjectRepository.find(id);
+  const [documents, definitions] = await Promise.all([
+    listStudioDocuments(),
+    listStudioDefinitions(),
+  ]);
+  const document = documents.find((item) => item.id === id);
   if (!document) notFound();
-  const options: RelationshipOption[] = (await knowledgeObjectRepository.list())
-    .filter(
-      (item) =>
-        item.publicationState === "published" &&
-        typeof item.fields.slug === "string" &&
-        item.id !== document.id,
-    )
-    .map((item) => ({
-      kind: item.kind,
-      slug: String(item.fields.slug),
-      title: String(item.fields.title ?? item.fields.slug),
-    }));
+  const definition = definitions.find((item) => item.kind === document.kind);
+  if (!definition) throw new Error(`The Python API has no definition for kind ${document.kind}.`);
   return (
     <main id="main-content" className="studio-page">
       <StudioEditor
         initialDocument={document}
-        definition={getAuthoringDefinition(document.kind)}
-        relationshipOptions={options}
+        definition={definition}
+        relationshipOptions={publishedRelationshipOptions(documents, document.id)}
       />
     </main>
   );

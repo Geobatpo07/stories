@@ -1,7 +1,11 @@
 import { notFound } from "next/navigation";
-import { getAuthoringDefinition, listAuthoringDefinitions, type EntityKind } from "@/kernel";
-import { authoringWorkflow, knowledgeObjectRepository } from "@/authoring/server";
-import { StudioEditor, type RelationshipOption } from "@/components/authoring/studio-editor";
+import { StudioEditor } from "@/components/authoring/studio-editor";
+import {
+  listStudioDefinitions,
+  listStudioDocuments,
+  newStudioDraft,
+  publishedRelationshipOptions,
+} from "@/lib/studio-data";
 
 const EDITABLE = new Set([
   "program",
@@ -19,28 +23,20 @@ export default async function NewStudioDocumentPage({
   params: Promise<{ kind: string }>;
 }) {
   const { kind } = await params;
-  if (!EDITABLE.has(kind) || !listAuthoringDefinitions().some((item) => item.kind === kind))
-    notFound();
-  const definition = getAuthoringDefinition(kind as EntityKind);
-  const document = authoringWorkflow.createDraft(definition.kind);
-  const relationshipOptions = await publishedRelationshipOptions();
+  if (!EDITABLE.has(kind)) notFound();
+  const [definitions, documents] = await Promise.all([
+    listStudioDefinitions(),
+    listStudioDocuments(),
+  ]);
+  const definition = definitions.find((item) => item.kind === kind);
+  if (!definition) notFound();
   return (
     <main id="main-content" className="studio-page">
       <StudioEditor
-        initialDocument={document}
+        initialDocument={newStudioDraft(definition)}
         definition={definition}
-        relationshipOptions={relationshipOptions}
+        relationshipOptions={publishedRelationshipOptions(documents)}
       />
     </main>
   );
-}
-
-async function publishedRelationshipOptions(): Promise<readonly RelationshipOption[]> {
-  return (await knowledgeObjectRepository.list())
-    .filter((item) => item.publicationState === "published" && typeof item.fields.slug === "string")
-    .map((item) => ({
-      kind: item.kind,
-      slug: String(item.fields.slug),
-      title: String(item.fields.title ?? item.fields.slug),
-    }));
 }

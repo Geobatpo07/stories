@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Route } from "next";
-import { listAuthoringDefinitions } from "@/kernel";
-import { knowledgeObjectRepository } from "@/authoring/server";
+import { listStudioDefinitions, listStudioDocuments } from "@/lib/studio-data";
 
 const STUDIO_KINDS = new Set([
   "program",
@@ -14,8 +13,11 @@ const STUDIO_KINDS = new Set([
 ]);
 
 export default async function StudioPage() {
-  const documents = await knowledgeObjectRepository.list();
-  const definitions = listAuthoringDefinitions().filter((item) => STUDIO_KINDS.has(item.kind));
+  const [documents, allDefinitions] = await Promise.all([
+    listStudioDocuments(),
+    listStudioDefinitions(),
+  ]);
+  const definitions = allDefinitions.filter((item) => STUDIO_KINDS.has(item.kind));
   return (
     <main id="main-content" className="shell page studio-home">
       <header className="page-hero compact-hero">

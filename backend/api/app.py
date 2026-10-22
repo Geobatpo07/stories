@@ -12,6 +12,7 @@ from email.utils import format_datetime
 from typing import Any
 
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 from pydantic import ValidationError
 from starlette.background import BackgroundTask
@@ -140,6 +141,19 @@ def create_app(dependencies: AppDependencies | None = None) -> FastAPI:
             logger.exception("Site revalidation failed after a successful publication")
 
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+
+    # The Studio editor calls this API from the browser. Same origin needs nothing; a different
+    # origin (local dev: next dev on :3000, this service on :8000) must be listed explicitly.
+    # Credentials are allowed, so the origin list is never a wildcard.
+    allowed_origins = [o.strip() for o in deps.environ.get("STUDIO_ALLOWED_ORIGINS", "").split(",")]
+    if any(allowed_origins):
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=[o for o in allowed_origins if o and o != "*"],
+            allow_credentials=True,
+            allow_methods=["GET", "POST"],
+            allow_headers=["content-type"],
+        )
 
     # ---- /api/auth/* -------------------------------------------------------------------------
 
