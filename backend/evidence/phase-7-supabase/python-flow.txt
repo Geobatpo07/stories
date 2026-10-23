@@ -1,0 +1,93 @@
+warning: `VIRTUAL_ENV=C:\Users\gblaguerre\AppData\Local\anaconda3` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+HTTP Request: POST https://<project-ref>.supabase.co/rest/v1/persistence_records "HTTP/1.1 200 OK"
+HTTP Request: POST https://<project-ref>.supabase.co/rest/v1/persistence_records "HTTP/1.1 201 Created"
+tools: ['list_definitions', 'list_documents', 'publish_draft', 'save_draft']
+
+--- P1. list_documents (Python, real Supabase) - must contain the draft the TS-side flow saved
+is_error=False
+{
+ "documents": [
+  {
+   "version": 1,
+   "id": "44448c66-78ed-42cc-a58f-14e7e223aaa1",
+   "kind": "software",
+   "publicationState": "draft",
+   "fields": {
+    "date": "2026-10-23",
+    "slug": "phase7-validation-draft",
+    "tags": [],
+    "title": "PHASE7 validation draft",
+    "status": "active",
+    "description": "Real Supabase round trip."
+   },
+   "content": "Draft body written by the Phase 7 validation pass.",
+   "createdAt": "2026-10-23T12:00:00.000Z",
+   "updatedAt": "2026-10-23T17:58:52.252Z"
+  }
+ ]
+}
+>>> TS-saved draft visible to Python: True
+
+--- P2. save_draft UPDATE of the same id from Python (content changed)
+is_error=False
+{
+ "saved": true,
+ "valid": true,
+ "issues": [],
+ "document": {
+  "version": 1,
+  "id": "44448c66-78ed-42cc-a58f-14e7e223aaa1",
+  "kind": "software",
+  "publicationState": "draft",
+  "fields": {
+   "title": "PHASE7 validation draft",
+   "description": "Real Supabase round trip.",
+   "date": "2026-10-23",
+   "status": "active",
+   "tags": [],
+   "slug": "phase7-validation-draft"
+  },
+  "content": "EDITED FROM PYTHON (MCP) in the Phase 7 pass.",
+  "createdAt": "2026-10-23T12:00:00.000Z",
+  "updatedAt": "2026-10-23T17:59:12.440Z"
+ }
+}
+
+--- P3. save_draft NEW id from Python
+is_error=False
+{
+ "saved": true,
+ "valid": true,
+ "issues": [],
+ "document": {
+  "version": 1,
+  "id": "55558c66-78ed-42cc-a58f-14e7e223aaa2",
+  "kind": "software",
+  "publicationState": "draft",
+  "fields": {
+   "title": "PHASE7 python draft",
+   "description": "Created by the MCP server.",
+   "date": "2026-10-23",
+   "status": "active",
+   "tags": [],
+   "slug": "phase7-python-draft"
+  },
+  "content": "python-created",
+  "createdAt": "2026-10-23T17:59:13.376Z",
+  "updatedAt": "2026-10-23T17:59:16.023Z"
+ }
+}
+
+rows in persistence_records (namespace=knowledge):
+[
+ {
+  "collection": "software",
+  "id": "55558c66-78ed-42cc-a58f-14e7e223aaa2",
+  "updated_at": "2026-10-23T17:59:16.024+00:00"
+ },
+ {
+  "collection": "software",
+  "id": "44448c66-78ed-42cc-a58f-14e7e223aaa1",
+  "updated_at": "2026-10-23T17:59:12.44+00:00"
+ }
+]
