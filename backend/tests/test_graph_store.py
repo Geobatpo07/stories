@@ -121,3 +121,9 @@ def test_empty_graph_is_valid():
         store.load([])
         assert store.counts() == (0, 0)
         assert store.entity_rows() == []
+
+
+def test_query_refuses_a_multi_statement_script_with_a_clear_error(store):
+    # Before the mypy fix this surfaced as AttributeError: 'list' object has no attribute 'has_next'.
+    with pytest.raises(TypeError, match="single Cypher statement"):
+        store.query("MATCH (n:Entity) RETURN count(n); MATCH (n:Entity) RETURN count(n)")
