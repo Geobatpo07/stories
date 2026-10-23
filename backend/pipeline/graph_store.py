@@ -14,7 +14,7 @@ any dependence on that for non-ASCII ids.
 import json
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 import ladybug as lb
 
@@ -191,7 +191,7 @@ class GraphStore:
         self._conn.close()
         self._db.close()
 
-    def __enter__(self) -> "GraphStore":
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, *exc: object) -> None:

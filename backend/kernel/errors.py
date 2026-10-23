@@ -23,7 +23,7 @@ class KnowledgeParseError(Exception):
 
     def __init__(self, file_path: str, cause: object) -> None:
         self.file_path = file_path
-        detail = str(cause) if isinstance(cause, BaseException) else str(cause)
+        detail = str(cause)
         super().__init__(f'Failed to read or parse "{file_path}": {detail}')
 
 

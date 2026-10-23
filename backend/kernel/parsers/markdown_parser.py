@@ -59,7 +59,7 @@ def split_frontmatter(raw: str) -> tuple[Any, str]:
     """Return `(data, body)` exactly as `matter(raw)` would, before the caller's `.trim()`."""
     if raw == "":
         return {}, raw
-    text = raw[1:] if raw.startswith("﻿") else raw
+    text = raw.removeprefix("﻿")
     if not text.startswith(_OPEN):
         return {}, text
     if text[len(_OPEN) : len(_OPEN) + 1] == _OPEN[-1]:

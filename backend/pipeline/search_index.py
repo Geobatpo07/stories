@@ -70,7 +70,7 @@ def compute_search_signals(store: GraphStore) -> tuple[list[Related], list[Stats
         " RETURN a.id, b.id, m.id, r1.field, r1.cardinality, r2.field, r2.cardinality"
         " ORDER BY a.id, b.id, m.id"
     )
-    for a, b, m, f1, c1, f2, c2 in sorted(
+    for a, b, _m, f1, c1, f2, c2 in sorted(
         two_hop,
         key=lambda r: tuple(byte_key(x) for x in (r[0], r[1], r[2], r[3], r[5])),
     ):
