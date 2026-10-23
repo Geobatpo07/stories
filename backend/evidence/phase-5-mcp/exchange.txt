@@ -1,0 +1,116 @@
+Tool 'publish_draft' failed: 'Error executing tool publish_draft: description: This field is required.; date: This field is required.; status: Choose one of the available values.'
+HTTP Request: GET https://api.github.com/repos/octo/stories/git/ref/heads/main "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.github.com/repos/octo/stories/git/commits/4af6565febad2113b3a1e083e2ffb05e6d34bab1 "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.github.com/repos/octo/stories/tarball/4af6565febad2113b3a1e083e2ffb05e6d34bab1 "HTTP/1.1 302 Found"
+HTTP Request: GET https://codeload.github.com/octo/stories/legacy.tar.gz/4af6565febad2113b3a1e083e2ffb05e6d34bab1 "HTTP/1.1 200 OK"
+HTTP Request: POST https://api.github.com/repos/octo/stories/git/trees "HTTP/1.1 201 Created"
+HTTP Request: POST https://api.github.com/repos/octo/stories/git/commits "HTTP/1.1 201 Created"
+HTTP Request: PATCH https://api.github.com/repos/octo/stories/git/refs/heads/main "HTTP/1.1 200 OK"
+### tools/call save_draft
+request : {"kind": "software", "fields": {"title": "Half Done", "status": "nope"}, "content": "x", "id": "11111111-1111-4111-8111-111111111111"}
+response: {
+ "is_error": false,
+ "structured_content": {
+  "saved": true,
+  "valid": false,
+  "issues": [
+   {
+    "field": "description",
+    "message": "This field is required."
+   },
+   {
+    "field": "date",
+    "message": "This field is required."
+   },
+   {
+    "field": "status",
+    "message": "Choose one of the available values."
+   }
+  ],
+  "document": {
+   "version": 1,
+   "id": "11111111-1111-4111-8111-111111111111",
+   "kind": "software",
+   "publicationState": "draft",
+   "fields": {
+    "title": "Half Done",
+    "status": "nope",
+    "slug": "half-done"
+   },
+   "content": "x",
+   "createdAt": "2026-08-15T12:00:00.000Z",
+   "updatedAt": "2026-08-15T12:00:00.000Z"
+  }
+ }
+}
+
+### tools/call publish_draft
+request : {"id": "11111111-1111-4111-8111-111111111111"}
+response: {
+ "is_error": true,
+ "text": "Error executing tool publish_draft: description: This field is required.; date: This field is required.; status: Choose one of the available values."
+}
+
+### tools/call save_draft
+request : {"kind": "software", "fields": {"title": "Research Tool", "description": "A research artifact.", "date": "2026-08-03", "status": "active", "tags": []}, "content": "Body", "id": "11111111-1111-4111-8111-111111111111"}
+response: {
+ "is_error": false,
+ "structured_content": {
+  "saved": true,
+  "valid": true,
+  "issues": [],
+  "document": {
+   "version": 1,
+   "id": "11111111-1111-4111-8111-111111111111",
+   "kind": "software",
+   "publicationState": "draft",
+   "fields": {
+    "title": "Research Tool",
+    "description": "A research artifact.",
+    "date": "2026-08-03",
+    "status": "active",
+    "tags": [],
+    "slug": "research-tool"
+   },
+   "content": "Body",
+   "createdAt": "2026-08-15T12:00:00.000Z",
+   "updatedAt": "2026-08-15T12:00:00.000Z"
+  }
+ }
+}
+
+### tools/call publish_draft
+request : {"id": "11111111-1111-4111-8111-111111111111"}
+response: {
+ "is_error": false,
+ "structured_content": {
+  "document": {
+   "id": "11111111-1111-4111-8111-111111111111",
+   "publicationState": "published",
+   "publication": {
+    "kind": "software",
+    "slug": "research-tool",
+    "path": "content/software/research-tool.mdx",
+    "publishedAt": "2026-08-15T12:00:00.000Z"
+   }
+  },
+  "report": {
+   "commit": {
+    "sha": "c9450217d3da2897b0449d33666e059f3203595f",
+    "url": "https://github.com/octo/stories/commit/c9450217d3da2897b0449d33666e059f3203595f",
+    "branch": "main",
+    "parent": "4af6565febad2113b3a1e083e2ffb05e6d34bab1",
+    "written": "content/software/research-tool.mdx",
+    "deleted": null
+   },
+   "deployment": {
+    "status": "pending"
+   },
+   "build": {
+    "entityCount": 1,
+    "success": true
+   }
+  }
+ }
+}
+

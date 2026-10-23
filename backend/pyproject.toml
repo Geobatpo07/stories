@@ -19,6 +19,7 @@ dependencies = [
     "fastapi>=0.115,<1",
     "httpx>=0.27,<1",
     "uvicorn>=0.30,<1",
+    "mcp==2.3.0",  # official SDK; stdio server in mcp_server/ (NOT a package named mcp),
 ]
 
 [dependency-groups]
@@ -61,4 +62,4 @@ strict = true
 plugins = ["pydantic.mypy"]
 mypy_path = "."
 explicit_package_bases = true
-files = ["api", "auth", "authoring", "kernel", "pipeline", "publication", "runtime", "schemas", "tests", "tools"]
+files = ["api", "auth", "authoring", "kernel", "mcp_server", "pipeline", "publication", "runtime", "schemas", "tests", "tools"]
