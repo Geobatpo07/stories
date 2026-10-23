@@ -101,3 +101,16 @@ jobs:
 
       - name: Real content parity (build:knowledge under both producers)
         run: pnpm build:knowledge:parity
+<<<<<<< HEAD
+=======
+
+      # Static checks run last, with the versions pinned in backend/uv.lock (dev dependencies, installed
+      # by `uv sync --frozen`) and the configuration in backend/pyproject.toml. They gate the job.
+      - name: ruff
+        working-directory: backend
+        run: uv run --frozen ruff check .
+
+      - name: mypy --strict
+        working-directory: backend
+        run: uv run --frozen mypy
+>>>>>>> caf032e (CI: ruff and mypy use the pinned versions from the lock and gate the python-artifact job)
