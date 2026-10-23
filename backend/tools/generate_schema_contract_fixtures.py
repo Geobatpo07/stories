@@ -113,10 +113,10 @@ def main() -> None:
         req, opt = spec["required"], spec["optional"]
         valid_base = {**BASE, **req}
 
-        def ok(name, desc, data, expected):
+        def ok(name, desc, data, expected, out=out):
             out[name] = {"description": desc, "input": data, "valid": True, "expected": expected}
 
-        def bad(name, desc, data):
+        def bad(name, desc, data, out=out):
             out[name] = {"description": desc, "input": data, "valid": False}
 
         ok(
