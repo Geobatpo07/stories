@@ -14,6 +14,7 @@ from collections import Counter
 from collections.abc import Sequence
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
+from typing import Any
 
 from kernel import (
     KnowledgeEntity,
@@ -56,7 +57,7 @@ class BuildResult:
     success: bool
     report: BuildReport
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[str, Any]:
         return {"success": self.success, "report": asdict(self.report)}
 
 
