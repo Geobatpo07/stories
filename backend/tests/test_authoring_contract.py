@@ -8,6 +8,7 @@ reproduce them exactly; from now on Python owns the definitions.
 import asyncio
 import json
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -25,26 +26,28 @@ from kernel.errors import KnowledgeRelationshipError
 FIXTURES = Path(__file__).resolve().parents[2] / "fixtures/authoring-contract"
 
 
-def load(name):
+def load(name: Any) -> Any:
     return json.loads((FIXTURES / name).read_text("utf8"))
 
 
-def test_the_definitions_of_all_nine_kinds_match_the_typescript_output_exactly():
+def test_the_definitions_of_all_nine_kinds_match_the_typescript_output_exactly() -> None:
     assert list_authoring_definitions() == load("definitions.json")
 
 
-def test_every_definition_has_exactly_the_documented_keys():
+def test_every_definition_has_exactly_the_documented_keys() -> None:
     definitions = list_authoring_definitions()
     assert len(definitions) == 9
     for definition in definitions:
         assert sorted(definition) == ["contentDir", "fields", "kind", "label", "publicKind"]
 
 
-def test_the_key_order_matches_too_so_the_json_text_is_identical():
+def test_the_key_order_matches_too_so_the_json_text_is_identical() -> None:
     assert json.dumps(list_authoring_definitions()) == json.dumps(load("definitions.json"))
 
 
-def test_get_authoring_definition_returns_the_matching_entry_and_raises_for_an_unknown_kind():
+def test_get_authoring_definition_returns_the_matching_entry_and_raises_for_an_unknown_kind() -> (
+    None
+):
     for definition in list_authoring_definitions():
         assert get_authoring_definition(definition["kind"]) == definition
     with pytest.raises(ValueError, match="Unknown knowledge kind: essay"):
@@ -55,11 +58,13 @@ CASES = load("validation-cases.json")
 
 
 @pytest.mark.parametrize("case", CASES, ids=[c["description"] for c in CASES])
-def test_validation_gives_the_typescript_accept_reject_results_issue_texts_and_normalization(case):
+def test_validation_gives_the_typescript_accept_reject_results_issue_texts_and_normalization(
+    case: Any,
+) -> None:
     assert validate_authoring_fields(case["kind"], case["fields"]) == case["result"]
 
 
-def test_validation_of_an_unknown_kind_has_the_fixed_issue():
+def test_validation_of_an_unknown_kind_has_the_fixed_issue() -> None:
     assert validate_authoring_fields("essay", {}) == {
         "success": False,
         "issues": [{"field": "kind", "message": "Choose a valid knowledge type."}],
@@ -86,7 +91,7 @@ def test_validation_of_an_unknown_kind_has_the_fixed_issue():
         ({"status": "x"}, [("status", "Choose one of the available values.")]),
     ],
 )
-def test_friendly_messages_follow_zods_friendly_message_rules(fields, expected):
+def test_friendly_messages_follow_zods_friendly_message_rules(fields: Any, expected: Any) -> None:
     base = {"title": "T", "slug": "t", "description": "d", "date": "2026-08-03"}
     result = validate_authoring_fields("software", {**base, **fields})
     assert result["success"] is False
@@ -101,7 +106,7 @@ RENDERED = load("rendered-mdx.json")
 
 
 @pytest.mark.parametrize("case", RENDERED, ids=[c["name"] for c in RENDERED])
-def test_the_renderer_output_is_byte_identical_to_the_typescript_renderer(case):
+def test_the_renderer_output_is_byte_identical_to_the_typescript_renderer(case: Any) -> None:
     document = AuthoringDocument.model_validate(case["document"])
     if "error" in case:
         with pytest.raises(ValueError) as caught:
@@ -113,7 +118,7 @@ def test_the_renderer_output_is_byte_identical_to_the_typescript_renderer(case):
     assert rendered.content == case["rendered"]["content"]
 
 
-def test_rendering_is_deterministic():
+def test_rendering_is_deterministic() -> None:
     document = AuthoringDocument.model_validate(RENDERED[0]["document"])
     first = asyncio.run(MDXRenderer().render(document))
     assert asyncio.run(MDXRenderer().render(document)) == first
@@ -121,7 +126,7 @@ def test_rendering_is_deterministic():
     assert 'tags: ["authoring", "rendering"]' in first.content
 
 
-def test_javascript_value_formatting_helpers():
+def test_javascript_value_formatting_helpers() -> None:
     assert yaml_value(True) == "true" and yaml_value(False) == "false"
     assert yaml_value(1.0) == "1" and yaml_value(2) == "2" and yaml_value(None) == "null"
     assert yaml_value(["a", 'b"c']) == '["a", "b\\"c"]'
@@ -143,22 +148,22 @@ def test_javascript_value_formatting_helpers():
         ("A_B c", "a-b-c"),
     ],
 )
-def test_slug_normalisation_matches_identifier_service(title, slug):
+def test_slug_normalisation_matches_identifier_service(title: Any, slug: Any) -> None:
     assert normalize_slug(title) == slug
 
 
 @pytest.mark.parametrize("path", ["content/software/x.mdx", "a/./b.mdx", "a/../b.mdx"])
-def test_publication_paths_inside_the_root_resolve(path):
+def test_publication_paths_inside_the_root_resolve(path: Any) -> None:
     assert publication_path(path).startswith("/project/")
 
 
 @pytest.mark.parametrize("path", ["../x.mdx", "a/../../x.mdx", "/etc/passwd", ".", ""])
-def test_publication_paths_outside_the_root_or_equal_to_it_are_refused(path):
+def test_publication_paths_outside_the_root_or_equal_to_it_are_refused(path: Any) -> None:
     with pytest.raises(ValueError, match="Publication path leaves the project root."):
         publication_path(path)
 
 
-def test_materialize_resolves_relationships_and_raises_on_a_dangling_one():
+def test_materialize_resolves_relationships_and_raises_on_a_dangling_one() -> None:
     program = {
         "kind": "program",
         "fields": {

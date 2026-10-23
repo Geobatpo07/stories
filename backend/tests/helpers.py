@@ -2,6 +2,9 @@
 
 from collections import defaultdict
 from pathlib import Path
+from typing import Any
+
+import duckdb
 
 from kernel import KnowledgeEntity, load_all
 
@@ -37,3 +40,10 @@ def reference_graph(entities: list[KnowledgeEntity]) -> dict[str, dict[str, list
             "related": dedup(parents + children),
         }
     return graph
+
+
+def scalar(connection: duckdb.DuckDBPyConnection, sql: str) -> Any:
+    """First column of the only row `sql` returns (a miss is a failed test, not a None)."""
+    row = connection.execute(sql).fetchone()
+    assert row is not None
+    return row[0]

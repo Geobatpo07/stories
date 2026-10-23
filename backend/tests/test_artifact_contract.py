@@ -11,7 +11,7 @@ import pytest
 
 from pipeline import duckdb_export, manifest
 from pipeline.build import run_build_pipeline
-from tests.helpers import REPO_ROOT, SCENARIOS
+from tests.helpers import REPO_ROOT, SCENARIOS, scalar
 
 DUCKDB_TARGET = (REPO_ROOT / "build/targets/duckdb-target.ts").read_text(encoding="utf-8")
 MANIFEST_TARGET = (REPO_ROOT / "build/targets/manifest-target.ts").read_text(encoding="utf-8")
@@ -22,29 +22,35 @@ def _typescript_create_statements() -> list[str]:
     return re.findall(r'"(CREATE TABLE [^"]+)"', DUCKDB_TARGET)
 
 
-def test_ddl_is_copied_verbatim_from_duckdb_target_ts():
+def test_ddl_is_copied_verbatim_from_duckdb_target_ts() -> None:
     statements = _typescript_create_statements()
     assert statements == [duckdb_export.CREATE_ENTITY, duckdb_export.CREATE_RELATIONSHIP]
     for statement in statements:
         assert "PRIMARY KEY" not in statement and "NOT NULL" not in statement
 
 
-def test_drop_statements_match_typescript():
+def test_drop_statements_match_typescript() -> None:
     assert re.findall(r'"(DROP TABLE IF EXISTS [^"]+)"', DUCKDB_TARGET) == list(
         duckdb_export.DROP_STATEMENTS
     )
 
 
-def test_version_constants_match_build_version_ts():
+def captured(pattern: str, text: str) -> str:
+    match = re.search(pattern, text)
+    assert match is not None, pattern
+    return match.group(1)
+
+
+def test_version_constants_match_build_version_ts() -> None:
     for name, value in (
         ("KERNEL_VERSION", manifest.KERNEL_VERSION),
         ("BUILD_VERSION", manifest.BUILD_VERSION),
         ("SCHEMA_VERSION", manifest.SCHEMA_VERSION),
     ):
-        assert re.search(rf'export const {name} = "([^"]+)"', VERSION_TS).group(1) == value
+        assert captured(rf'export const {name} = "([^"]+)"', VERSION_TS) == value
 
 
-def test_manifest_has_exactly_the_typescript_fields_in_the_same_order():
+def test_manifest_has_exactly_the_typescript_fields_in_the_same_order() -> None:
     body = MANIFEST_TARGET[MANIFEST_TARGET.index("const manifest = {") :]
     body = body[: body.index("};")]
     typescript_keys = re.findall(r"^\s{6}(\w+):", body, re.MULTILINE)
@@ -56,12 +62,12 @@ def test_manifest_has_exactly_the_typescript_fields_in_the_same_order():
         generation_duration_ms=0,
     )
     assert list(produced) == typescript_keys
-    assert manifest.MANIFEST_DATABASE_PATH == re.search(
+    assert manifest.MANIFEST_DATABASE_PATH == captured(
         r'MANIFEST_RELATIVE_PATH = "([^"]+)"', DUCKDB_TARGET
-    ).group(1)
+    )
 
 
-def test_platform_version_comes_from_package_json():
+def test_platform_version_comes_from_package_json() -> None:
     assert (
         manifest.platform_version()
         == json.loads((REPO_ROOT / "package.json").read_text())["version"]
@@ -69,14 +75,14 @@ def test_platform_version_comes_from_package_json():
 
 
 @pytest.fixture
-def built(tmp_path: Path):
+def built(tmp_path: Path) -> Path:
     shutil.copytree(SCENARIOS / "ok-full" / "content", tmp_path / "content")
     result = run_build_pipeline(tmp_path, include_search_index=False)
     assert result.success, result.report.validationIssues
     return tmp_path / "database" / "generated"
 
 
-def test_artifact_has_exactly_two_tables_and_no_constraints(built: Path):
+def test_artifact_has_exactly_two_tables_and_no_constraints(built: Path) -> None:
     connection = duckdb.connect(str(built / "knowledge.duckdb"), read_only=True)
     tables = [
         r[0]
@@ -86,7 +92,7 @@ def test_artifact_has_exactly_two_tables_and_no_constraints(built: Path):
         ).fetchall()
     ]
     assert tables == ["knowledge_entity", "knowledge_relationship"]
-    assert connection.execute("SELECT count(*) FROM duckdb_constraints()").fetchone()[0] == 0
+    assert scalar(connection, "SELECT count(*) FROM duckdb_constraints()") == 0
     columns = connection.execute(
         "SELECT table_name, column_name, data_type, is_nullable FROM information_schema.columns"
         " ORDER BY table_name, ordinal_position"
@@ -117,7 +123,7 @@ def test_artifact_has_exactly_two_tables_and_no_constraints(built: Path):
     connection.close()
 
 
-def test_manifest_matches_the_database_it_describes(built: Path):
+def test_manifest_matches_the_database_it_describes(built: Path) -> None:
     data = json.loads((built / "manifest.json").read_text(encoding="utf-8"))
     database = built / "knowledge.duckdb"
     assert data["artifacts"]["knowledgeDatabase"] == {
@@ -126,23 +132,19 @@ def test_manifest_matches_the_database_it_describes(built: Path):
     }
     connection = duckdb.connect(str(database), read_only=True)
     assert data["knowledge"] == {
-        "entities": connection.execute("SELECT count(*) FROM knowledge_entity").fetchone()[0],
-        "relationships": connection.execute(
-            "SELECT count(*) FROM knowledge_relationship"
-        ).fetchone()[0],
+        "entities": scalar(connection, "SELECT count(*) FROM knowledge_entity"),
+        "relationships": scalar(connection, "SELECT count(*) FROM knowledge_relationship"),
     }
     connection.close()
     assert (built / "manifest.json").read_text(encoding="utf-8").endswith("}\n")
     assert not list(built.glob("*.wal"))
 
 
-def test_metadata_column_carries_kind_specific_fields(built: Path):
+def test_metadata_column_carries_kind_specific_fields(built: Path) -> None:
     """The bug fixed in af1834e: theme / leadResearcher must reach the artifact."""
     connection = duckdb.connect(str(built / "knowledge.duckdb"), read_only=True)
     metadata = json.loads(
-        connection.execute(
-            "SELECT metadata FROM knowledge_entity WHERE id = 'program:lab'"
-        ).fetchone()[0]
+        scalar(connection, "SELECT metadata FROM knowledge_entity WHERE id = 'program:lab'")
     )
     connection.close()
     assert metadata["theme"] == "Climate"
@@ -151,11 +153,11 @@ def test_metadata_column_carries_kind_specific_fields(built: Path):
     assert metadata["tags"] == ["alpha", "zeta", "\U0001f600", "ﬁ"]
 
 
-def test_metadata_json_text_matches_javascript_json_stringify(built: Path):
+def test_metadata_json_text_matches_javascript_json_stringify(built: Path) -> None:
     connection = duckdb.connect(str(built / "knowledge.duckdb"), read_only=True)
-    text = connection.execute(
-        "SELECT metadata::VARCHAR FROM knowledge_entity WHERE id = 'program:lab'"
-    ).fetchone()[0]
+    text = scalar(
+        connection, "SELECT metadata::VARCHAR FROM knowledge_entity WHERE id = 'program:lab'"
+    )
     connection.close()
     # Compact separators and raw non-ASCII, key order = tags first then frontmatter field order.
     assert text == (
@@ -164,7 +166,7 @@ def test_metadata_json_text_matches_javascript_json_stringify(built: Path):
     )
 
 
-def test_rebuilding_replaces_the_previous_artifact(tmp_path: Path):
+def test_rebuilding_replaces_the_previous_artifact(tmp_path: Path) -> None:
     shutil.copytree(SCENARIOS / "ok-full" / "content", tmp_path / "content")
     first = run_build_pipeline(tmp_path)
     second = run_build_pipeline(tmp_path, include_search_index=False)

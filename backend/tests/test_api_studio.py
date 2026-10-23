@@ -6,10 +6,12 @@ the stubbed PublicationTarget, see authoring/workflow.py)."""
 import json
 from datetime import timedelta
 from pathlib import Path
+from typing import Any
 
+import httpx
 import pytest
 
-from .api_support import NOW, RecordingPublication, make_harness
+from .api_support import NOW, Harness, RecordingPublication, make_harness
 
 SESSION = "5" * 64
 DOCS = "/api/studio/documents"
@@ -20,13 +22,13 @@ CREATED = "2026-08-01T09:00:00.000Z"
 REPO = Path(__file__).resolve().parents[2]
 
 
-def signed_in(**kwargs):
+def signed_in(**kwargs: Any) -> Harness:
     h = make_harness(**kwargs)
     h.fakes.seed_session(SESSION, NOW, NOW + timedelta(hours=1))
     return h
 
 
-def draft(**overrides):
+def draft(**overrides: Any) -> dict[str, Any]:
     body = {
         "id": ID_A,
         "kind": "software",
@@ -45,11 +47,11 @@ def draft(**overrides):
     return {key: value for key, value in body.items() if value is not None}
 
 
-def get(h, url=DOCS, cookie=SESSION):
+def get(h: Harness, url: Any = DOCS, cookie: Any = SESSION) -> httpx.Response:
     return h.get(url, cookie=cookie)
 
 
-def post(h, body, cookie=SESSION):
+def post(h: Harness, body: Any, cookie: Any = SESSION) -> httpx.Response:
     return h.post(DOCS, body, cookie=cookie)
 
 
@@ -57,7 +59,7 @@ def post(h, body, cookie=SESSION):
 
 
 @pytest.mark.parametrize("flag", [None, "1", "TRUE", "false"])
-def test_answers_404_in_production_unless_the_flag_is_exactly_true(flag):
+def test_answers_404_in_production_unless_the_flag_is_exactly_true(flag: Any) -> None:
     environ = {"STORIES_ENV": "production"}
     if flag is not None:
         environ["STORIES_STUDIO_ENABLED"] = flag
@@ -67,35 +69,35 @@ def test_answers_404_in_production_unless_the_flag_is_exactly_true(flag):
         assert response.json() == {"error": "Not found"}
 
 
-def test_is_enabled_in_production_with_the_flag_true():
+def test_is_enabled_in_production_with_the_flag_true() -> None:
     h = signed_in(environ={"STORIES_ENV": "production", "STORIES_STUDIO_ENABLED": "true"})
     assert get(h).status_code == 200
 
 
-def test_checks_the_feature_flag_before_the_session():
+def test_checks_the_feature_flag_before_the_session() -> None:
     h = make_harness(environ={"STORIES_ENV": "production"})
     assert get(h, cookie=None).status_code == 404
 
 
-def test_answers_401_without_a_session_cookie():
+def test_answers_401_without_a_session_cookie() -> None:
     h = make_harness()
     for response in (get(h, cookie=None), post(h, draft(), cookie=None)):
         assert response.status_code == 401
         assert response.json() == {"error": "Unauthorized"}
 
 
-def test_answers_401_for_an_unknown_token():
+def test_answers_401_for_an_unknown_token() -> None:
     assert get(signed_in(), cookie="9" * 64).status_code == 401
 
 
-def test_answers_401_for_an_expired_session_and_deletes_its_row():
+def test_answers_401_for_an_expired_session_and_deletes_its_row() -> None:
     h = signed_in()
     h.clock.set(NOW + timedelta(hours=1))
     assert get(h).status_code == 401
     assert h.fakes.rows_of("auth", "auth-sessions") == {}
 
 
-def test_checks_the_session_before_validating_the_body():
+def test_checks_the_session_before_validating_the_body() -> None:
     h = make_harness()
     assert post(h, {"nonsense": True}, cookie=None).status_code == 401
     # even unparseable JSON never gets read without a session
@@ -105,13 +107,13 @@ def test_checks_the_session_before_validating_the_body():
 # ---- GET ---------------------------------------------------------------------------------------
 
 
-def test_get_answers_200_with_an_empty_list_when_nothing_is_stored():
+def test_get_answers_200_with_an_empty_list_when_nothing_is_stored() -> None:
     response = get(signed_in())
     assert response.status_code == 200
     assert response.json() == {"documents": []}
 
 
-def test_get_lists_drafts_of_every_kind_newest_first_ties_broken_by_id():
+def test_get_lists_drafts_of_every_kind_newest_first_ties_broken_by_id() -> None:
     h = signed_in()
     h.clock.set(NOW.replace(hour=10))
     post(h, draft(id=ID_B, kind="note"))
@@ -126,7 +128,7 @@ def test_get_lists_drafts_of_every_kind_newest_first_ties_broken_by_id():
     ]
 
 
-def test_get_lets_a_stored_row_that_fails_the_document_schema_escape():
+def test_get_lets_a_stored_row_that_fails_the_document_schema_escape() -> None:
     h = signed_in()
     h.fakes.put_row("knowledge", "software", ID_A, {"version": 2, "id": ID_A})
     with pytest.raises(Exception):  # noqa: B017 - pydantic ValidationError
@@ -148,7 +150,7 @@ BROKEN = [
 
 
 @pytest.mark.parametrize(("name", "override"), BROKEN, ids=[b[0] for b in BROKEN])
-def test_post_answers_400_and_stores_nothing(name, override):
+def test_post_answers_400_and_stores_nothing(name: Any, override: Any) -> None:
     h = signed_in()
     response = post(h, draft(**override))
     assert response.status_code == 400
@@ -156,7 +158,7 @@ def test_post_answers_400_and_stores_nothing(name, override):
     assert h.fakes.rows_of("knowledge") == {}
 
 
-def test_post_lets_a_malformed_json_body_escape():
+def test_post_lets_a_malformed_json_body_escape() -> None:
     h = signed_in()
     with pytest.raises(json.JSONDecodeError):
         h.post(DOCS, raw="{oops", cookie=SESSION)
@@ -165,7 +167,7 @@ def test_post_lets_a_malformed_json_body_escape():
 # ---- POST saving -------------------------------------------------------------------------------
 
 
-def test_post_answers_200_document_and_validation_and_stores_under_knowledge_kind_id():
+def test_post_answers_200_document_and_validation_and_stores_under_knowledge_kind_id() -> None:
     h = signed_in()
     response = post(h, draft())
     assert response.status_code == 200
@@ -185,7 +187,7 @@ def test_post_answers_200_document_and_validation_and_stores_under_knowledge_kin
     assert h.fakes.rows_of("knowledge") == {f"knowledge/software/{ID_A}": body["document"]}
 
 
-def test_post_stores_a_partial_draft_and_reports_friendly_issues_instead_of_failing():
+def test_post_stores_a_partial_draft_and_reports_friendly_issues_instead_of_failing() -> None:
     h = signed_in()
     response = post(h, draft(id=ID_B, kind="note", fields={"title": "Early observation"}))
     assert response.status_code == 200
@@ -201,7 +203,7 @@ def test_post_stores_a_partial_draft_and_reports_friendly_issues_instead_of_fail
 
 
 @pytest.mark.parametrize("slug", [None, ""])
-def test_post_generates_the_slug_from_the_title_when_absent_or_empty(slug):
+def test_post_generates_the_slug_from_the_title_when_absent_or_empty(slug: Any) -> None:
     h = signed_in()
     fields = {**draft()["fields"], "title": "My  Research Tool!"}
     fields.pop("slug")
@@ -211,26 +213,26 @@ def test_post_generates_the_slug_from_the_title_when_absent_or_empty(slug):
     assert document["fields"]["slug"] == "my-research-tool"
 
 
-def test_post_keeps_a_slug_the_client_sent_verbatim():
+def test_post_keeps_a_slug_the_client_sent_verbatim() -> None:
     h = signed_in()
     fields = {**draft()["fields"], "slug": "Custom_Slug"}
     assert post(h, draft(fields=fields)).json()["document"]["fields"]["slug"] == "Custom_Slug"
 
 
 @pytest.mark.parametrize("title", ["   ", 42])
-def test_post_does_not_generate_a_slug_from_a_blank_or_non_string_title(title):
+def test_post_does_not_generate_a_slug_from_a_blank_or_non_string_title(title: Any) -> None:
     h = signed_in()
     document = post(h, draft(fields={"description": "x", "title": title})).json()["document"]
     assert "slug" not in document["fields"]
 
 
-def test_post_treats_an_empty_list_slug_as_present_like_javascript():
+def test_post_treats_an_empty_list_slug_as_present_like_javascript() -> None:
     h = signed_in()
     fields = {**draft()["fields"], "slug": []}
     assert post(h, draft(fields=fields)).json()["document"]["fields"]["slug"] == []
 
 
-def test_post_keeps_the_original_created_at_and_publication_state_on_a_resave():
+def test_post_keeps_the_original_created_at_and_publication_state_on_a_resave() -> None:
     h = signed_in()
     post(h, draft())
     h.clock.set(NOW.replace(minute=30))
@@ -242,7 +244,7 @@ def test_post_keeps_the_original_created_at_and_publication_state_on_a_resave():
     assert len(h.fakes.rows_of("knowledge")) == 1
 
 
-def test_post_trusts_a_client_supplied_publication_state_and_publication():
+def test_post_trusts_a_client_supplied_publication_state_and_publication() -> None:
     h = signed_in()
     publication = {
         "kind": "software",
@@ -257,14 +259,14 @@ def test_post_trusts_a_client_supplied_publication_state_and_publication():
     assert document["publication"] == publication
 
 
-def test_post_writes_only_into_the_knowledge_namespace_and_never_touches_auth_rows():
+def test_post_writes_only_into_the_knowledge_namespace_and_never_touches_auth_rows() -> None:
     h = signed_in()
     auth_before = h.fakes.rows_of("auth")
     post(h, draft())
     assert h.fakes.rows_of("auth") == auth_before
 
 
-def test_post_strips_unknown_top_level_keys_and_does_not_validate_the_fields_beyond_the_record():
+def test_post_strips_unknown_top_level_keys_and_does_not_validate_the_fields_beyond_the_record() -> None:  # noqa: E501
     h = signed_in()
     response = post(h, {**draft(), "extra": 1})
     assert response.status_code == 200
@@ -290,7 +292,7 @@ MDX = "\n".join(
 )
 
 
-def stored(**overrides):
+def stored(**overrides: Any) -> dict[str, Any]:
     base = {
         "version": 1,
         "id": ID_A,
@@ -305,14 +307,14 @@ def stored(**overrides):
     return base
 
 
-def publish_url(id=ID_A):
+def publish_url(id: Any = ID_A) -> str:
     return f"/api/studio/documents/{id}/publish"
 
 
-def publishing_harness(report=None, **kwargs):
+def publishing_harness(report: Any = None, **kwargs: Any) -> tuple[Harness, list[int]]:
     revalidated = []
 
-    async def revalidate():
+    async def revalidate() -> None:
         revalidated.append(1)
 
     h = signed_in(
@@ -323,14 +325,14 @@ def publishing_harness(report=None, **kwargs):
     return h, revalidated
 
 
-def test_publish_answers_404_when_the_studio_is_disabled_before_looking_at_the_session():
+def test_publish_answers_404_when_the_studio_is_disabled_before_looking_at_the_session() -> None:
     h = make_harness(environ={"STORIES_ENV": "production"})
     response = h.post(publish_url())
     assert response.status_code == 404
     assert response.json() == {"error": "Not found"}
 
 
-def test_publish_answers_401_without_a_session_and_publishes_nothing():
+def test_publish_answers_401_without_a_session_and_publishes_nothing() -> None:
     h, revalidated = publishing_harness()
     h.fakes.put_row("knowledge", "software", ID_A, stored())
     response = h.post(publish_url())
@@ -339,7 +341,7 @@ def test_publish_answers_401_without_a_session_and_publishes_nothing():
     assert h.fakes.published == [] and revalidated == []
 
 
-def test_publish_answers_422_when_the_draft_does_not_exist():
+def test_publish_answers_422_when_the_draft_does_not_exist() -> None:
     h, revalidated = publishing_harness()
     response = h.post(publish_url(), cookie=SESSION)
     assert response.status_code == 422
@@ -347,7 +349,7 @@ def test_publish_answers_422_when_the_draft_does_not_exist():
     assert revalidated == []
 
 
-def test_publish_answers_422_with_field_message_pairs_when_the_draft_is_incomplete():
+def test_publish_answers_422_with_field_message_pairs_when_the_draft_is_incomplete() -> None:
     h, _ = publishing_harness()
     h.fakes.put_row("knowledge", "software", ID_A, stored(fields={"title": "T", "slug": "t"}))
     response = h.post(publish_url(), cookie=SESSION)
@@ -358,7 +360,7 @@ def test_publish_answers_422_with_field_message_pairs_when_the_draft_is_incomple
     assert h.fakes.published == []
 
 
-def test_publish_renders_the_exact_mdx_marks_the_draft_published_and_refreshes_the_site():
+def test_publish_renders_the_exact_mdx_marks_the_draft_published_and_refreshes_the_site() -> None:
     h, revalidated = publishing_harness(report={"success": True, "entityCount": 1})
     h.fakes.put_row("knowledge", "software", ID_A, stored())
     response = h.post(publish_url(), cookie=SESSION)
@@ -384,7 +386,7 @@ def test_publish_renders_the_exact_mdx_marks_the_draft_published_and_refreshes_t
     assert revalidated == [1]
 
 
-def test_publish_hands_the_previous_path_to_the_target_when_the_slug_changed():
+def test_publish_hands_the_previous_path_to_the_target_when_the_slug_changed() -> None:
     h, _ = publishing_harness()
     h.fakes.put_row(
         "knowledge",
@@ -404,7 +406,7 @@ def test_publish_hands_the_previous_path_to_the_target_when_the_slug_changed():
     assert h.fakes.published[0][1] == "content/software/old-name.mdx"
 
 
-def test_publish_without_github_configuration_answers_422_and_leaves_the_draft_unchanged():
+def test_publish_without_github_configuration_answers_422_and_leaves_the_draft_unchanged() -> None:
     h = signed_in()
     h.fakes.put_row("knowledge", "software", ID_A, stored())
     response = h.post(publish_url(), cookie=SESSION)
@@ -416,14 +418,14 @@ def test_publish_without_github_configuration_answers_422_and_leaves_the_draft_u
     assert h.fakes.rows_of("knowledge")[f"knowledge/software/{ID_A}"] == stored()
 
 
-def test_publish_when_the_target_fails_answers_422_saves_nothing_and_refreshes_nothing():
+def test_publish_when_the_target_fails_answers_422_saves_nothing_and_refreshes_nothing() -> None:
     class Failing:
-        async def publish(self, rendered, previous_path):
+        async def publish(self, rendered: Any, previous_path: Any) -> None:
             raise RuntimeError("GitHub rejected the commit")
 
     revalidated = []
 
-    async def revalidate():
+    async def revalidate() -> None:
         revalidated.append(1)
 
     h = signed_in(publication=Failing(), revalidate=revalidate)
@@ -435,8 +437,10 @@ def test_publish_when_the_target_fails_answers_422_saves_nothing_and_refreshes_n
     assert revalidated == []
 
 
-def test_publish_succeeds_even_when_revalidation_fails_because_the_commit_already_happened(caplog):
-    async def broken():
+def test_publish_succeeds_even_when_revalidation_fails_because_the_commit_already_happened(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    async def broken() -> None:
         raise RuntimeError("Next is down")
 
     h = signed_in(publication=lambda fakes: RecordingPublication(fakes), revalidate=broken)
@@ -451,7 +455,7 @@ def test_publish_succeeds_even_when_revalidation_fails_because_the_commit_alread
     assert "Site revalidation failed" in caplog.text
 
 
-def test_publish_refuses_a_recorded_publication_path_that_leaves_the_project_root():
+def test_publish_refuses_a_recorded_publication_path_that_leaves_the_project_root() -> None:
     h, revalidated = publishing_harness()
     h.fakes.put_row(
         "knowledge",
@@ -472,7 +476,7 @@ def test_publish_refuses_a_recorded_publication_path_that_leaves_the_project_roo
     assert h.fakes.published == [] and revalidated == []
 
 
-def test_publish_validates_relationships_against_published_drafts_with_the_generic_message():
+def test_publish_validates_relationships_against_published_drafts_with_the_generic_message() -> None:  # noqa: E501
     # TS quirk kept: its friendly-message regex never matches the Kernel's real error text.
     h, _ = publishing_harness()
     fields = {
@@ -493,7 +497,7 @@ def test_publish_validates_relationships_against_published_drafts_with_the_gener
 # ---- GET /api/authoring/definitions ------------------------------------------------------------
 
 
-def test_definitions_are_gated_like_the_studio_404_then_401():
+def test_definitions_are_gated_like_the_studio_404_then_401() -> None:
     off = make_harness(environ={"STORIES_ENV": "production"})
     assert off.get("/api/authoring/definitions", cookie=SESSION).status_code == 404
     h = make_harness()
@@ -502,7 +506,7 @@ def test_definitions_are_gated_like_the_studio_404_then_401():
     assert response.json() == {"error": "Unauthorized"}
 
 
-def test_definitions_serve_exactly_the_committed_typescript_definitions():
+def test_definitions_serve_exactly_the_committed_typescript_definitions() -> None:
     h = signed_in()
     response = h.get("/api/authoring/definitions", cookie=SESSION)
     assert response.status_code == 200

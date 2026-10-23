@@ -8,7 +8,9 @@ import asyncio
 import hashlib
 import json
 import re
+from collections.abc import Coroutine
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -27,23 +29,23 @@ GOLDEN = json.loads(
 VECTORS = GOLDEN["vectors"]
 
 
-def run(coroutine):
+def run[T](coroutine: Coroutine[Any, Any, T]) -> T:
     return asyncio.run(coroutine)
 
 
-def test_the_fixture_describes_the_parameters_the_port_uses():
+def test_the_fixture_describes_the_parameters_the_port_uses() -> None:
     assert GOLDEN["parameters"] == {"N": 16384, "r": 8, "p": 1, "keyLengthBytes": 64}
     assert len(VECTORS) == 6
 
 
 @pytest.mark.parametrize("vector", VECTORS, ids=[v["description"] for v in VECTORS])
-def test_every_typescript_vector_verifies_and_any_other_password_fails(vector):
+def test_every_typescript_vector_verifies_and_any_other_password_fails(vector: Any) -> None:
     assert re.fullmatch(r"[0-9a-f]{128}", vector["hash"])
     assert run(verify_password(vector["password"], vector["salt"], vector["hash"])) is True
     assert run(verify_password(vector["password"] + "!", vector["salt"], vector["hash"])) is False
 
 
-def test_the_salt_is_the_hex_string_itself_not_its_decoded_bytes():
+def test_the_salt_is_the_hex_string_itself_not_its_decoded_bytes() -> None:
     vector = VECTORS[0]
     decoded = hashlib.scrypt(
         vector["password"].encode(), salt=bytes.fromhex(vector["salt"]), n=16384, r=8, p=1, dklen=64
@@ -51,7 +53,7 @@ def test_the_salt_is_the_hex_string_itself_not_its_decoded_bytes():
     assert decoded.hex() != vector["hash"]
 
 
-def test_hash_password_emits_a_32_hex_salt_and_a_128_hex_hash_that_verify():
+def test_hash_password_emits_a_32_hex_salt_and_a_128_hex_hash_that_verify() -> None:
     hashed, salt = run(hash_password("anything"))
     assert re.fullmatch(r"[0-9a-f]{32}", salt)
     assert re.fullmatch(r"[0-9a-f]{128}", hashed)
@@ -61,13 +63,13 @@ def test_hash_password_emits_a_32_hex_salt_and_a_128_hex_hash_that_verify():
     )
 
 
-def test_tokens_are_64_lowercase_hex_characters_and_unique():
+def test_tokens_are_64_lowercase_hex_characters_and_unique() -> None:
     tokens = {generate_token() for _ in range(50)}
     assert len(tokens) == 50
     assert all(re.fullmatch(r"[0-9a-f]{64}", token) for token in tokens)
 
 
-def test_a_lone_surrogate_is_hashed_as_u_fffd_like_node_instead_of_raising():
+def test_a_lone_surrogate_is_hashed_as_u_fffd_like_node_instead_of_raising() -> None:
     surrogate = run(hash_password("a\ud800b"))
     replaced_hash = hashlib.scrypt(
         "a�b".encode(), salt=surrogate[1].encode(), n=16384, r=8, p=1, dklen=64
@@ -86,12 +88,12 @@ def test_a_lone_surrogate_is_hashed_as_u_fffd_like_node_instead_of_raising():
         ("0g", b""),
     ],
 )
-def test_node_hex_decoding_stops_at_the_first_invalid_pair(text, expected):
+def test_node_hex_decoding_stops_at_the_first_invalid_pair(text: Any, expected: Any) -> None:
     # Buffer.from(text, "hex") semantics: a corrupt stored hash must compare unequal, never raise.
     assert _node_hex_decode(text) == expected
 
 
-def test_a_corrupt_stored_hash_verifies_as_false():
+def test_a_corrupt_stored_hash_verifies_as_false() -> None:
     vector = VECTORS[0]
     assert run(verify_password(vector["password"], vector["salt"], "not hex at all")) is False
     assert run(verify_password(vector["password"], vector["salt"], vector["hash"][:-2])) is False

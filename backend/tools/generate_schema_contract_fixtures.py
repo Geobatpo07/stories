@@ -10,6 +10,7 @@ Run from the repo root:  python backend/tools/generate_schema_contract_fixtures.
 import json
 import shutil
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2] / "fixtures" / "schema-contract"
 
@@ -24,7 +25,7 @@ BASE_DEFAULTS = {"status": "draft", "tags": []}
 URL_OK = "https://example.org/x"
 
 # kind -> required extras, optional extras (valid sample values), plus typed field groups.
-SPECS = {
+SPECS: dict[str, dict[str, Any]] = {
     "dataset": {
         "required": {},
         "optional": {"sourceUrl": URL_OK, "license": "CC-BY-4.0"},
@@ -109,14 +110,16 @@ def main() -> None:
     (ROOT / "vocabulary.json").unlink(missing_ok=True)
     ROOT.mkdir(parents=True, exist_ok=True)
     for kind, spec in SPECS.items():
-        out: dict[str, dict] = {}
+        out: dict[str, dict[str, Any]] = {}
         req, opt = spec["required"], spec["optional"]
         valid_base = {**BASE, **req}
 
-        def ok(name, desc, data, expected, out=out):
+        def ok(
+            name: str, desc: str, data: Any, expected: Any, out: dict[str, dict[str, Any]] = out
+        ) -> None:
             out[name] = {"description": desc, "input": data, "valid": True, "expected": expected}
 
-        def bad(name, desc, data, out=out):
+        def bad(name: str, desc: str, data: Any, out: dict[str, dict[str, Any]] = out) -> None:
             out[name] = {"description": desc, "input": data, "valid": False}
 
         ok(

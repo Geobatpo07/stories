@@ -107,7 +107,7 @@ class FakeGitHub:
             self.bad_headers.append("accept")
         if not headers.get("x-github-api-version") or not headers.get("user-agent"):
             self.bad_headers.append("version/user-agent")
-        body = json.loads(request.content) if request.content else None
+        body: Any = json.loads(request.content) if request.content else None
         if body is not None:
             self.bodies.append(body)
 

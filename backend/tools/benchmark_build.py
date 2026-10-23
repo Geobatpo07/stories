@@ -10,6 +10,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
+from typing import Any
 
 from kernel.types import KnowledgeEntity, Relationship, ResolvedRef
 from pipeline.build import run_build_pipeline
@@ -20,7 +21,9 @@ def synthetic(count: int) -> list[KnowledgeEntity]:
     questions = count // 4
     ids: dict[str, KnowledgeEntity] = {}
 
-    def make(kind: str, slug: str, rels: tuple[Relationship, ...], extra: dict) -> KnowledgeEntity:
+    def make(
+        kind: str, slug: str, rels: tuple[Relationship, ...], extra: dict[str, Any]
+    ) -> KnowledgeEntity:
         return KnowledgeEntity(
             id=f"{kind}:{slug}",
             kind=kind,

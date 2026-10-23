@@ -7,6 +7,7 @@ the expected normalised output; both languages assert against that one declarati
 
 import json
 from pathlib import Path
+from typing import Any
 
 import pytest
 from pydantic import ValidationError
@@ -21,7 +22,7 @@ from schemas import (
 FIXTURES = Path(__file__).resolve().parents[2] / "fixtures" / "schema-contract"
 
 
-def _cases():
+def _cases() -> list[Any]:
     cases = []
     for kind in DOMAIN_MODELS:
         for path in sorted((FIXTURES / kind).glob("*.json")):
@@ -29,20 +30,20 @@ def _cases():
     return cases
 
 
-def test_vocabulary_matches_zod_enums_in_order():
+def test_vocabulary_matches_zod_enums_in_order() -> None:
     vocabulary = json.loads((FIXTURES / "vocabulary.json").read_text(encoding="utf8"))
     assert list(CONTENT_STATUSES) == vocabulary["contentStatus"]
     assert list(CONTENT_TYPES) == vocabulary["contentType"]
     assert list(KNOWLEDGE_OBJECT_TYPES) == vocabulary["knowledgeObjectType"]
 
 
-def test_every_domain_directory_has_a_model():
+def test_every_domain_directory_has_a_model() -> None:
     on_disk = {p.name for p in FIXTURES.iterdir() if p.is_dir()}
     assert on_disk == set(DOMAIN_MODELS)
 
 
 @pytest.mark.parametrize("kind", sorted(DOMAIN_MODELS))
-def test_kind_has_fixtures_covering_both_outcomes(kind: str):
+def test_kind_has_fixtures_covering_both_outcomes(kind: str) -> None:
     outcomes = {
         json.loads(p.read_text(encoding="utf8"))["valid"] for p in (FIXTURES / kind).glob("*.json")
     }
@@ -50,7 +51,7 @@ def test_kind_has_fixtures_covering_both_outcomes(kind: str):
 
 
 @pytest.mark.parametrize(("kind", "path"), _cases())
-def test_fixture(kind: str, path: Path):
+def test_fixture(kind: str, path: Path) -> None:
     fixture = json.loads(path.read_text(encoding="utf8"))
     model = DOMAIN_MODELS[kind]
     if fixture["valid"]:

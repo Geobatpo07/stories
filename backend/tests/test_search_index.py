@@ -14,12 +14,14 @@ from pipeline.search_index import (
     CARDINALITY_WEIGHT,
     HOP_DECAY,
     TOP_N,
+    Related,
+    Stats,
     compute_search_signals,
 )
-from tests.helpers import SCENARIOS, scenario_entities
+from tests.helpers import SCENARIOS, scalar, scenario_entities
 
 
-def reference_signals(entities: list[KnowledgeEntity]):
+def reference_signals(entities: list[KnowledgeEntity]) -> tuple[list[Related], list[Stats]]:
     """Independent implementation straight from the documented scoring rules (no graph database)."""
     edges = [  # (source, target, field, weight)
         (e.id, r.target.id, r.field, CARDINALITY_WEIGHT[r.cardinality])
@@ -60,8 +62,8 @@ def reference_signals(entities: list[KnowledgeEntity]):
             (a, b, sc, hops[(a, b)], ",".join(sorted(fields[(a, b)], key=byte_key)))
             for b, sc in ranked
         ]
-    in_degree = defaultdict(int)
-    out_degree = defaultdict(int)
+    in_degree: defaultdict[str, int] = defaultdict(int)
+    out_degree: defaultdict[str, int] = defaultdict(int)
     for s, t, _, _ in edges:
         out_degree[s] += 1
         in_degree[t] += 1
@@ -73,7 +75,7 @@ def reference_signals(entities: list[KnowledgeEntity]):
 
 
 @pytest.mark.parametrize("scenario", ["ok-full", "ok-empty", "ok-yaml-quirks"])
-def test_cypher_signals_equal_the_independent_reference(scenario: str):
+def test_cypher_signals_equal_the_independent_reference(scenario: str) -> None:
     entities = scenario_entities(scenario)
     with GraphStore() as store:
         store.load(entities)
@@ -83,7 +85,7 @@ def test_cypher_signals_equal_the_independent_reference(scenario: str):
     assert stats == expected_stats
 
 
-def test_known_scores_on_the_full_fixture():
+def test_known_scores_on_the_full_fixture() -> None:
     with GraphStore() as store:
         store.load(scenario_entities("ok-full"))
         related, _ = compute_search_signals(store)
@@ -100,7 +102,7 @@ def test_known_scores_on_the_full_fixture():
     assert not [k for k in scores if k[0] == "dataset:d-one"]
 
 
-def test_rows_are_ordered_score_desc_then_byte_order():
+def test_rows_are_ordered_score_desc_then_byte_order() -> None:
     with GraphStore() as store:
         store.load(scenario_entities("ok-full"))
         related, _ = compute_search_signals(store)
@@ -112,7 +114,7 @@ def test_rows_are_ordered_score_desc_then_byte_order():
         assert len(rows) <= TOP_N
 
 
-def test_tables_are_written_next_to_the_two_base_tables(tmp_path: Path):
+def test_tables_are_written_next_to_the_two_base_tables(tmp_path: Path) -> None:
     shutil.copytree(SCENARIOS / "ok-full" / "content", tmp_path / "content")
     assert run_build_pipeline(tmp_path).success
     connection = duckdb.connect(
@@ -131,7 +133,7 @@ def test_tables_are_written_next_to_the_two_base_tables(tmp_path: Path):
         "knowledge_search_related",
         "knowledge_search_stats",
     ]
-    assert connection.execute("SELECT count(*) FROM duckdb_constraints()").fetchone()[0] == 0
+    assert scalar(connection, "SELECT count(*) FROM duckdb_constraints()") == 0
     # A search read is one indexed-by-nothing lookup on a static file: no live backend involved.
     top = connection.execute(
         "SELECT related_id, score FROM knowledge_search_related WHERE entity_id = 'program:lab'"
@@ -141,14 +143,15 @@ def test_tables_are_written_next_to_the_two_base_tables(tmp_path: Path):
     connection.close()
 
 
-def test_search_index_can_be_skipped(tmp_path: Path):
+def test_search_index_can_be_skipped(tmp_path: Path) -> None:
     shutil.copytree(SCENARIOS / "ok-full" / "content", tmp_path / "content")
     assert run_build_pipeline(tmp_path, include_search_index=False).success
     connection = duckdb.connect(
         str(tmp_path / "database/generated/knowledge.duckdb"), read_only=True
     )
-    count = connection.execute(
-        "SELECT count(*) FROM information_schema.tables WHERE table_name LIKE 'knowledge_search%'"
-    ).fetchone()[0]
+    count = scalar(
+        connection,
+        "SELECT count(*) FROM information_schema.tables WHERE table_name LIKE 'knowledge_search%'",
+    )
     connection.close()
     assert count == 0

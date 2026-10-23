@@ -10,6 +10,7 @@ import io
 import tarfile
 from datetime import timedelta
 from pathlib import Path
+from typing import Any
 
 import httpx
 import pytest
@@ -27,7 +28,7 @@ from publication import (
 from publication.report import render_report
 from publication.snapshot import extract_content_tree
 
-from .api_support import NOW, make_harness
+from .api_support import NOW, Harness, make_harness
 from .github_fake import OWNER_REPO, TOKEN, FakeGitHub, empty_repository
 
 CONFIG = GitHubConfig(token=TOKEN, repository=OWNER_REPO)
@@ -46,11 +47,13 @@ def rendered(path: str = PATH, content: str | None = None) -> RenderedDocument:
     return RenderedDocument("mdx", path, content if content is not None else mdx())
 
 
-def target_for(github: FakeGitHub, **kwargs):
+def target_for(github: FakeGitHub, **kwargs: Any) -> GitHubPublicationTarget:
     return GitHubPublicationTarget(CONFIG, github.client(), **kwargs)
 
 
-def publish(github: FakeGitHub, document: RenderedDocument, previous: str | None = None):
+def publish(
+    github: FakeGitHub, document: RenderedDocument, previous: str | None = None
+) -> dict[str, Any]:
     return asyncio.run(target_for(github).publish(document, previous))
 
 
@@ -63,7 +66,7 @@ def repository_with(**extra: str) -> dict[str, bytes]:
 # ---- the happy path: one tree, one commit, one fast-forward ------------------------------------
 
 
-def test_publishes_a_new_file_with_exactly_the_documented_call_sequence():
+def test_publishes_a_new_file_with_exactly_the_documented_call_sequence() -> None:
     github = FakeGitHub()
     parent = github.head
     report = publish(github, rendered())
@@ -87,7 +90,7 @@ def test_publishes_a_new_file_with_exactly_the_documented_call_sequence():
     assert report["build"]["success"] is True and report["build"]["entityCount"] == 1
 
 
-def test_the_tree_entry_carries_the_content_inline_and_the_ref_update_is_not_forced():
+def test_the_tree_entry_carries_the_content_inline_and_the_ref_update_is_not_forced() -> None:
     github = FakeGitHub()
     publish(github, rendered())
     tree_body, commit_body, ref_body = github.bodies[-3:]
@@ -97,13 +100,13 @@ def test_the_tree_entry_carries_the_content_inline_and_the_ref_update_is_not_for
     assert ref_body == {"sha": github.head, "force": False}
 
 
-def test_every_request_carries_the_token_accept_version_and_user_agent():
+def test_every_request_carries_the_token_accept_version_and_user_agent() -> None:
     github = FakeGitHub()
     publish(github, rendered())
     assert github.bad_headers == []
 
 
-def test_a_slug_change_writes_the_new_file_and_deletes_the_old_one_in_a_single_commit():
+def test_a_slug_change_writes_the_new_file_and_deletes_the_old_one_in_a_single_commit() -> None:
     github = FakeGitHub(repository_with(**{OLD_PATH: mdx("old-name", "Old Name")}))
     commits_before = len(github.commits)
     parent = github.head
@@ -117,13 +120,13 @@ def test_a_slug_change_writes_the_new_file_and_deletes_the_old_one_in_a_single_c
     assert "replaces" in github.commits[github.head]["message"]
 
 
-def test_a_previous_path_that_is_not_in_the_repository_is_not_deleted_through_the_api():
+def test_a_previous_path_that_is_not_in_the_repository_is_not_deleted_through_the_api() -> None:
     github = FakeGitHub()
     publish(github, rendered(), OLD_PATH)
     assert all("sha" not in entry for entry in github.bodies[-3]["tree"])
 
 
-def test_republishing_identical_content_makes_no_commit_and_needs_no_deployment():
+def test_republishing_identical_content_makes_no_commit_and_needs_no_deployment() -> None:
     github = FakeGitHub(repository_with(**{PATH: mdx()}))
     head = github.head
     report = publish(github, rendered())
@@ -133,7 +136,7 @@ def test_republishing_identical_content_makes_no_commit_and_needs_no_deployment(
     assert report["build"]["success"] is True  # the tree was still validated
 
 
-def test_other_files_in_the_repository_are_left_alone():
+def test_other_files_in_the_repository_are_left_alone() -> None:
     github = FakeGitHub()
     others = dict(github.files)
     publish(github, rendered())
@@ -143,7 +146,7 @@ def test_other_files_in_the_repository_are_left_alone():
 # ---- validate BEFORE committing ----------------------------------------------------------------
 
 
-def test_a_content_tree_that_does_not_build_makes_no_github_write_at_all():
+def test_a_content_tree_that_does_not_build_makes_no_github_write_at_all() -> None:
     github = FakeGitHub(repository_with(**{"content/notes/broken.mdx": "---\ntitle: [oops\n---\n"}))
     head = github.head
     with pytest.raises(PublicationValidationError) as caught:
@@ -155,7 +158,7 @@ def test_a_content_tree_that_does_not_build_makes_no_github_write_at_all():
     assert PATH not in github.files
 
 
-def test_a_duplicate_id_in_the_tree_with_the_change_applied_is_refused_before_any_write():
+def test_a_duplicate_id_in_the_tree_with_the_change_applied_is_refused_before_any_write() -> None:
     # The TypeScript pipeline never checked this; the Python build does (ADR-004 phase 3).
     other = "content/software/other-file.mdx"
     github = FakeGitHub(repository_with(**{other: mdx()}))  # same slug, different file
@@ -165,7 +168,7 @@ def test_a_duplicate_id_in_the_tree_with_the_change_applied_is_refused_before_an
     assert github.writes() == []
 
 
-def test_a_dangling_relationship_is_refused_before_any_write():
+def test_a_dangling_relationship_is_refused_before_any_write() -> None:
     question = (
         '---\ntitle: "Q"\nslug: "q"\ndescription: "d"\ndate: "2026-08-03"\nstatus: "draft"\n'
         'tags: []\nprogramSlug: "missing"\n---\n'
@@ -176,10 +179,10 @@ def test_a_dangling_relationship_is_refused_before_any_write():
     assert github.writes() == []
 
 
-def test_the_validated_tree_is_the_one_the_commit_is_built_on():
+def test_the_validated_tree_is_the_one_the_commit_is_built_on() -> None:
     seen: list[Path] = []
 
-    def spy(root: Path):
+    def spy(root: Path) -> dict[str, Any]:
         seen.append(root)
         return {
             "success": True,
@@ -203,7 +206,7 @@ def test_the_validated_tree_is_the_one_the_commit_is_built_on():
 # ---- failures leave GitHub untouched, and are reported plainly ---------------------------------
 
 
-def test_a_branch_that_moved_while_publishing_is_a_conflict_not_an_overwrite():
+def test_a_branch_that_moved_while_publishing_is_a_conflict_not_an_overwrite() -> None:
     github = FakeGitHub()
     github.before_ref_update = lambda: github.advance_head("README.md", b"someone else\n")
     with pytest.raises(PublicationConflictError, match="nothing was published"):
@@ -213,7 +216,7 @@ def test_a_branch_that_moved_while_publishing_is_a_conflict_not_an_overwrite():
 
 
 @pytest.mark.parametrize("step", ["/git/trees", "/git/commits"])
-def test_a_github_failure_before_the_ref_update_leaves_the_branch_untouched(step):
+def test_a_github_failure_before_the_ref_update_leaves_the_branch_untouched(step: Any) -> None:
     github = FakeGitHub()
     head = github.head
     github.fail[("POST", step)] = 500
@@ -223,7 +226,7 @@ def test_a_github_failure_before_the_ref_update_leaves_the_branch_untouched(step
     assert github.head == head
 
 
-def test_a_failed_ref_update_other_than_a_conflict_is_a_github_error():
+def test_a_failed_ref_update_other_than_a_conflict_is_a_github_error() -> None:
     github = FakeGitHub()
     github.fail[("PATCH", "/git/refs/heads/main")] = 403
     with pytest.raises(GitHubApiError) as caught:
@@ -231,7 +234,7 @@ def test_a_failed_ref_update_other_than_a_conflict_is_a_github_error():
     assert caught.value.status == 403
 
 
-def test_errors_never_contain_the_token():
+def test_errors_never_contain_the_token() -> None:
     github = FakeGitHub()
     github.fail[("GET", "/git/ref/heads/main")] = 401
     with pytest.raises(GitHubApiError) as caught:
@@ -240,7 +243,7 @@ def test_errors_never_contain_the_token():
 
 
 @pytest.mark.parametrize("config", [None, GitHubConfig("", OWNER_REPO), GitHubConfig(TOKEN, "")])
-def test_without_a_token_and_repository_it_refuses_before_any_request(config):
+def test_without_a_token_and_repository_it_refuses_before_any_request(config: Any) -> None:
     github = FakeGitHub()
     target = GitHubPublicationTarget(config, github.client())
     with pytest.raises(PublicationConfigurationError, match="GITHUB_PUBLISH_TOKEN"):
@@ -266,7 +269,9 @@ def archive(members: dict[str, bytes], links: dict[str, str] | None = None) -> b
     return buffer.getvalue()
 
 
-def test_extraction_keeps_only_regular_files_under_content_and_strips_the_top_folder(tmp_path):
+def test_extraction_keeps_only_regular_files_under_content_and_strips_the_top_folder(
+    tmp_path: Path,
+) -> None:
     data = archive(
         {
             "o-r-abc1234/content/notes/a.mdx": b"a",
@@ -280,7 +285,7 @@ def test_extraction_keeps_only_regular_files_under_content_and_strips_the_top_fo
     ) == ["content/notes/a.mdx"]
 
 
-def test_extraction_ignores_traversal_absolute_and_link_members(tmp_path):
+def test_extraction_ignores_traversal_absolute_and_link_members(tmp_path: Path) -> None:
     outside = tmp_path / "outside"
     outside.mkdir()
     root = tmp_path / "root"
@@ -302,7 +307,7 @@ def test_extraction_ignores_traversal_absolute_and_link_members(tmp_path):
 # ---- report rendering (port of build/report.ts) ------------------------------------------------
 
 
-def test_the_report_rendering_matches_the_typescript_format():
+def test_the_report_rendering_matches_the_typescript_format() -> None:
     report = {
         "success": False,
         "entityCount": 2,
@@ -337,7 +342,7 @@ ID = "44444444-4444-4444-8444-444444444444"
 SESSION = "7" * 64
 
 
-def stored_draft(**overrides):
+def stored_draft(**overrides: Any) -> dict[str, Any]:
     base = {
         "version": 1,
         "id": ID,
@@ -359,7 +364,7 @@ def stored_draft(**overrides):
     return base
 
 
-def api(github: FakeGitHub, revalidate=None):
+def api(github: FakeGitHub, revalidate: Any = None) -> tuple[Harness, list[Any]]:
     calls: list[int] = []
 
     async def record() -> None:
@@ -371,11 +376,11 @@ def api(github: FakeGitHub, revalidate=None):
     return h, calls
 
 
-def publish_via_api(h):
+def publish_via_api(h: Harness) -> httpx.Response:
     return h.post(f"/api/studio/documents/{ID}/publish", cookie=SESSION)
 
 
-def test_the_route_commits_marks_the_draft_published_and_reports_deployment_pending():
+def test_the_route_commits_marks_the_draft_published_and_reports_deployment_pending() -> None:
     github = FakeGitHub()
     h, revalidated = api(github)
     response = publish_via_api(h)
@@ -390,7 +395,7 @@ def test_the_route_commits_marks_the_draft_published_and_reports_deployment_pend
     assert revalidated == [1]
 
 
-def test_the_stored_row_keeps_the_shape_the_typescript_app_can_still_read():
+def test_the_stored_row_keeps_the_shape_the_typescript_app_can_still_read() -> None:
     # No new states or keys: the TS Studio parses this same row with a closed enum.
     github = FakeGitHub()
     h, _ = api(github)
@@ -400,7 +405,7 @@ def test_the_stored_row_keeps_the_shape_the_typescript_app_can_still_read():
     assert sorted(stored["publication"]) == ["kind", "path", "publishedAt", "slug"]
 
 
-def test_a_failed_commit_leaves_the_draft_unpublished_and_refreshes_nothing():
+def test_a_failed_commit_leaves_the_draft_unpublished_and_refreshes_nothing() -> None:
     github = FakeGitHub()
     github.fail[("POST", "/git/commits")] = 500
     h, revalidated = api(github)
@@ -413,7 +418,7 @@ def test_a_failed_commit_leaves_the_draft_unpublished_and_refreshes_nothing():
     assert revalidated == []
 
 
-def test_a_build_failure_answers_422_with_the_report_and_touches_nothing():
+def test_a_build_failure_answers_422_with_the_report_and_touches_nothing() -> None:
     github = FakeGitHub(repository_with(**{"content/notes/broken.mdx": "---\ntitle: [oops\n---\n"}))
     h, revalidated = api(github)
     response = publish_via_api(h)
@@ -424,7 +429,7 @@ def test_a_build_failure_answers_422_with_the_report_and_touches_nothing():
     assert revalidated == []
 
 
-def test_a_retry_after_a_lost_save_is_harmless_identical_content_makes_no_second_commit():
+def test_a_retry_after_a_lost_save_is_harmless_identical_content_makes_no_second_commit() -> None:
     github = FakeGitHub()
     h, _ = api(github)
     assert publish_via_api(h).status_code == 200
@@ -439,7 +444,7 @@ def test_a_retry_after_a_lost_save_is_harmless_identical_content_makes_no_second
 # ---- revalidation ------------------------------------------------------------------------------
 
 
-def test_the_revalidator_posts_with_the_secret_header_and_raises_when_refused():
+def test_the_revalidator_posts_with_the_secret_header_and_raises_when_refused() -> None:
     seen: list[httpx.Request] = []
     status = {"code": 200}
 
@@ -457,6 +462,6 @@ def test_the_revalidator_posts_with_the_secret_header_and_raises_when_refused():
         asyncio.run(revalidate())
 
 
-def test_the_revalidator_refuses_to_call_without_a_secret():
+def test_the_revalidator_refuses_to_call_without_a_secret() -> None:
     with pytest.raises(RuntimeError, match="REVALIDATE_SECRET"):
         asyncio.run(NextRevalidator("https://stories.test", "")())

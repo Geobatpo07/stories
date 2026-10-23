@@ -10,6 +10,7 @@ Run from the repo root:  python backend/tools/generate_kernel_contract_scenarios
 
 import shutil
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2] / "fixtures" / "kernel-contract" / "scenarios"
 
@@ -26,7 +27,7 @@ COLLECTIONS = [
 ]
 
 
-def fm(**fields) -> str:
+def fm(**fields: Any) -> str:
     """Render a frontmatter block. Values are written verbatim (caller quotes when needed)."""
     lines = ["---"]
     for key, value in fields.items():
@@ -42,7 +43,7 @@ def fm(**fields) -> str:
     return "\n".join(lines) + "\n"
 
 
-def base(slug, title=None, **extra):
+def base(slug: Any, title: Any=None, **extra: Any) -> dict[str, Any]:
     return dict(
         title=title or f"Title of {slug}",
         slug=slug,

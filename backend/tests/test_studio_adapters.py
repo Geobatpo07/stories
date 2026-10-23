@@ -13,7 +13,9 @@ from runtime.resend import ResendEmailAdapter
 from runtime.supabase import SupabasePersistenceAdapter
 
 
-def adapter_with(response: httpx.Response, namespace="auth", url="https://x.supabase.co"):
+def adapter_with(
+    response: httpx.Response, namespace: str = "auth", url: str = "https://x.supabase.co"
+) -> tuple[SupabasePersistenceAdapter, list[httpx.Request]]:
     calls: list[httpx.Request] = []
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -24,11 +26,11 @@ def adapter_with(response: httpx.Response, namespace="auth", url="https://x.supa
     return SupabasePersistenceAdapter(url, "service-role-key", namespace, client), calls
 
 
-def test_never_throws_at_construction_even_with_an_empty_url_and_key():
+def test_never_throws_at_construction_even_with_an_empty_url_and_key() -> None:
     SupabasePersistenceAdapter("", "", "auth")
 
 
-def test_save_upserts_via_post_with_the_merge_duplicates_prefer_header():
+def test_save_upserts_via_post_with_the_merge_duplicates_prefer_header() -> None:
     adapter, calls = adapter_with(httpx.Response(204))
     asyncio.run(adapter.save("admin", "the-id", {"email": "a@example.com"}))
     [request] = calls
@@ -47,7 +49,7 @@ def test_save_upserts_via_post_with_the_merge_duplicates_prefer_header():
     assert isinstance(body["updated_at"], str) and body["updated_at"].endswith("Z")
 
 
-def test_load_returns_the_stored_value_or_none_when_no_row_matches():
+def test_load_returns_the_stored_value_or_none_when_no_row_matches() -> None:
     adapter, calls = adapter_with(httpx.Response(200, json=[{"value": {"email": "a@example.com"}}]))
     assert asyncio.run(adapter.load("admin", "the-id")) == {"email": "a@example.com"}
     url = str(calls[0].url)
@@ -57,7 +59,7 @@ def test_load_returns_the_stored_value_or_none_when_no_row_matches():
     assert asyncio.run(empty.load("admin", "missing")) is None
 
 
-def test_list_maps_every_rows_value_in_the_order_returned():
+def test_list_maps_every_rows_value_in_the_order_returned() -> None:
     adapter, calls = adapter_with(
         httpx.Response(200, json=[{"value": {"id": 1}}, {"value": {"id": 2}}]),
         namespace="knowledge",
@@ -68,7 +70,7 @@ def test_list_maps_every_rows_value_in_the_order_returned():
         assert part in url
 
 
-def test_delete_issues_a_delete_scoped_to_namespace_collection_and_id():
+def test_delete_issues_a_delete_scoped_to_namespace_collection_and_id() -> None:
     adapter, calls = adapter_with(httpx.Response(204))
     asyncio.run(adapter.delete("auth-sessions", "token-123"))
     assert calls[0].method == "DELETE"
@@ -76,26 +78,26 @@ def test_delete_issues_a_delete_scoped_to_namespace_collection_and_id():
     assert "id=eq.token-123" in str(calls[0].url)
 
 
-def test_throws_a_descriptive_error_on_a_non_2xx_response():
+def test_throws_a_descriptive_error_on_a_non_2xx_response() -> None:
     adapter, _ = adapter_with(httpx.Response(404, text="relation does not exist"))
     with pytest.raises(RuntimeError, match=r"404.*relation does not exist"):
         asyncio.run(adapter.load("admin", "the-id"))
 
 
-def test_ids_are_percent_encoded_like_encode_uri_component():
+def test_ids_are_percent_encoded_like_encode_uri_component() -> None:
     adapter, calls = adapter_with(httpx.Response(200, json=[]))
     asyncio.run(adapter.load("a b", "x/y?z&é"))
     assert "collection=eq.a%20b" in str(calls[0].url)
     assert "id=eq.x%2Fy%3Fz%26%C3%A9" in str(calls[0].url)
 
 
-def test_a_trailing_slash_on_the_project_url_is_dropped_once():
+def test_a_trailing_slash_on_the_project_url_is_dropped_once() -> None:
     adapter, calls = adapter_with(httpx.Response(200, json=[]), url="https://x.supabase.co/")
     asyncio.run(adapter.list("c"))
     assert str(calls[0].url).startswith("https://x.supabase.co/rest/v1/persistence_records?")
 
 
-def test_resend_posts_the_message_as_json_and_raises_on_a_rejection():
+def test_resend_posts_the_message_as_json_and_raises_on_a_rejection() -> None:
     seen: list[httpx.Request] = []
 
     def handler(request: httpx.Request) -> httpx.Response:

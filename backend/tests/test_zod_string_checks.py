@@ -4,6 +4,7 @@ was produced by the real zod (backend/tools/zod-string-cases.mjs)."""
 
 import json
 from pathlib import Path
+from typing import Any
 
 import pytest
 from pydantic import TypeAdapter, ValidationError
@@ -29,7 +30,7 @@ CASES = [(name, case["value"], case["ok"]) for name, cases in GOLDEN.items() for
 @pytest.mark.parametrize(
     ("check", "value", "zod_accepts"), CASES, ids=[f"{c[0]}:{c[1]!r}"[:70] for c in CASES]
 )
-def test_accepts_and_rejects_exactly_like_zod(check, value, zod_accepts):
+def test_accepts_and_rejects_exactly_like_zod(check: Any, value: Any, zod_accepts: Any) -> None:
     try:
         TypeAdapter(VALIDATORS[check]).validate_python(value)
         accepted = True

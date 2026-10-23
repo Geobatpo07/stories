@@ -22,22 +22,24 @@ from tests.helpers import REPO_ROOT, SCENARIOS
 COMPAT = json.loads((REPO_ROOT / "backend" / "duckdb-compat.json").read_text(encoding="utf-8"))
 
 
-def test_python_pin_in_pyproject_matches_the_compat_file():
+def test_python_pin_in_pyproject_matches_the_compat_file() -> None:
     pyproject = (REPO_ROOT / "backend" / "pyproject.toml").read_text(encoding="utf-8")
-    assert re.search(r'"duckdb==([^"]+)"', pyproject).group(1) == COMPAT["python"]
+    match = re.search(r'"duckdb==([^"]+)"', pyproject)
+    assert match is not None
+    assert match.group(1) == COMPAT["python"]
 
 
-def test_node_pin_in_package_json_matches_the_compat_file():
+def test_node_pin_in_package_json_matches_the_compat_file() -> None:
     package = json.loads((REPO_ROOT / "package.json").read_text(encoding="utf-8"))
     assert package["dependencies"]["@duckdb/node-api"] == COMPAT["node"]  # exact, no ^ or ~
 
 
-def test_installed_python_duckdb_is_the_pinned_version():
+def test_installed_python_duckdb_is_the_pinned_version() -> None:
     assert duckdb.__version__ == COMPAT["python"]
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="node is not installed")
-def test_node_reader_opens_a_python_written_artifact(tmp_path: Path):
+def test_node_reader_opens_a_python_written_artifact(tmp_path: Path) -> None:
     shutil.copytree(SCENARIOS / "ok-full" / "content", tmp_path / "content")
     assert run_build_pipeline(tmp_path).success
     completed = subprocess.run(

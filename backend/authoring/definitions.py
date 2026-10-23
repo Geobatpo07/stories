@@ -10,7 +10,7 @@ definitions and the TypeScript copy is only a frozen reference.
 import re
 from collections.abc import Sequence
 from types import UnionType
-from typing import Annotated, Any, Literal, Union, cast, get_args, get_origin
+from typing import Annotated, Any, Literal, Union, get_args, get_origin
 
 from pydantic import ValidationError
 from pydantic.fields import FieldInfo
@@ -153,7 +153,7 @@ def _friendly_issues(error: ValidationError) -> list[JsonObject]:
         else:
             messages = [
                 re.sub(r"^String", "This value", i.message)
-                for i in _issues_for(cast(dict[str, Any], item))
+                for i in _issues_for(item)
             ]
         issues.extend({"field": field, "message": message} for message in messages)
     return issues

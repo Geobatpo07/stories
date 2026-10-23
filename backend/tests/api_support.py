@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
+import httpx
 from fastapi.testclient import TestClient
 
 from api import create_app
@@ -154,28 +155,32 @@ class Harness:
         cookie: str | None = None,
         ip: str | None = None,
         headers: dict[str, str] | None = None,
-    ):
+    ) -> httpx.Response:
         merged = dict(headers or {})
         if cookie is not None:
             merged["cookie"] = f"{COOKIE}={cookie}"
         if ip is not None:
             merged["x-real-ip"] = ip
         self.client.cookies.clear()
+        response: httpx.Response
         if raw is not None:
             merged.setdefault("content-type", "application/json")
-            return self.client.request(method, url, content=raw, headers=merged)
-        if json_body is not None:
-            return self.client.request(method, url, json=json_body, headers=merged)
-        return self.client.request(method, url, headers=merged)
+            response = self.client.request(method, url, content=raw, headers=merged)
+        elif json_body is not None:
+            response = self.client.request(method, url, json=json_body, headers=merged)
+        else:
+            response = self.client.request(method, url, headers=merged)
+        return response
 
-    def post(self, url: str, body: Any = None, **kwargs: Any):
+    def post(self, url: str, body: Any = None, **kwargs: Any) -> httpx.Response:
         return self.request("POST", url, json_body=body, **kwargs)
 
-    def get(self, url: str, **kwargs: Any):
+    def get(self, url: str, **kwargs: Any) -> httpx.Response:
         return self.request("GET", url, **kwargs)
 
     def set_cookies(self, response: Any) -> list[str]:
-        return response.headers.get_list("set-cookie")
+        cookies: list[str] = response.headers.get_list("set-cookie")
+        return cookies
 
 
 def make_harness(

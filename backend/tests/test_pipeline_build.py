@@ -20,7 +20,7 @@ def _scenario_root(tmp_path: Path, name: str) -> Path:
 
 
 @pytest.mark.parametrize("name", ["ok-full", "ok-empty", "ok-yaml-quirks", "ok-frontmatter-edges"])
-def test_buildable_scenarios_succeed(tmp_path: Path, name: str):
+def test_buildable_scenarios_succeed(tmp_path: Path, name: str) -> None:
     result = run_build_pipeline(_scenario_root(tmp_path, name))
     assert result.success, result.report.validationIssues
     assert [t.name for t in result.report.targetResults] == ["ladybug-graph", "duckdb", "manifest"]
@@ -28,14 +28,14 @@ def test_buildable_scenarios_succeed(tmp_path: Path, name: str):
     assert (tmp_path / "database/generated/manifest.json").exists()
 
 
-def test_report_counts(tmp_path: Path):
+def test_report_counts(tmp_path: Path) -> None:
     result = run_build_pipeline(_scenario_root(tmp_path, "ok-full"))
     assert result.report.entityCount == 15
     assert result.report.relationshipCount == 11
     assert result.report.countsByKind["program"] == 2
 
 
-def test_duplicate_id_fails_the_build_naming_both_files_and_writes_nothing(tmp_path: Path):
+def test_duplicate_id_fails_the_build_naming_both_files_and_writes_nothing(tmp_path: Path) -> None:
     result = run_build_pipeline(_scenario_root(tmp_path, "ok-duplicate-slug"))
     assert result.success is False
     [issue] = result.report.validationIssues
@@ -54,7 +54,7 @@ def test_duplicate_id_fails_the_build_naming_both_files_and_writes_nothing(tmp_p
         ("err-missing-collection-dir", "Failed to read or parse"),
     ],
 )
-def test_content_problems_fail_without_raising(tmp_path: Path, name: str, needle: str):
+def test_content_problems_fail_without_raising(tmp_path: Path, name: str, needle: str) -> None:
     result = run_build_pipeline(_scenario_root(tmp_path, name))
     assert result.success is False
     [issue] = result.report.validationIssues
@@ -62,7 +62,7 @@ def test_content_problems_fail_without_raising(tmp_path: Path, name: str, needle
     assert not (tmp_path / "database").exists()
 
 
-def test_a_failed_rebuild_leaves_the_previous_artifact_untouched(tmp_path: Path):
+def test_a_failed_rebuild_leaves_the_previous_artifact_untouched(tmp_path: Path) -> None:
     root = _scenario_root(tmp_path, "ok-full")
     assert run_build_pipeline(root).success
     manifest_before = (root / "database/generated/manifest.json").read_bytes()
@@ -85,13 +85,13 @@ def _cli(*args: str) -> subprocess.CompletedProcess[str]:
     )
 
 
-def test_cli_exits_zero_and_prints_the_report(tmp_path: Path):
+def test_cli_exits_zero_and_prints_the_report(tmp_path: Path) -> None:
     completed = _cli("--root", str(_scenario_root(tmp_path, "ok-full")))
     assert completed.returncode == 0, completed.stderr
     assert json.loads(completed.stdout)["success"] is True
 
 
-def test_cli_exits_nonzero_and_explains_on_stderr(tmp_path: Path):
+def test_cli_exits_nonzero_and_explains_on_stderr(tmp_path: Path) -> None:
     completed = _cli("--root", str(_scenario_root(tmp_path, "ok-duplicate-slug")))
     assert completed.returncode == 1
     assert "[duplicate-id]" in completed.stderr
