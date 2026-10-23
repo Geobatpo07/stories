@@ -1,0 +1,3 @@
+   100 entities    165 edges  total     338 ms  stages(ms) {'ladybug-graph': 94, 'duckdb': 191, 'manifest': 2}  ok=True
+  1000 entities   1650 edges  total    1204 ms  stages(ms) {'ladybug-graph': 473, 'duckdb': 671, 'manifest': 6}  ok=True
+  5000 entities   8250 edges  total    6522 ms  stages(ms) {'ladybug-graph': 3371, 'duckdb': 3013, 'manifest': 21}  ok=True

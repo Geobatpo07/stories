@@ -1,0 +1,20 @@
+build/python-producer.test.ts(33,35): error TS2345: Argument of type '{ STORIES_BUILD_PRODUCER: string; }' is not assignable to parameter of type 'ProcessEnv'.
+  Type '{ STORIES_BUILD_PRODUCER: string; }' is missing the following properties from type 'ProcessEnv': NODE_ENV, DUCKDB_PATH, NEXT_PUBLIC_SITE_URL
+ ELIFECYCLE  Command failed with exit code 2.
+typecheck exit 2
+> stories@3.0.0 lint C:\Users\gblaguerre\Documents\Data Analytics Projects\stories-p3
+> eslint .
+
+lint exit 0
+
+[2m Test Files [22m [1m[32m50 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (51)[39m
+[2m      Tests [22m [1m[32m621 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (622)[39m
+[2m   Start at [22m 19:07:43
+[2m   Duration [22m 10.62s[2m (transform 5.74s, setup 0ms, collect 27.42s, tests 20.78s, environment 22ms, prepare 19.65s)[22m
+
+PARITY OK   ok-full  (68 lines, sha256 f6e5c6a1e94bf9b3)
+PARITY OK   ok-empty  (42 lines, sha256 6d9990213088c963)
+PARITY OK   ok-yaml-quirks  (45 lines, sha256 db6f511509ac60ac)
+PARITY OK   ok-frontmatter-edges  (49 lines, sha256 3e70fee1f5064b99)
+.........................                                                [100%]
+817 passed in 8.30s

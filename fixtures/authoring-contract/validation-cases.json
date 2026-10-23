@@ -1,0 +1,116 @@
+[
+  {
+    "description": "complete software artifact",
+    "kind": "software",
+    "fields": {
+      "title": "Research Tool",
+      "slug": "research-tool",
+      "description": "A research artifact.",
+      "date": "2026-08-03",
+      "status": "active",
+      "tags": [
+        "a",
+        "b"
+      ]
+    },
+    "result": {
+      "success": true,
+      "data": {
+        "title": "Research Tool",
+        "slug": "research-tool",
+        "description": "A research artifact.",
+        "date": "2026-08-03",
+        "status": "active",
+        "tags": [
+          "a",
+          "b"
+        ]
+      },
+      "issues": []
+    }
+  },
+  {
+    "description": "note with only a title",
+    "kind": "note",
+    "fields": {
+      "title": "Early observation"
+    },
+    "result": {
+      "success": false,
+      "issues": [
+        {
+          "field": "slug",
+          "message": "This field is required."
+        },
+        {
+          "field": "description",
+          "message": "This field is required."
+        },
+        {
+          "field": "date",
+          "message": "This field is required."
+        },
+        {
+          "field": "noteType",
+          "message": "This field is required."
+        }
+      ]
+    }
+  },
+  {
+    "description": "program with nothing",
+    "kind": "program",
+    "fields": {},
+    "result": {
+      "success": false,
+      "issues": [
+        {
+          "field": "title",
+          "message": "This field is required."
+        },
+        {
+          "field": "slug",
+          "message": "This field is required."
+        },
+        {
+          "field": "description",
+          "message": "This field is required."
+        },
+        {
+          "field": "date",
+          "message": "This field is required."
+        },
+        {
+          "field": "theme",
+          "message": "This field is required."
+        },
+        {
+          "field": "leadResearcher",
+          "message": "This field is required."
+        }
+      ]
+    }
+  },
+  {
+    "description": "software with an unknown field and a bad status",
+    "kind": "software",
+    "fields": {
+      "title": "T",
+      "slug": "t",
+      "description": "d",
+      "date": "2026-08-03",
+      "status": "nope",
+      "tags": [],
+      "extra": 1
+    },
+    "result": {
+      "success": false,
+      "issues": [
+        {
+          "field": "status",
+          "message": "Choose one of the available values."
+        }
+      ]
+    }
+  }
+]

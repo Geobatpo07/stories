@@ -1,25 +1,8 @@
-import { revalidatePath } from "next/cache";
-import { NextResponse } from "next/server";
-import { authoringWorkflow, isStudioEnabled } from "@/authoring/server";
-import { getStudioSession } from "@/auth/server";
-import { resetRuntimeContext } from "@/lib/presentation/runtime";
-import { resetLaboratory } from "@/lib/presentation";
+import { pythonApiRelay } from "@/lib/python-api";
 
-export async function POST(_request: Request, context: { params: Promise<{ id: string }> }) {
-  if (!isStudioEnabled()) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  if (!(await getStudioSession()))
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  try {
-    const { id } = await context.params;
-    const { document, report } = await authoringWorkflow.publish(id);
-    resetRuntimeContext();
-    resetLaboratory();
-    revalidatePath("/", "layout");
-    return NextResponse.json({ document, report: report.report });
-  } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Publication failed." },
-      { status: 422 },
-    );
-  }
+/** Pure relay: gating, publication (GitHub commit) and the revalidation callback are the Python
+ *  endpoint's. */
+export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
+  return pythonApiRelay(request, `/api/studio/documents/${encodeURIComponent(id)}/publish`);
 }

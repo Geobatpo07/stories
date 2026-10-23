@@ -1,0 +1,697 @@
+[
+  {
+    "kind": "program",
+    "label": "Program",
+    "publicKind": "Program",
+    "contentDir": "content/programs",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "slug",
+        "label": "Slug",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "date",
+        "label": "Date",
+        "type": "date",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "status",
+        "label": "Status",
+        "type": "select",
+        "required": false,
+        "multiple": false,
+        "options": [
+          "draft",
+          "active",
+          "paused",
+          "concluded"
+        ],
+        "defaultValue": "draft"
+      },
+      {
+        "name": "tags",
+        "label": "Tags",
+        "type": "tags",
+        "required": false,
+        "multiple": true,
+        "defaultValue": []
+      },
+      {
+        "name": "theme",
+        "label": "Theme",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "leadResearcher",
+        "label": "Lead Researcher",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "relatedQuestionSlugs",
+        "label": "Related Question Slugs",
+        "type": "relationship",
+        "required": false,
+        "multiple": true,
+        "relationshipKind": "question",
+        "defaultValue": []
+      }
+    ]
+  },
+  {
+    "kind": "question",
+    "label": "Question",
+    "publicKind": "Project",
+    "contentDir": "content/questions",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "slug",
+        "label": "Slug",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "date",
+        "label": "Date",
+        "type": "date",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "status",
+        "label": "Status",
+        "type": "select",
+        "required": false,
+        "multiple": false,
+        "options": [
+          "draft",
+          "active",
+          "paused",
+          "concluded"
+        ],
+        "defaultValue": "draft"
+      },
+      {
+        "name": "tags",
+        "label": "Tags",
+        "type": "tags",
+        "required": false,
+        "multiple": true,
+        "defaultValue": []
+      },
+      {
+        "name": "programSlug",
+        "label": "Program Slug",
+        "type": "relationship",
+        "required": true,
+        "multiple": false,
+        "relationshipKind": "program"
+      }
+    ]
+  },
+  {
+    "kind": "hypothesis",
+    "label": "Hypothesis",
+    "publicKind": "Investigation",
+    "contentDir": "content/hypotheses",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "slug",
+        "label": "Slug",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "date",
+        "label": "Date",
+        "type": "date",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "status",
+        "label": "Status",
+        "type": "select",
+        "required": false,
+        "multiple": false,
+        "options": [
+          "draft",
+          "active",
+          "paused",
+          "concluded"
+        ],
+        "defaultValue": "draft"
+      },
+      {
+        "name": "tags",
+        "label": "Tags",
+        "type": "tags",
+        "required": false,
+        "multiple": true,
+        "defaultValue": []
+      },
+      {
+        "name": "questionSlug",
+        "label": "Question Slug",
+        "type": "relationship",
+        "required": true,
+        "multiple": false,
+        "relationshipKind": "question"
+      }
+    ]
+  },
+  {
+    "kind": "experiment",
+    "label": "Experiment",
+    "publicKind": "Investigation",
+    "contentDir": "content/experiments",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "slug",
+        "label": "Slug",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "date",
+        "label": "Date",
+        "type": "date",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "status",
+        "label": "Status",
+        "type": "select",
+        "required": false,
+        "multiple": false,
+        "options": [
+          "draft",
+          "active",
+          "paused",
+          "concluded"
+        ],
+        "defaultValue": "draft"
+      },
+      {
+        "name": "tags",
+        "label": "Tags",
+        "type": "tags",
+        "required": false,
+        "multiple": true,
+        "defaultValue": []
+      },
+      {
+        "name": "questionSlug",
+        "label": "Question Slug",
+        "type": "relationship",
+        "required": true,
+        "multiple": false,
+        "relationshipKind": "question"
+      },
+      {
+        "name": "hypothesisSlug",
+        "label": "Hypothesis Slug",
+        "type": "relationship",
+        "required": false,
+        "multiple": false,
+        "relationshipKind": "hypothesis"
+      }
+    ]
+  },
+  {
+    "kind": "note",
+    "label": "Note",
+    "publicKind": "Story",
+    "contentDir": "content/notes",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "slug",
+        "label": "Slug",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "date",
+        "label": "Date",
+        "type": "date",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "status",
+        "label": "Status",
+        "type": "select",
+        "required": false,
+        "multiple": false,
+        "options": [
+          "draft",
+          "active",
+          "paused",
+          "concluded"
+        ],
+        "defaultValue": "draft"
+      },
+      {
+        "name": "tags",
+        "label": "Tags",
+        "type": "tags",
+        "required": false,
+        "multiple": true,
+        "defaultValue": []
+      },
+      {
+        "name": "noteType",
+        "label": "Note Type",
+        "type": "select",
+        "required": true,
+        "multiple": false,
+        "options": [
+          "research-note",
+          "development-log",
+          "reading-note",
+          "tutorial",
+          "conference-note",
+          "book-review",
+          "essay"
+        ]
+      },
+      {
+        "name": "programSlug",
+        "label": "Program Slug",
+        "type": "relationship",
+        "required": false,
+        "multiple": false,
+        "relationshipKind": "program"
+      }
+    ]
+  },
+  {
+    "kind": "software",
+    "label": "Software",
+    "publicKind": "Artifact",
+    "contentDir": "content/software",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "slug",
+        "label": "Slug",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "date",
+        "label": "Date",
+        "type": "date",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "status",
+        "label": "Status",
+        "type": "select",
+        "required": false,
+        "multiple": false,
+        "options": [
+          "draft",
+          "active",
+          "paused",
+          "concluded"
+        ],
+        "defaultValue": "draft"
+      },
+      {
+        "name": "tags",
+        "label": "Tags",
+        "type": "tags",
+        "required": false,
+        "multiple": true,
+        "defaultValue": []
+      },
+      {
+        "name": "repositoryUrl",
+        "label": "Repository Url",
+        "type": "url",
+        "required": false,
+        "multiple": false
+      },
+      {
+        "name": "license",
+        "label": "License",
+        "type": "text",
+        "required": false,
+        "multiple": false
+      }
+    ]
+  },
+  {
+    "kind": "publication",
+    "label": "Publication",
+    "publicKind": "Artifact",
+    "contentDir": "content/publications",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "slug",
+        "label": "Slug",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "date",
+        "label": "Date",
+        "type": "date",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "status",
+        "label": "Status",
+        "type": "select",
+        "required": false,
+        "multiple": false,
+        "options": [
+          "draft",
+          "active",
+          "paused",
+          "concluded"
+        ],
+        "defaultValue": "draft"
+      },
+      {
+        "name": "tags",
+        "label": "Tags",
+        "type": "tags",
+        "required": false,
+        "multiple": true,
+        "defaultValue": []
+      },
+      {
+        "name": "venue",
+        "label": "Venue",
+        "type": "text",
+        "required": false,
+        "multiple": false
+      },
+      {
+        "name": "doi",
+        "label": "Doi",
+        "type": "text",
+        "required": false,
+        "multiple": false
+      },
+      {
+        "name": "preprintUrl",
+        "label": "Preprint Url",
+        "type": "url",
+        "required": false,
+        "multiple": false
+      },
+      {
+        "name": "coAuthors",
+        "label": "Co Authors",
+        "type": "string-list",
+        "required": false,
+        "multiple": true,
+        "defaultValue": []
+      }
+    ]
+  },
+  {
+    "kind": "dataset",
+    "label": "Dataset",
+    "publicKind": "Artifact",
+    "contentDir": "content/datasets",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "slug",
+        "label": "Slug",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "date",
+        "label": "Date",
+        "type": "date",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "status",
+        "label": "Status",
+        "type": "select",
+        "required": false,
+        "multiple": false,
+        "options": [
+          "draft",
+          "active",
+          "paused",
+          "concluded"
+        ],
+        "defaultValue": "draft"
+      },
+      {
+        "name": "tags",
+        "label": "Tags",
+        "type": "tags",
+        "required": false,
+        "multiple": true,
+        "defaultValue": []
+      },
+      {
+        "name": "sourceUrl",
+        "label": "Source Url",
+        "type": "url",
+        "required": false,
+        "multiple": false
+      },
+      {
+        "name": "license",
+        "label": "License",
+        "type": "text",
+        "required": false,
+        "multiple": false
+      }
+    ]
+  },
+  {
+    "kind": "presentation",
+    "label": "Presentation",
+    "publicKind": "Artifact",
+    "contentDir": "content/presentations",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "slug",
+        "label": "Slug",
+        "type": "text",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "description",
+        "label": "Description",
+        "type": "textarea",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "date",
+        "label": "Date",
+        "type": "date",
+        "required": true,
+        "multiple": false
+      },
+      {
+        "name": "status",
+        "label": "Status",
+        "type": "select",
+        "required": false,
+        "multiple": false,
+        "options": [
+          "draft",
+          "active",
+          "paused",
+          "concluded"
+        ],
+        "defaultValue": "draft"
+      },
+      {
+        "name": "tags",
+        "label": "Tags",
+        "type": "tags",
+        "required": false,
+        "multiple": true,
+        "defaultValue": []
+      },
+      {
+        "name": "venue",
+        "label": "Venue",
+        "type": "text",
+        "required": false,
+        "multiple": false
+      },
+      {
+        "name": "slidesUrl",
+        "label": "Slides Url",
+        "type": "url",
+        "required": false,
+        "multiple": false
+      },
+      {
+        "name": "videoUrl",
+        "label": "Video Url",
+        "type": "url",
+        "required": false,
+        "multiple": false
+      },
+      {
+        "name": "programSlug",
+        "label": "Program Slug",
+        "type": "relationship",
+        "required": false,
+        "multiple": false,
+        "relationshipKind": "program"
+      },
+      {
+        "name": "questionSlug",
+        "label": "Question Slug",
+        "type": "relationship",
+        "required": false,
+        "multiple": false,
+        "relationshipKind": "question"
+      }
+    ]
+  }
+]

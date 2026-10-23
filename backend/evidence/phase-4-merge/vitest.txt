@@ -1,0 +1,136 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/gblaguerre/Documents/Data Analytics Projects/stories-p3[39m
+
+ [32m✓[39m build/targets/python-artifact.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 4719[2mms[22m[39m
+   [33m[2m✓[22m[39m Python-built artifact read by the real Node reader[2m > [22mis accepted by ArtifactKnowledgeSourceAdapter, with kind-specific fields and the graph intact [33m 1311[2mms[22m[39m
+   [33m[2m✓[22m[39m Python-built artifact read by the real Node reader[2m > [22mcarries graph-derived search signals in the same static file [33m 1332[2mms[22m[39m
+   [33m[2m✓[22m[39m Python-built artifact read by the real Node reader[2m > [22mbuilds an empty laboratory [33m 1111[2mms[22m[39m
+   [33m[2m✓[22m[39m Python-built artifact read by the real Node reader[2m > [22mrefuses a duplicate id, naming both files, and writes no artifact [33m 962[2mms[22m[39m
+ [32m✓[39m auth/workflow.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 2469[2mms[22m[39m
+   [33m[2m✓[22m[39m AuthWorkflow.confirmPasswordReset[2m > [22mupdates the password, signs out every session, and consumes the token [33m 652[2mms[22m[39m
+{
+  "success": true,
+  "report": {
+    "countsByKind": {
+      "program": 2,
+      "question": 2,
+      "hypothesis": 1,
+      "experiment": 2,
+      "note": 2,
+      "software": 2,
+      "publication": 1,
+      "dataset": 2,
+      "presentation": 1
+    },
+    "entityCount": 15,
+    "relationshipCount": 11,
+    "targetResults": [
+      {
+        "name": "ladybug-graph",
+        "success": true,
+        "message": "Loaded 15 entities into the LadybugDB working graph.",
+        "durationMs": 85
+      },
+      {
+        "name": "duckdb",
+        "success": true,
+        "message": "Wrote 15 entities to database/generated/knowledge.duckdb.",
+        "durationMs": 178
+      },
+      {
+        "name": "manifest",
+        "success": true,
+        "message": "Wrote manifest.json (15 entities, 11 relationships).",
+        "durationMs": 1
+      }
+    ],
+    "validationIssues": [],
+    "elapsedMs": 380,
+    "success": true
+  }
+}
+[duplicate-id] Duplicate entity "dataset:same": defined in both "content/datasets/a-first.mdx" and "content/datasets/b-second.mdx". Each kind + slug must be unique: change the `slug` in one of the two files (or delete the one you no longer want).
+{
+  "success": false,
+  "report": {
+    "countsByKind": {},
+    "entityCount": 0,
+    "relationshipCount": 0,
+    "targetResults": [],
+    "validationIssues": [
+      {
+        "check": "duplicate-id",
+        "message": "Duplicate entity \"dataset:same\": defined in both \"content/datasets/a-first.mdx\" and \"content/datasets/b-second.mdx\". Each kind + slug must be unique: change the `slug` in one of the two files (or delete the one you no longer want)."
+      }
+    ],
+    "elapsedMs": 76,
+    "success": false
+  }
+}
+ [32m✓[39m build/python-producer.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2392[2mms[22m[39m
+   [33m[2m✓[22m[39m runPythonProducer[2m > [22mwrites the artifact at database/generated and returns 0 [33m 1365[2mms[22m[39m
+   [33m[2m✓[22m[39m runPythonProducer[2m > [22mpropagates a duplicate-id failure as a non-zero code and writes nothing [33m 1020[2mms[22m[39m
+ [32m✓[39m middleware.test.ts [2m([22m[2m34 tests[22m[2m)[22m[33m 821[2mms[22m[39m
+ [32m✓[39m fixtures/auth-contract/auth-contract.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 2699[2mms[22m[39m
+   [33m[2m✓[22m[39m scrypt vectors[2m > [22mare committed and match a fresh derivation [33m 765[2mms[22m[39m
+   [33m[2m✓[22m[39m scrypt vectors[2m > [22mverify with the real verifyPassword, and fail for any other password [33m 1671[2mms[22m[39m
+ [32m✓[39m build/pipeline.chain.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 275[2mms[22m[39m
+ [32m✓[39m auth/passwords.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1042[2mms[22m[39m
+   [33m[2m✓[22m[39m hashPassword / verifyPassword[2m > [22mrejects a hash computed under a different salt [33m 350[2mms[22m[39m
+ [32m✓[39m build/targets/duckdb-target.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 396[2mms[22m[39m
+ [32m✓[39m build/pipeline.kernel-failure.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 381[2mms[22m[39m
+   [33m[2m✓[22m[39m runBuildPipeline — Kernel failure[2m > [22mnever rejects; a Kernel error becomes a validationIssue and success: false [33m 377[2mms[22m[39m
+ [32m✓[39m build/targets/metadata-persistence.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 191[2mms[22m[39m
+ [32m✓[39m authoring/workflow.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 151[2mms[22m[39m
+ [32m✓[39m components/knowledge/reading.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 133[2mms[22m[39m
+ [32m✓[39m app/api/internal/revalidate/route.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 209[2mms[22m[39m
+ [32m✓[39m app/studio/pages.test.tsx [2m([22m[2m23 tests[22m[2m)[22m[32m 129[2mms[22m[39m
+ [32m✓[39m fixtures/schema-contract/schema-contract.test.ts [2m([22m[2m421 tests[22m[2m)[22m[33m 302[2mms[22m[39m
+ [32m✓[39m build/targets/round-trip.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 186[2mms[22m[39m
+ [32m✓[39m build/pipeline.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 151[2mms[22m[39m
+ [32m✓[39m app/api/relay.test.ts [2m([22m[2m73 tests[22m[2m)[22m[32m 111[2mms[22m[39m
+ [32m✓[39m runtime/adapters/artifact-knowledge-source-adapter.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 158[2mms[22m[39m
+ [32m✓[39m fixtures/kernel-contract/kernel-contract.test.ts [2m([22m[2m22 tests[22m[2m)[22m[32m 98[2mms[22m[39m
+ [32m✓[39m authoring/renderers/mdx-renderer.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 52[2mms[22m[39m
+ [32m✓[39m kernel/registry/registrations.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m fixtures/build-contract/build-contract.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 91[2mms[22m[39m
+ [32m✓[39m app/presentation.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m runtime/adapters/file-system-persistence-adapter.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m lib/presentation/knowledge.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m build/targets/registry.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m components/authoring/studio-editor.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m runtime/adapters/kernel-knowledge-source-adapter.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m build/targets/manifest-target.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32m✓[39m kernel/parsers/markdown-parser.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m kernel/authoring.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m lib/presentation/search.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m kernel/api.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 46[2mms[22m[39m
+ [32m✓[39m fixtures/authoring-contract/authoring-contract.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 55[2mms[22m[39m
+ [32m✓[39m runtime/adapters/supabase-persistence-adapter.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m runtime/platform-runtime.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m kernel/pipeline/relationships.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m kernel/errors.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m kernel/pipeline/validation.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m runtime/lifecycle.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m runtime/adapters/in-memory-event-bus.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m runtime/composition-root.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m runtime/adapters/environment-configuration.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m runtime/adapters/null-persistence-adapter.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m runtime/adapters/identifier-service.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m runtime/adapters/console-logger.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m kernel/cache.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m kernel/pipeline/factory.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m kernel/pipeline/graph.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m lib/utils/group-by.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m build/report.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m runtime/context.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m kernel/pipeline/normalization.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m runtime/errors.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m runtime/adapters/clock.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [2m[90m↓[39m[22m spikes/ladybugdb-phase0/artifact-contract.spike.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+
+[2m Test Files [22m [1m[32m56 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (57)[39m
+[2m      Tests [22m [1m[32m769 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (770)[39m
+[2m   Start at [22m 05:03:47
+[2m   Duration [22m 78.62s[2m (transform 1.99s, setup 0ms, collect 19.58s, tests 17.76s, environment 24ms, prepare 16.64s)[22m
+

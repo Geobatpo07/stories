@@ -6,6 +6,7 @@ Python but not in JS) and `re.ASCII` (so `\\d` is [0-9] only, as in JS).
 """
 
 import re
+from collections.abc import Callable
 from typing import Annotated
 
 from pydantic import AfterValidator, AnyUrl, StringConstraints, TypeAdapter, ValidationError
@@ -20,7 +21,7 @@ def _format_error(message: str) -> PydanticCustomError:
     return PydanticCustomError("format", "{msg}", {"msg": message})
 
 
-def _match(pattern: re.Pattern[str], message: str):
+def _match(pattern: re.Pattern[str], message: str) -> Callable[[str], str]:
     def check(value: str) -> str:
         if pattern.fullmatch(value) is None:
             raise _format_error(message)

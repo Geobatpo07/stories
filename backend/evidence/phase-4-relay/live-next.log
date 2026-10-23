@@ -1,0 +1,26 @@
+   ▲ Next.js 15.5.21
+   - Local:        http://localhost:3002
+   - Network:      http://192.168.1.6:3002
+
+ ✓ Starting...
+ ✓ Ready in 6.3s
+ ○ Compiling /api/auth/login ...
+ ✓ Compiled /api/auth/login in 4.3s (314 modules)
+ POST /api/auth/login 401 in 5220ms
+ POST /api/auth/login 401 in 520ms
+ POST /api/auth/login 400 in 34ms
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 773ms (128 modules)
+ ✓ Compiled /api/auth/reset-password in 407ms (316 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (128kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ POST /api/auth/reset-password 200 in 603ms
+ ✓ Compiled /api/auth/logout in 198ms (318 modules)
+ POST /api/auth/logout 200 in 281ms
+ POST /api/auth/login 200 in 326ms
+ ○ Compiling /api/studio/documents ...
+ ✓ Compiled /api/studio/documents in 1280ms (456 modules)
+ POST /api/studio/documents 200 in 2153ms
+ ✓ Compiled /api/studio/documents/[id]/publish in 220ms (458 modules)
+ POST /api/studio/documents/11111111-1111-4111-8111-111111111111/publish 422 in 1559ms
+ POST /api/auth/login 502 in 48ms
+[?25h

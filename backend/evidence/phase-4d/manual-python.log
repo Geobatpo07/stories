@@ -1,0 +1,17 @@
+INFO:     Started server process [19488]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:50858 - "GET /api/authoring/definitions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50857 - "GET /api/studio/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52891 - "GET /api/authoring/definitions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52892 - "GET /api/studio/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52914 - "OPTIONS /api/studio/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52916 - "POST /api/studio/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52940 - "GET /api/authoring/definitions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52939 - "GET /api/studio/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52940 - "GET /api/authoring/definitions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52939 - "GET /api/studio/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52940 - "GET /api/authoring/definitions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52939 - "GET /api/studio/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51420 - "POST /api/studio/documents/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/publish HTTP/1.1" 422 Unprocessable Content

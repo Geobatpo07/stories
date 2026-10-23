@@ -18,6 +18,7 @@ frontmatter library:
 import io
 import json
 import re
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -45,7 +46,7 @@ def _parse_yaml(text: str) -> Any:
     return yaml.load(io.StringIO(text))
 
 
-def _engine(language: str):
+def _engine(language: str) -> Callable[[str], Any]:
     name = language.lower()
     if name in ("yaml", "yml"):
         return _parse_yaml
@@ -59,7 +60,7 @@ def split_frontmatter(raw: str) -> tuple[Any, str]:
     """Return `(data, body)` exactly as `matter(raw)` would, before the caller's `.trim()`."""
     if raw == "":
         return {}, raw
-    text = raw[1:] if raw.startswith("﻿") else raw
+    text = raw.removeprefix("﻿")
     if not text.startswith(_OPEN):
         return {}, text
     if text[len(_OPEN) : len(_OPEN) + 1] == _OPEN[-1]:
@@ -68,7 +69,8 @@ def split_frontmatter(raw: str) -> tuple[Any, str]:
     rest = text[len(_OPEN) :]
     length = len(rest)
 
-    # matter.language(): everything up to the first newline; `search` == -1 slices off the last char.
+    # matter.language(): everything up to the first newline; `search` == -1 slices off the last
+    # char.
     newline = re.search(r"\r?\n", rest)
     end = newline.start() if newline else -1
     language_raw = rest[:end] if end != -1 else rest[:-1]
@@ -103,9 +105,11 @@ def split_frontmatter(raw: str) -> tuple[Any, str]:
 
 
 def extract_slug(data: Any, source_path: str) -> str:
-    """Port of lib/markdown's `extractSlug`: frontmatter slug, else the filename without .md/.mdx."""
-    if isinstance(data, dict) and isinstance(data.get("slug"), str):
-        return data["slug"]
+    """Port of lib/markdown's `extractSlug`: frontmatter slug, else the filename without
+    .md/.mdx."""
+    slug = data.get("slug") if isinstance(data, dict) else None
+    if isinstance(slug, str):
+        return slug
     return re.sub(r"\.mdx?$", "", source_path.rsplit("/", 1)[-1])
 
 

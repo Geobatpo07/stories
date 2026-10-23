@@ -1,0 +1,695 @@
+tools\generate_schema_contract_fixtures.py:112: error: Missing type arguments for generic type "dict"  [type-arg]
+tools\generate_schema_contract_fixtures.py:113: error: Value of type "object" is not indexable  [index]
+tools\generate_schema_contract_fixtures.py:116: error: Function is missing a type annotation  [no-untyped-def]
+tools\generate_schema_contract_fixtures.py:119: error: Function is missing a type annotation  [no-untyped-def]
+tools\generate_schema_contract_fixtures.py:122: error: Call to untyped function "ok" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:129: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:133: error: Call to untyped function "ok" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:134: error: Call to untyped function "ok" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:141: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:144: error: Call to untyped function "ok" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:152: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:156: error: Call to untyped function "ok" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:164: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:169: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:174: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:175: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:176: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:177: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:178: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:179: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:180: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:185: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:186: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:187: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:188: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:193: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:198: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:199: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:200: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:205: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:206: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:207: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:208: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:209: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:210: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:211: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:212: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:214: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:215: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:216: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:221: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:222: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:224: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:229: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:230: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:235: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:240: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:245: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:246: error: Call to untyped function "ok" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:252: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:253: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:254: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:255: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:256: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:257: error: Call to untyped function "ok" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:265: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:268: error: Call to untyped function "ok" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:276: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:279: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:280: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:282: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:287: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:288: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:293: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:294: error: "object" has no attribute "get"  [attr-defined]
+tools\generate_schema_contract_fixtures.py:296: error: Call to untyped function "ok" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:302: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:303: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tools\generate_schema_contract_fixtures.py:327: error: Value of type "object" is not indexable  [index]
+tools\generate_kernel_contract_scenarios.py:22: error: Function is missing a type annotation for one or more parameters  [no-untyped-def]
+tools\generate_kernel_contract_scenarios.py:38: error: Function is missing a type annotation  [no-untyped-def]
+tools\generate_kernel_contract_scenarios.py:65: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:70: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:71: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:72: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:73: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:74: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:75: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:76: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:77: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:78: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:79: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:81: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:82: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:85: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:89: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:94: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:95: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:99: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:100: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:143: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:146: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:151: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:152: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tools\generate_kernel_contract_scenarios.py:153: error: Call to untyped function "base" in typed context  [no-untyped-call]
+tests\test_zod_string_checks.py:32: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_schema_contract.py:24: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_schema_contract.py:32: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_schema_contract.py:32: note: Use "-> None" if function does not return a value
+tests\test_schema_contract.py:39: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_schema_contract.py:39: note: Use "-> None" if function does not return a value
+tests\test_schema_contract.py:45: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_schema_contract.py:52: error: Call to untyped function "_cases" in typed context  [no-untyped-call]
+tests\test_schema_contract.py:53: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_password_contract.py:30: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_password_contract.py:34: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_password_contract.py:34: note: Use "-> None" if function does not return a value
+tests\test_password_contract.py:40: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_password_contract.py:42: error: Call to untyped function "run" in typed context  [no-untyped-call]
+tests\test_password_contract.py:43: error: Call to untyped function "run" in typed context  [no-untyped-call]
+tests\test_password_contract.py:46: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_password_contract.py:46: note: Use "-> None" if function does not return a value
+tests\test_password_contract.py:54: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_password_contract.py:54: note: Use "-> None" if function does not return a value
+tests\test_password_contract.py:55: error: Call to untyped function "run" in typed context  [no-untyped-call]
+tests\test_password_contract.py:58: error: Call to untyped function "run" in typed context  [no-untyped-call]
+tests\test_password_contract.py:64: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_password_contract.py:64: note: Use "-> None" if function does not return a value
+tests\test_password_contract.py:70: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_password_contract.py:70: note: Use "-> None" if function does not return a value
+tests\test_password_contract.py:71: error: Call to untyped function "run" in typed context  [no-untyped-call]
+tests\test_password_contract.py:89: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_password_contract.py:94: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_password_contract.py:94: note: Use "-> None" if function does not return a value
+tests\test_password_contract.py:96: error: Call to untyped function "run" in typed context  [no-untyped-call]
+tests\test_password_contract.py:97: error: Call to untyped function "run" in typed context  [no-untyped-call]
+tests\test_manifest_version.py:10: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_manifest_version.py:16: error: Function is missing a type annotation  [no-untyped-def]
+authoring\definitions.py:156: error: Argument 1 to "_issues_for" has incompatible type "dict[str, Any]"; expected "ErrorDetails"  [arg-type]
+tests\test_kernel_contract.py:26: error: Missing type arguments for generic type "dict"  [type-arg]
+tests\test_kernel_contract.py:41: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_kernel_contract.py:46: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_kernel_contract.py:46: note: Use "-> None" if function does not return a value
+tests\test_kernel_contract.py:50: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_kernel_contract.py:55: error: Call to untyped function "_invalid_cases" in typed context  [no-untyped-call]
+tests\test_kernel_contract.py:56: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_kernel_contract.py:56: error: Missing type arguments for generic type "list"  [type-arg]
+tests\test_authoring_contract.py:28: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:32: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:32: note: Use "-> None" if function does not return a value
+tests\test_authoring_contract.py:33: error: Call to untyped function "load" in typed context  [no-untyped-call]
+tests\test_authoring_contract.py:36: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:36: note: Use "-> None" if function does not return a value
+tests\test_authoring_contract.py:43: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:43: note: Use "-> None" if function does not return a value
+tests\test_authoring_contract.py:44: error: Call to untyped function "load" in typed context  [no-untyped-call]
+tests\test_authoring_contract.py:47: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:47: note: Use "-> None" if function does not return a value
+tests\test_authoring_contract.py:54: error: Call to untyped function "load" in typed context  [no-untyped-call]
+tests\test_authoring_contract.py:58: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:62: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:62: note: Use "-> None" if function does not return a value
+tests\test_authoring_contract.py:89: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:100: error: Call to untyped function "load" in typed context  [no-untyped-call]
+tests\test_authoring_contract.py:104: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:116: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:116: note: Use "-> None" if function does not return a value
+tests\test_authoring_contract.py:124: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:124: note: Use "-> None" if function does not return a value
+tests\test_authoring_contract.py:146: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:151: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:156: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:161: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_authoring_contract.py:161: note: Use "-> None" if function does not return a value
+tests\test_graph_store.py:14: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_graph_store.py:19: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_graph_store.py:25: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_graph_store.py:29: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_graph_store.py:38: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_graph_store.py:44: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_graph_store.py:49: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_graph_store.py:79: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_graph_store.py:79: note: Use "-> None" if function does not return a value
+tests\test_graph_store.py:95: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_graph_store.py:101: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_graph_store.py:112: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_graph_store.py:119: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_graph_store.py:119: note: Use "-> None" if function does not return a value
+tests\test_graph_store.py:126: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_content_hash.py:16: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_content_hash.py:20: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_content_hash.py:20: note: Use "-> None" if function does not return a value
+tests\test_content_hash.py:25: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_content_hash.py:25: note: Use "-> None" if function does not return a value
+tests\test_content_hash.py:30: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_content_hash.py:30: note: Use "-> None" if function does not return a value
+tests\test_content_hash.py:38: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_content_hash.py:38: note: Use "-> None" if function does not return a value
+tools\benchmark_build.py:23: error: Missing type arguments for generic type "dict"  [type-arg]
+tests\test_search_index.py:22: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_search_index.py:58: error: Need type annotation for "in_degree"  [var-annotated]
+tests\test_search_index.py:59: error: Need type annotation for "out_degree"  [var-annotated]
+tests\test_search_index.py:68: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_search_index.py:78: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_search_index.py:78: note: Use "-> None" if function does not return a value
+tests\test_search_index.py:94: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_search_index.py:106: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_search_index.py:116: error: Value of type "tuple[Any, ...] | None" is not indexable  [index]
+tests\test_search_index.py:126: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_search_index.py:130: error: Value of type "tuple[Any, ...] | None" is not indexable  [index]
+tests\test_pipeline_build.py:23: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_pipeline_build.py:31: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_pipeline_build.py:38: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_pipeline_build.py:57: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_pipeline_build.py:65: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_pipeline_build.py:88: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_pipeline_build.py:94: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_duckdb_pin.py:25: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_duckdb_pin.py:25: note: Use "-> None" if function does not return a value
+tests\test_duckdb_pin.py:27: error: Item "None" of "Match[str] | None" has no attribute "group"  [union-attr]
+tests\test_duckdb_pin.py:30: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_duckdb_pin.py:30: note: Use "-> None" if function does not return a value
+tests\test_duckdb_pin.py:35: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_duckdb_pin.py:35: note: Use "-> None" if function does not return a value
+tests\test_duckdb_pin.py:40: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:25: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:25: note: Use "-> None" if function does not return a value
+tests\test_artifact_contract.py:32: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:32: note: Use "-> None" if function does not return a value
+tests\test_artifact_contract.py:38: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:38: note: Use "-> None" if function does not return a value
+tests\test_artifact_contract.py:44: error: Item "None" of "Match[str] | None" has no attribute "group"  [union-attr]
+tests\test_artifact_contract.py:47: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:47: note: Use "-> None" if function does not return a value
+tests\test_artifact_contract.py:56: error: Item "None" of "Match[str] | None" has no attribute "group"  [union-attr]
+tests\test_artifact_contract.py:61: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:61: note: Use "-> None" if function does not return a value
+tests\test_artifact_contract.py:66: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:73: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:79: error: Value of type "tuple[Any, ...] | None" is not indexable  [index]
+tests\test_artifact_contract.py:97: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:106: error: Value of type "tuple[Any, ...] | None" is not indexable  [index]
+tests\test_artifact_contract.py:107: error: Value of type "tuple[Any, ...] | None" is not indexable  [index]
+tests\test_artifact_contract.py:114: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:118: error: Value of type "tuple[Any, ...] | None" is not indexable  [index]
+tests\test_artifact_contract.py:127: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_artifact_contract.py:129: error: Value of type "tuple[Any, ...] | None" is not indexable  [index]
+tests\test_artifact_contract.py:140: error: Function is missing a return type annotation  [no-untyped-def]
+tests\github_fake.py:135: error: Value of type "Any | None" is not indexable  [index]
+tests\github_fake.py:136: error: Value of type "Any | None" is not indexable  [index]
+tests\github_fake.py:147: error: Value of type "Any | None" is not indexable  [index]
+tests\github_fake.py:154: error: Value of type "Any | None" is not indexable  [index]
+tests\github_fake.py:155: error: Item "None" of "Any | None" has no attribute "get"  [union-attr]
+tests\github_fake.py:157: error: Value of type "Any | None" is not indexable  [index]
+tests\test_studio_adapters.py:16: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_studio_adapters.py:16: error: Function is missing a type annotation for one or more parameters  [no-untyped-def]
+tests\test_studio_adapters.py:27: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_studio_adapters.py:27: note: Use "-> None" if function does not return a value
+tests\test_studio_adapters.py:31: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_studio_adapters.py:31: note: Use "-> None" if function does not return a value
+tests\test_studio_adapters.py:50: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_studio_adapters.py:50: note: Use "-> None" if function does not return a value
+tests\test_studio_adapters.py:60: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_studio_adapters.py:60: note: Use "-> None" if function does not return a value
+tests\test_studio_adapters.py:71: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_studio_adapters.py:71: note: Use "-> None" if function does not return a value
+tests\test_studio_adapters.py:79: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_studio_adapters.py:79: note: Use "-> None" if function does not return a value
+tests\test_studio_adapters.py:85: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_studio_adapters.py:85: note: Use "-> None" if function does not return a value
+tests\test_studio_adapters.py:92: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_studio_adapters.py:92: note: Use "-> None" if function does not return a value
+tests\test_studio_adapters.py:98: error: Function is missing a return type annotation  [no-untyped-def]
+tests\api_support.py:147: error: Function is missing a return type annotation  [no-untyped-def]
+tests\api_support.py:171: error: Function is missing a return type annotation  [no-untyped-def]
+tests\api_support.py:174: error: Function is missing a return type annotation  [no-untyped-def]
+tests\api_support.py:178: error: Returning Any from function declared to return "list[str]"  [no-any-return]
+tests\test_github_publication.py:49: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:49: error: Function is missing a type annotation for one or more parameters  [no-untyped-def]
+tests\test_github_publication.py:53: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:66: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:66: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:90: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:90: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:100: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:100: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:106: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:106: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:120: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:120: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:126: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:126: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:136: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:136: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:146: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:146: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:158: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:158: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:168: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:168: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:179: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:182: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:206: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:216: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_github_publication.py:226: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:226: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:234: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:234: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:243: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_github_publication.py:269: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_github_publication.py:283: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_github_publication.py:305: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:305: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:340: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_github_publication.py:362: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:362: error: Function is missing a type annotation for one or more parameters  [no-untyped-def]
+tests\test_github_publication.py:370: error: Call to untyped function "stored_draft" in typed context  [no-untyped-call]
+tests\test_github_publication.py:374: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_github_publication.py:378: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:378: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:381: error: Call to untyped function "publish_via_api" in typed context  [no-untyped-call]
+tests\test_github_publication.py:393: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:393: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:397: error: Call to untyped function "publish_via_api" in typed context  [no-untyped-call]
+tests\test_github_publication.py:403: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:403: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:408: error: Call to untyped function "publish_via_api" in typed context  [no-untyped-call]
+tests\test_github_publication.py:416: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:416: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:419: error: Call to untyped function "publish_via_api" in typed context  [no-untyped-call]
+tests\test_github_publication.py:427: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:427: note: Use "-> None" if function does not return a value
+tests\test_github_publication.py:430: error: Call to untyped function "publish_via_api" in typed context  [no-untyped-call]
+tests\test_github_publication.py:432: error: Call to untyped function "stored_draft" in typed context  [no-untyped-call]
+tests\test_github_publication.py:433: error: Call to untyped function "publish_via_api" in typed context  [no-untyped-call]
+tests\test_github_publication.py:442: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:460: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_github_publication.py:460: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:23: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:29: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:48: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:52: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:60: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:64: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:65: error: Call to untyped function "get" in typed context  [no-untyped-call]
+tests\test_api_studio.py:65: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:65: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:70: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:70: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:71: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:72: error: Call to untyped function "get" in typed context  [no-untyped-call]
+tests\test_api_studio.py:75: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:75: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:77: error: Call to untyped function "get" in typed context  [no-untyped-call]
+tests\test_api_studio.py:80: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:80: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:82: error: Call to untyped function "get" in typed context  [no-untyped-call]
+tests\test_api_studio.py:82: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:82: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:87: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:87: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:88: error: Call to untyped function "get" in typed context  [no-untyped-call]
+tests\test_api_studio.py:88: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:91: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:91: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:92: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:94: error: Call to untyped function "get" in typed context  [no-untyped-call]
+tests\test_api_studio.py:98: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:98: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:100: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:108: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:108: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:109: error: Call to untyped function "get" in typed context  [no-untyped-call]
+tests\test_api_studio.py:109: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:114: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:114: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:115: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:117: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:117: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:119: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:119: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:120: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:120: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:121: error: Call to untyped function "get" in typed context  [no-untyped-call]
+tests\test_api_studio.py:129: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:129: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:130: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:133: error: Call to untyped function "get" in typed context  [no-untyped-call]
+tests\test_api_studio.py:151: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:152: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:153: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:153: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:159: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:159: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:160: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:168: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:168: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:169: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:170: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:170: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:178: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:188: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:188: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:189: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:190: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:190: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:204: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:205: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:206: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:210: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:210: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:214: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:214: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:215: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:216: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:217: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:217: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:221: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:222: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:223: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:223: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:227: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:227: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:228: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:229: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:230: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:230: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:233: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:233: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:234: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:235: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:235: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:237: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:237: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:245: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:245: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:246: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:253: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:253: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:260: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:260: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:261: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:263: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:263: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:267: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:267: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:268: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:269: error: Call to untyped function "post" in typed context  [no-untyped-call]
+tests\test_api_studio.py:269: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:293: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:299: error: Call to untyped function "draft" in typed context  [no-untyped-call]
+tests\test_api_studio.py:308: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:312: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:315: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:315: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:318: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:326: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:326: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:328: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:333: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:333: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:334: error: Call to untyped function "publishing_harness" in typed context  [no-untyped-call]
+tests\test_api_studio.py:335: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:336: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:342: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:342: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:343: error: Call to untyped function "publishing_harness" in typed context  [no-untyped-call]
+tests\test_api_studio.py:344: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:350: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:350: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:351: error: Call to untyped function "publishing_harness" in typed context  [no-untyped-call]
+tests\test_api_studio.py:352: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:353: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:361: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:361: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:362: error: Call to untyped function "publishing_harness" in typed context  [no-untyped-call]
+tests\test_api_studio.py:363: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:364: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:368: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:387: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:387: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:388: error: Call to untyped function "publishing_harness" in typed context  [no-untyped-call]
+tests\test_api_studio.py:393: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:403: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:407: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:407: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:408: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:409: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:410: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:416: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:419: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:419: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:421: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:426: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:426: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:429: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:430: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:431: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:434: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:438: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_studio.py:439: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:439: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:442: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_studio.py:443: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:445: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:454: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:454: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:455: error: Call to untyped function "publishing_harness" in typed context  [no-untyped-call]
+tests\test_api_studio.py:460: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:469: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:475: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:475: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:477: error: Call to untyped function "publishing_harness" in typed context  [no-untyped-call]
+tests\test_api_studio.py:485: error: Call to untyped function "stored" in typed context  [no-untyped-call]
+tests\test_api_studio.py:486: error: Call to untyped function "publish_url" in typed context  [no-untyped-call]
+tests\test_api_studio.py:496: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:496: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:505: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_studio.py:505: note: Use "-> None" if function does not return a value
+tests\test_api_studio.py:506: error: Call to untyped function "signed_in" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:26: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:33: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:33: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:34: error: Call to untyped function "logout_harness" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:42: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:42: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:43: error: Call to untyped function "logout_harness" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:47: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:47: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:48: error: Call to untyped function "logout_harness" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:57: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:57: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:58: error: Call to untyped function "logout_harness" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:65: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:65: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:66: error: Call to untyped function "logout_harness" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:72: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:72: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:73: error: Call to untyped function "logout_harness" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:86: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:96: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:96: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:119: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:119: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:125: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:125: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:134: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:134: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:140: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:140: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:148: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:148: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:156: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:156: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:165: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:165: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:173: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:173: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:187: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:209: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:211: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:221: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:221: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:223: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:227: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:227: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:230: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:233: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:240: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:240: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:246: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:246: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:248: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:268: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:268: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:270: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:277: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:277: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:279: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:284: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:284: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:286: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:297: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:297: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:307: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:307: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:309: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:320: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:320: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:322: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:328: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:328: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:330: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:334: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:334: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:336: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:345: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:345: note: Use "-> None" if function does not return a value
+tests\test_api_logout_reset.py:347: error: Call to untyped function "seed_token" in typed context  [no-untyped-call]
+tests\test_api_logout_reset.py:354: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_logout_reset.py:354: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:25: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_login.py:29: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_login.py:36: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:36: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:38: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:44: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:44: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:46: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:54: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:54: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:56: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:64: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:64: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:66: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:79: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:79: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:82: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:90: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:90: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:92: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:93: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:100: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:100: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:127: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_login.py:140: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:140: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:153: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:153: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:161: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:161: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:169: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:169: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:178: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:178: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:181: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:182: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:187: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:187: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:190: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:191: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:194: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:194: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:197: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:199: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:200: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:205: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:205: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:208: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:209: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:210: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:213: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:213: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:216: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:217: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:223: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:223: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:227: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:230: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:230: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:233: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:234: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:236: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:237: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:240: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:240: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:243: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:244: error: Call to untyped function "good" in typed context  [no-untyped-call]
+tests\test_api_login.py:245: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:248: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:248: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:251: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:253: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:255: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:258: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:258: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:279: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:279: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:282: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:285: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:285: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:288: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:289: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:292: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_login.py:292: note: Use "-> None" if function does not return a value
+tests\test_api_login.py:295: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:297: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:298: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_login.py:299: error: Call to untyped function "bad" in typed context  [no-untyped-call]
+tests\test_api_cors.py:12: error: Function is missing a type annotation  [no-untyped-def]
+tests\test_api_cors.py:23: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_cors.py:23: note: Use "-> None" if function does not return a value
+tests\test_api_cors.py:24: error: Call to untyped function "preflight" in typed context  [no-untyped-call]
+tests\test_api_cors.py:31: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_cors.py:31: note: Use "-> None" if function does not return a value
+tests\test_api_cors.py:33: error: Call to untyped function "preflight" in typed context  [no-untyped-call]
+tests\test_api_cors.py:36: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_cors.py:36: note: Use "-> None" if function does not return a value
+tests\test_api_cors.py:38: error: Call to untyped function "preflight" in typed context  [no-untyped-call]
+tests\test_api_cors.py:41: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_cors.py:41: note: Use "-> None" if function does not return a value
+tests\test_api_cors.py:43: error: Call to untyped function "preflight" in typed context  [no-untyped-call]
+tests\test_api_cors.py:46: error: Function is missing a return type annotation  [no-untyped-def]
+tests\test_api_cors.py:46: note: Use "-> None" if function does not return a value
+Found 544 errors in 24 files (checked 95 source files)

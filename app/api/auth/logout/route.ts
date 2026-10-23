@@ -1,9 +1,6 @@
-import { NextResponse } from "next/server";
-import { authWorkflow, clearSessionCookie, currentSessionToken } from "@/auth/server";
+import { pythonApiRelay } from "@/lib/python-api";
 
-export async function POST() {
-  const token = await currentSessionToken();
-  if (token) await authWorkflow.logout(token);
-  await clearSessionCookie();
-  return NextResponse.json({ success: true });
+/** Pure relay: session deletion and the cleared cookie are the Python endpoint's. */
+export async function POST(request: Request) {
+  return pythonApiRelay(request, "/api/auth/logout");
 }

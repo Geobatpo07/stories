@@ -1,0 +1,34 @@
+$ cat the two colliding files
+--- content/datasets/a-first.mdx
+---
+title: First
+slug: same
+description: Description of same
+date: "2026-03-01"
+---
+first
+--- content/datasets/b-second.mdx
+---
+title: Second
+slug: same
+description: Description of same
+date: "2026-03-01"
+---
+second
+$ python -m pipeline.cli --root <that content>   (stdout = report JSON, stderr = reasons)
+exit code: 1
+--- stderr
+[duplicate-id] Duplicate entity "dataset:same": defined in both "content/datasets/a-first.mdx" and "content/datasets/b-second.mdx". Each kind + slug must be unique: change the `slug` in one of the two files (or delete the one you no longer want).
+--- stdout: success and validationIssues
+{
+  "success": false,
+  "validationIssues": [
+    {
+      "check": "duplicate-id",
+      "message": "Duplicate entity \"dataset:same\": defined in both \"content/datasets/a-first.mdx\" and \"content/datasets/b-second.mdx\". Each kind + slug must be unique: change the `slug` in one of the two files (or delete the one you no longer want)."
+    }
+  ],
+  "targetResults": []
+}
+$ ls <root>/database   (nothing written)
+ls: cannot access '/tmp/dup/database': No such file or directory

@@ -6,6 +6,7 @@ import { ArtifactKnowledgeSourceAdapter } from "@/runtime";
 import { afterEach, describe, expect, it } from "vitest";
 import { duckDBBuildTarget } from "./duckdb-target";
 import { manifestBuildTarget } from "./manifest-target";
+import { runPythonBuildFromEntities, useJsProducer } from "./python-producer.test-support";
 import type { BuildTargetContext } from "./types";
 
 /**
@@ -80,10 +81,18 @@ describe("DuckDB + Manifest targets round-tripped through ArtifactKnowledgeSourc
       startedAt: Date.now(),
     };
 
-    const duckdbOutcome = await duckDBBuildTarget.run(context);
-    expect(duckdbOutcome.success).toBe(true);
-    const manifestOutcome = await manifestBuildTarget.run(context);
-    expect(manifestOutcome.success).toBe(true);
+    if (useJsProducer) {
+      const duckdbOutcome = await duckDBBuildTarget.run(context);
+      expect(duckdbOutcome.success).toBe(true);
+      const manifestOutcome = await manifestBuildTarget.run(context);
+      expect(manifestOutcome.success).toBe(true);
+    } else {
+      // STORIES_ARTIFACT_PRODUCER=python: the same entities go through the Python producer
+      // (backend/pipeline, ADR-004 Phase 3); every assertion below is unchanged.
+      const built = runPythonBuildFromEntities(rootDirectory, [program, question]);
+      expect(built.stderr).toBe("");
+      expect(built.status).toBe(0);
+    }
 
     const adapter = await ArtifactKnowledgeSourceAdapter.create({
       manifestPath: join(rootDirectory, "database/generated/manifest.json"),

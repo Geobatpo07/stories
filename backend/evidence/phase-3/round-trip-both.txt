@@ -1,0 +1,13 @@
+$ pnpm exec vitest run build/targets/round-trip.test.ts --reporter=verbose   (default: TypeScript producer)
+ ✓ build/targets/round-trip.test.ts > DuckDB + Manifest targets round-tripped through ArtifactKnowledgeSourceAdapter > reads back the same entities and relationships that were written 140ms
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+
+$ STORIES_ARTIFACT_PRODUCER=python pnpm exec vitest run build/targets/round-trip.test.ts --reporter=verbose   (Python producer, same assertions)
+ ✓ build/targets/round-trip.test.ts > DuckDB + Manifest targets round-tripped through ArtifactKnowledgeSourceAdapter > reads back the same entities and relationships that were written 902ms
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+
+$ git diff --stat build/targets/round-trip.test.ts
+ build/targets/round-trip.test.ts | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)

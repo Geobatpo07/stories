@@ -7,6 +7,7 @@ import type {
   AuthoringFieldDefinition,
   FriendlyValidationIssue,
 } from "@/authoring";
+import { studioApiFetch } from "@/lib/studio-client";
 import { MarkdownDocument } from "@/components/knowledge/markdown-document";
 
 export interface RelationshipOption {
@@ -32,10 +33,13 @@ export function StudioEditor({
 
   const save = useCallback(async (current: AuthoringDocument) => {
     setSaveState("saving");
-    const response = await fetch("/api/studio/documents", {
+    const response = await studioApiFetch("/api/studio/documents", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(current),
+    }).catch((error: unknown) => {
+      setSaveState("error");
+      throw error;
     });
     const payload = (await response.json()) as {
       document?: AuthoringDocument;
@@ -80,7 +84,9 @@ export function StudioEditor({
     setPublicationError(undefined);
     try {
       const saved = await save(document);
-      const response = await fetch(`/api/studio/documents/${saved.id}/publish`, { method: "POST" });
+      const response = await studioApiFetch(`/api/studio/documents/${saved.id}/publish`, {
+        method: "POST",
+      });
       const payload = (await response.json()) as { document?: AuthoringDocument; error?: string };
       if (!response.ok || !payload.document)
         throw new Error(payload.error ?? "Publication failed.");

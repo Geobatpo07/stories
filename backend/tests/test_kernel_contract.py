@@ -7,6 +7,7 @@ those same goldens.
 
 import json
 from pathlib import Path
+from typing import Any
 
 import pytest
 from pydantic import ValidationError
@@ -23,7 +24,7 @@ CONTRACT = Path(__file__).resolve().parents[2] / "fixtures" / "kernel-contract"
 SCENARIOS = sorted(p for p in (CONTRACT / "scenarios").iterdir() if p.is_dir())
 
 
-def snapshot(root: Path) -> dict:
+def snapshot(root: Path) -> dict[str, Any]:
     try:
         return {"outcome": "ok", "entities": [e.to_dict() for e in load_all(root)]}
     except KnowledgeValidationError as e:
@@ -38,22 +39,22 @@ def snapshot(root: Path) -> dict:
 
 
 @pytest.mark.parametrize("scenario", SCENARIOS, ids=lambda p: p.name)
-def test_scenario_matches_typescript_kernel(scenario: Path):
+def test_scenario_matches_typescript_kernel(scenario: Path) -> None:
     expected = json.loads((scenario / "expected.json").read_text(encoding="utf8"))
     assert snapshot(scenario) == expected
 
 
-def test_every_scenario_has_a_golden_file():
+def test_every_scenario_has_a_golden_file() -> None:
     assert SCENARIOS and all((s / "expected.json").exists() for s in SCENARIOS)
 
 
-def _invalid_cases():
+def _invalid_cases() -> list[Any]:
     golden = json.loads((CONTRACT / "validation-issues.json").read_text(encoding="utf8"))
     return [pytest.param(key, issues, id=key) for key, issues in golden.items()]
 
 
 @pytest.mark.parametrize(("key", "issues"), _invalid_cases())
-def test_validation_issues_match_zod(key: str, issues: list):
+def test_validation_issues_match_zod(key: str, issues: list[Any]) -> None:
     kind, name = key.split("/")
     fixture = json.loads(
         (CONTRACT.parent / "schema-contract" / kind / f"{name}.json").read_text(encoding="utf8")

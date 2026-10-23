@@ -1,4 +1,5 @@
-"""Port of kernel/pipeline/factory.ts: validated frontmatter -> KnowledgeEntity (registry-driven)."""
+"""Port of kernel/pipeline/factory.ts: validated frontmatter -> KnowledgeEntity
+(registry-driven)."""
 
 from typing import Any
 
@@ -24,7 +25,8 @@ def create_entity(
         status=frontmatter["status"],
         created_at=frontmatter["date"],
         updated_at=frontmatter["date"],
-        # Kind-specific fields live in metadata too (matches kernel/pipeline/factory.ts after af1834e):
+        # Kind-specific fields live in metadata too (matches kernel/pipeline/factory.ts after
+        # af1834e):
         # the DuckDB artifact persists only metadata, so they would otherwise be lost.
         metadata={"tags": frontmatter["tags"], **extra},
         relationships=(),

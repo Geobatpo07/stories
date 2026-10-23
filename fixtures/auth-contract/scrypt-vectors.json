@@ -1,0 +1,50 @@
+{
+  "algorithm": "scrypt",
+  "parameters": {
+    "N": 16384,
+    "r": 8,
+    "p": 1,
+    "keyLengthBytes": 64
+  },
+  "passwordEncoding": "utf-8",
+  "saltEncoding": "the 32-character hex string itself, encoded as UTF-8 bytes (NOT hex-decoded into 16 bytes)",
+  "hashEncoding": "lowercase hex, 128 characters",
+  "vectors": [
+    {
+      "description": "plain ASCII",
+      "password": "correct horse battery",
+      "salt": "00112233445566778899aabbccddeeff",
+      "hash": "ba9c3ef700b6de474b706aea98d13043eda61fb74744cfa3ddc2c124d41d72bbd9133a089140f0b26271c4d8d5d92dcf186b8f3451bcab31527466fff1000bf8"
+    },
+    {
+      "description": "non-ASCII, BMP and astral characters",
+      "password": "é–日本語🙂",
+      "salt": "ffeeddccbbaa99887766554433221100",
+      "hash": "da30e540b13be756cd762f68351584869e02bd2f52fe748d96160a9211f66e0d7b06ec98aa56f539ace601bf764a4df3dec25634798dbbae1dfffc215544088a"
+    },
+    {
+      "description": "single character",
+      "password": "a",
+      "salt": "0123456789abcdef0123456789abcdef",
+      "hash": "2d580af920bfe06dd61343deec3131f59621a511a4da4332914fc71ef99fd783b4f65ea7a60308056e9ee25236dd6c95d88c90b94cd862846b05f4cd41e49b44"
+    },
+    {
+      "description": "empty password",
+      "password": "",
+      "salt": "abcdefabcdefabcdefabcdefabcdefab",
+      "hash": "e67f2371734d6ca27f8f57edd196ba6d95dc7eb38e94e868c3e85484ce275c10c49d929e4fbb215f1351ccd678875833027ab36bcd99bc6f99e0fd4ec1dd84f3"
+    },
+    {
+      "description": "200 characters",
+      "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "salt": "deadbeefdeadbeefdeadbeefdeadbeef",
+      "hash": "d0696577e92b78518de9bd05d7802a4505ee19abc03472a40465a25c74a2a4f5fad7637a1aece3dd4a89ecd65c17cd9d33dbb5b5670f695ced27335f09a37a4a"
+    },
+    {
+      "description": "password with surrounding whitespace is not trimmed",
+      "password": "  spaced  ",
+      "salt": "1f1e1d1c1b1a19181716151413121110",
+      "hash": "18302fffabe49ad36734e62328a7d4c0f7026495fbe1cf5964fa0944d78441b7099bf63ffc652a852b4cb6d9cd061529cf33fda8c83c7ade48aad9978bbe7335"
+    }
+  ]
+}

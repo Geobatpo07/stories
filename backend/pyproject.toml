@@ -1,17 +1,64 @@
 [project]
 name = "stories-backend"
 version = "0.1.0"
-description = "Python backend for Stories (ADR-004). Phase 1: Pydantic schema contract."
+description = "Python backend for Stories (ADR-004): Pydantic schema contract, Kernel load pipeline, LadybugDB-backed build pipeline."
 requires-python = ">=3.12"
 dependencies = [
     "pydantic>=2.9,<3",
     # YAML 1.2 (like js-yaml 3 behind gray-matter): `yes`/`no`/`on`/`off` stay strings.
     "ruamel.yaml>=0.18,<0.19",
+    # LadybugDB (PyPI name is `ladybug`, NOT `ladybugdb` / `real-ladybug`). Pinned to the Phase 0
+    # spike's version; the working graph is rebuilt every run, so only the Python API matters.
+    "ladybug==0.21.2",
+    # PINNED TO THE NODE READER, do not bump alone. knowledge.duckdb is written here and read by
+    # `@duckdb/node-api` (package.json, pinned 1.5.5-r.1) through ArtifactKnowledgeSourceAdapter.
+    # duckdb 2.0.0 wrote a storage format that reader rejected ("database file with version number
+    # 999"). The pair is recorded in backend/duckdb-compat.json and enforced by
+    # backend/tests/test_duckdb_pin.py and the `python-artifact` CI job.
+    "duckdb==1.5.2",
+    "fastapi>=0.115,<1",
+    "httpx>=0.27,<1",
+    "uvicorn>=0.30,<1",
 ]
 
 [dependency-groups]
-dev = ["pytest>=8"]
+dev = [
+    "mypy==2.4.0",
+    "pytest>=8",
+    "ruff==0.17.2",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+# Written out on purpose: ruff's default rule set changes between releases, so "green" must not
+# depend on the version of the day. The version is pinned in the lock. `E`, `UP` and `ASYNC` come
+# from the Studio API port's own configuration (ADR-004 phase 4) and are kept; the rest is the
+# pinned set from the Python pipeline cleanup.
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "I", "B", "UP", "ASYNC",
+    "C4",              # comprehensions, C408 (dict() call instead of a literal)
+    "RUF100",          # unused noqa
+    "RUF034", "FURB167", "FURB188", "PLC0206", "PYI034",  # the other five findings of ruff 0.17's defaults
+]
+
+# The scenario generator embeds MDX/YAML fixture documents as one-line literals; wrapping them would
+# make the source harder to compare with the fixture they produce.
+[tool.ruff.lint.per-file-ignores]
+"tools/generate_kernel_contract_scenarios.py" = ["E501"]
+
+# Strict typing for the whole backend. The version is pinned in the lock; `uv run mypy` with no
+# arguments checks exactly `files`.
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+mypy_path = "."
+explicit_package_bases = true
+files = ["api", "auth", "authoring", "kernel", "pipeline", "publication", "runtime", "schemas", "tests", "tools"]

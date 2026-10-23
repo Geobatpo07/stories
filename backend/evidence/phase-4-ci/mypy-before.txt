@@ -1,0 +1,13 @@
+pipeline\manifest.py:21: error: Returning Any from function declared to return "str"  [no-any-return]
+schemas\common.py:23: error: Function is missing a return type annotation  [no-untyped-def]
+schemas\common.py:44: error: Returning Any from function declared to return "str"  [no-any-return]
+kernel\errors.py:127: error: Argument 1 to "_issues_for" has incompatible type "ErrorDetails"; expected "dict[str, Any]"  [arg-type]
+pipeline\graph_store.py:132: error: Item "list[QueryResult]" of "QueryResult | list[QueryResult]" has no attribute "has_next"  [union-attr]
+pipeline\graph_store.py:133: error: Item "list[QueryResult]" of "QueryResult | list[QueryResult]" has no attribute "get_next"  [union-attr]
+pipeline\graph_store.py:133: error: Argument 1 to "append" of "list" has incompatible type "list[Any] | dict[str, Any] | Any"; expected "list[Any]"  [arg-type]
+kernel\parsers\markdown_parser.py:48: error: Function is missing a return type annotation  [no-untyped-def]
+kernel\parsers\markdown_parser.py:108: error: Returning Any from function declared to return "str"  [no-any-return]
+pipeline\duckdb_export.py:47: error: Function is missing a type annotation for one or more parameters  [no-untyped-def]
+pipeline\duckdb_export.py:47: error: Missing type arguments for generic type "list"  [type-arg]
+pipeline\build.py:59: error: Missing type arguments for generic type "dict"  [type-arg]
+Found 12 errors in 7 files (checked 42 source files)

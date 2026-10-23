@@ -6,5 +6,7 @@ from ..parsers.parser import Parser
 from ..registry.types import EntityRegistration
 
 
-def discover_source_files(root: Path, registration: EntityRegistration, parser: Parser) -> list[str]:
+def discover_source_files(
+    root: Path, registration: EntityRegistration, parser: Parser
+) -> list[str]:
     return parser.discover(root, registration.content_dir)

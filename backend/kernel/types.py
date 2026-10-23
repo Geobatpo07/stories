@@ -26,7 +26,11 @@ class Relationship:
     target: ResolvedRef
 
     def to_dict(self) -> dict[str, Any]:
-        return {"field": self.field, "cardinality": self.cardinality, "target": self.target.to_dict()}
+        return {
+            "field": self.field,
+            "cardinality": self.cardinality,
+            "target": self.target.to_dict(),
+        }
 
 
 @dataclass(frozen=True)

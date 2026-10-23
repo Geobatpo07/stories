@@ -1,0 +1,17 @@
+C:\Users\GBLAGU~1\AppData\Local\Temp/mut.py:20: FutureWarning: Possible nested set at position 2
+  print("CAUGHT" if r.returncode else "SURVIVED", name, "|", __import__("re").sub(r"[[0-9;]*m","",tail[-1]).strip() if tail else "")
+CAUGHT cookie not forwarded | ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+CAUGHT wrong cookie value | ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+CAUGHT unreachable swallowed into empty | ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+CAUGHT 5xx not an error | ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+CAUGHT 401 ignored | ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+CAUGHT any 404 is not-found | ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+CAUGHT unset base accepted | ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+CAUGHT drafts offered as links | ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+CAUGHT self offered as link | ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+CAUGHT non-editable kind allowed | ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+CAUGHT credentials off ['1 failed, 4 passed, 1 warning in 5.67s']
+CAUGHT wildcard origin ['2 failed, 3 passed, 1 warning in 4.51s']
+CAUGHT star not filtered ['1 failed, 4 passed, 1 warning in 2.75s']
+SURVIVED always on ['5 passed, 1 warning in 2.61s']
+NOTE: 'always on' survived: it is an equivalent mutant (an empty allow list adds the middleware but allows no origin; behaviour identical).

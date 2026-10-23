@@ -1,0 +1,18 @@
+validation result ignored (build failure no longer blocks the commit) -> 4 failed, 25 passed, 1 warning in 4.99s
+state saved even when the commit fails (error swallowed in the workflow) -> 4 failed, 72 passed, 1 warning in 4.98s
+ref update forced (force: true) -> 2 failed, 27 passed, 1 warning in 4.32s
+slug-change delete entry dropped -> 1 failed, 28 passed, 1 warning in 5.01s
+commit parent dropped -> 10 failed, 19 passed, 1 warning in 4.76s
+unchanged content still commits -> 2 failed, 27 passed, 1 warning in 4.76s
+delete issued for a path missing from the tree -> 1 failed, 28 passed, 1 warning in 4.62s
+token omitted from requests -> 1 failed, 28 passed, 1 warning in 3.72s
+revalidation failure no longer swallowed -> 1 failed, 75 passed, 1 warning in 4.64s
+archive traversal guard removed -> 29 passed, 1 warning in 4.33s
+deployment status hoist removed -> 2 failed, 27 passed, 1 warning in 4.72s
+--- TypeScript route
+constant-time comparison replaced by === ->       Tests  1 failed | 10 passed (11)
+revalidatePath argument changed ->       Tests  1 failed | 10 passed (11)
+unconfigured secret no longer fails closed ->       Tests  2 failed | 9 passed (11)
+route.ts restored
+both traversal guards removed -> 1 failed, 28 passed, 1 warning in 4.06s
+NOTE: removing only the first traversal guard survives (29 passed): the normpath guard behind it is redundant defence in depth.

@@ -1,0 +1,40 @@
+kernel\errors.py:10:1: I001 [*] Import block is un-sorted or un-formatted
+kernel\errors.py:26:18: RUF034 Useless `if`-`else` condition
+kernel\parsers\markdown_parser.py:62:12: FURB188 [*] Prefer `str.removeprefix()` over conditionally replacing with slice.
+pipeline\build.py:40:22: RUF100 [*] Unused `noqa` directive (non-enabled: `N815`)
+pipeline\build.py:45:65: RUF100 [*] Unused `noqa` directive (non-enabled: `N815`)
+pipeline\build.py:46:27: RUF100 [*] Unused `noqa` directive (non-enabled: `N815`)
+pipeline\build.py:47:33: RUF100 [*] Unused `noqa` directive (non-enabled: `N815`)
+pipeline\build.py:48:71: RUF100 [*] Unused `noqa` directive (non-enabled: `N815`)
+pipeline\build.py:49:75: RUF100 [*] Unused `noqa` directive (non-enabled: `N815`)
+pipeline\build.py:50:25: RUF100 [*] Unused `noqa` directive (non-enabled: `N815`)
+pipeline\duckdb_export.py:63:29: C416 Unnecessary dict comprehension (rewrite using `dict()`)
+pipeline\graph_store.py:194:9: PYI034 `__enter__` methods in classes like `GraphStore` usually return `self` at runtime
+pipeline\search_index.py:73:15: B007 Loop control variable `m` not used within loop body
+schemas\__init__.py:1:21: F401 `.common.IsoDate` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+schemas\__init__.py:1:30: F401 `.common.NonEmptyStr` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+schemas\__init__.py:1:43: F401 `.common.Slug` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+schemas\__init__.py:1:49: F401 `.common.Tag` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+schemas\__init__.py:1:54: F401 `.common.Url` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+schemas\__init__.py:2:29: F401 `.content_status.CONTENT_STATUSES` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+schemas\__init__.py:2:47: F401 `.content_status.ContentStatus` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+schemas\__init__.py:3:27: F401 `.content_type.CONTENT_TYPES` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+schemas\__init__.py:3:42: F401 `.content_type.ContentType` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+schemas\__init__.py:8:24: F401 `.knowledge.KNOWLEDGE_OBJECT_TYPES` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+schemas\__init__.py:8:70: F401 `.knowledge.KnowledgeObjectType` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+tests\test_artifact_contract.py:50:57: FURB167 [*] Use of regular expression alias `re.M`
+tests\test_graph_store.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+tests\test_search_index.py:37:9: PLC0206 Extracting value from dictionary without calling `.items()`
+tools\generate_schema_contract_fixtures.py:28:16: C408 Unnecessary `dict()` call (rewrite as a literal)
+tools\generate_schema_contract_fixtures.py:30:19: C408 Unnecessary `dict()` call (rewrite as a literal)
+tools\generate_schema_contract_fixtures.py:33:19: C408 Unnecessary `dict()` call (rewrite as a literal)
+tools\generate_schema_contract_fixtures.py:35:18: C408 Unnecessary `dict()` call (rewrite as a literal)
+tools\generate_schema_contract_fixtures.py:39:21: C408 Unnecessary `dict()` call (rewrite as a literal)
+tools\generate_schema_contract_fixtures.py:44:16: C408 Unnecessary `dict()` call (rewrite as a literal)
+tools\generate_schema_contract_fixtures.py:47:20: C408 Unnecessary `dict()` call (rewrite as a literal)
+tools\generate_schema_contract_fixtures.py:51:17: C408 Unnecessary `dict()` call (rewrite as a literal)
+tools\generate_schema_contract_fixtures.py:53:17: C408 Unnecessary `dict()` call (rewrite as a literal)
+tools\generate_schema_contract_fixtures.py:70:13: B023 Function definition does not bind loop variable `out`
+tools\generate_schema_contract_fixtures.py:73:13: B023 Function definition does not bind loop variable `out`
+Found 38 errors.
+[*] 11 fixable with `--fix` (12 unsafe fixes available with `--fix --unsafe-fixes`).

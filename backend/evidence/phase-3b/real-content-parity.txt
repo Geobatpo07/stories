@@ -1,0 +1,133 @@
+
+> stories@3.0.0 build:knowledge:parity C:\Users\gblaguerre\Documents\Data Analytics Projects\stories-p3
+> bash backend/tools/artifact-parity.sh --repo
+
+content files: 0 (excluding .gitkeep)
+knowledge files read by the build: 0 (legacy directory, see knowledge/README.md)
+--- typescript producer
+Build succeeded.
+Entities: 0  Relationships: 0  Elapsed: 50ms
+Targets:
+  ✓ duckdb (45ms) — Wrote 0 entities to database/generated/knowledge.duckdb.
+  ✓ manifest (2ms) — Wrote manifest.json (0 entities, 0 relationships).
+--- python producer
+{
+  "success": true,
+  "report": {
+    "countsByKind": {},
+    "entityCount": 0,
+    "relationshipCount": 0,
+    "targetResults": [
+      {
+        "name": "ladybug-graph",
+        "success": true,
+        "message": "Loaded 0 entities into the LadybugDB working graph.",
+        "durationMs": 18
+      },
+      {
+        "name": "duckdb",
+        "success": true,
+        "message": "Wrote 0 entities to database/generated/knowledge.duckdb.",
+        "durationMs": 127
+      },
+      {
+        "name": "manifest",
+        "success": true,
+        "message": "Wrote manifest.json (0 entities, 0 relationships).",
+        "durationMs": 1
+      }
+    ],
+    "validationIssues": [],
+    "elapsedMs": 197,
+    "success": true
+  }
+}
+--- typescript dump (42 lines)
+== schema
+{"table_name":"knowledge_entity","column_name":"id","ordinal_position":1,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"kind","ordinal_position":2,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"slug","ordinal_position":3,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"title","ordinal_position":4,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"summary","ordinal_position":5,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"status","ordinal_position":6,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"created_at","ordinal_position":7,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"updated_at","ordinal_position":8,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"content","ordinal_position":9,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"file_path","ordinal_position":10,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"metadata","ordinal_position":11,"data_type":"JSON","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"source_id","ordinal_position":1,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"target_id","ordinal_position":2,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"field","ordinal_position":3,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"cardinality","ordinal_position":4,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+== constraints
+== table list
+knowledge_entity
+knowledge_relationship
+== knowledge_entity (adapter order)
+== knowledge_relationship (adapter order)
+== manifest (run-dependent fields blanked)
+{
+  "platformVersion": "3.0.0",
+  "kernelVersion": "1.0.0",
+  "buildVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "generatedAt": "<blank>",
+  "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "generationDuration": "<blank>",
+  "knowledge": {
+    "entities": 0,
+    "relationships": 0
+  },
+  "artifacts": {
+    "knowledgeDatabase": {
+      "file": "database/generated/knowledge.duckdb",
+      "checksum": "<blank>"
+    }
+  }
+}
+--- python dump (42 lines)
+== schema
+{"table_name":"knowledge_entity","column_name":"id","ordinal_position":1,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"kind","ordinal_position":2,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"slug","ordinal_position":3,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"title","ordinal_position":4,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"summary","ordinal_position":5,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"status","ordinal_position":6,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"created_at","ordinal_position":7,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"updated_at","ordinal_position":8,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"content","ordinal_position":9,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"file_path","ordinal_position":10,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_entity","column_name":"metadata","ordinal_position":11,"data_type":"JSON","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"source_id","ordinal_position":1,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"target_id","ordinal_position":2,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"field","ordinal_position":3,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+{"table_name":"knowledge_relationship","column_name":"cardinality","ordinal_position":4,"data_type":"VARCHAR","is_nullable":"YES","column_default":null}
+== constraints
+== table list
+knowledge_entity
+knowledge_relationship
+== knowledge_entity (adapter order)
+== knowledge_relationship (adapter order)
+== manifest (run-dependent fields blanked)
+{
+  "platformVersion": "3.0.0",
+  "kernelVersion": "1.0.0",
+  "buildVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "generatedAt": "<blank>",
+  "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "generationDuration": "<blank>",
+  "knowledge": {
+    "entities": 0,
+    "relationships": 0
+  },
+  "artifacts": {
+    "knowledgeDatabase": {
+      "file": "database/generated/knowledge.duckdb",
+      "checksum": "<blank>"
+    }
+  }
+}
+--- diff typescript python
+(no differences)
+PARITY OK   real-repo  (sha256 ts 6d9990213088c963, py 6d9990213088c963)
