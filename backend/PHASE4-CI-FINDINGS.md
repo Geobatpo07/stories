@@ -49,7 +49,7 @@ The fix (commit `57a0074`) is in the test only; the `verify` job itself is untou
 ## Linux 3.12 vs Windows 3.13
 
 - **No behavioural difference found.** Same 817 pytest results; the DuckDB artifact written by Python
-  on Linux is read by Node and byte-for-byte equal in the parity steps (the pinned
+  on Linux is read by Node and equal to the TypeScript-built one according to the parity scripts (the pinned
   `duckdb==1.5.2`/`@duckdb/node-api` pair works on Linux); the contract fixtures and scrypt vectors
   (generated on Windows) verify on Linux. No path-separator, iteration-order, or encoding failure
   in 817 tests.
