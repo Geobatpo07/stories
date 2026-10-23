@@ -2,6 +2,7 @@
 STUDIO_ALLOWED_ORIGINS, credentials are allowed, a wildcard is never honoured."""
 
 from datetime import timedelta
+from typing import cast
 
 import httpx
 
@@ -12,7 +13,7 @@ SESSION = "5" * 64
 
 
 def preflight(h: Harness, origin: str = ORIGIN) -> httpx.Response:
-    response: httpx.Response = h.client.options(
+    response = h.client.options(
         "/api/studio/documents",
         headers={
             "origin": origin,
@@ -20,7 +21,7 @@ def preflight(h: Harness, origin: str = ORIGIN) -> httpx.Response:
             "access-control-request-headers": "content-type",
         },
     )
-    return response
+    return cast(httpx.Response, response)  # httpx2 at runtime (see api_support), same API
 
 
 def test_listed_origin_gets_a_credentialed_preflight_answer() -> None:

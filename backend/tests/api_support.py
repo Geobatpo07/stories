@@ -11,7 +11,7 @@ import asyncio
 import json
 from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
-from typing import Any
+from typing import Any, cast
 
 import httpx
 from fastapi.testclient import TestClient
@@ -162,7 +162,8 @@ class Harness:
         if ip is not None:
             merged["x-real-ip"] = ip
         self.client.cookies.clear()
-        response: httpx.Response
+        # starlette's TestClient answers with httpx2 responses (installed by the MCP SDK); same API.
+        response: Any
         if raw is not None:
             merged.setdefault("content-type", "application/json")
             response = self.client.request(method, url, content=raw, headers=merged)
@@ -170,7 +171,7 @@ class Harness:
             response = self.client.request(method, url, json=json_body, headers=merged)
         else:
             response = self.client.request(method, url, headers=merged)
-        return response
+        return cast(httpx.Response, response)
 
     def post(self, url: str, body: Any = None, **kwargs: Any) -> httpx.Response:
         return self.request("POST", url, json_body=body, **kwargs)
