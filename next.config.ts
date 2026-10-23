@@ -31,6 +31,15 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/studio/**": ["./database/generated/**"],
   },
+  /**
+   * The "/studio/**" include above also matches /api/studio/**, which are
+   * thin relays to the Python API and never import the knowledge DB. Drop
+   * the file from those two Lambdas (Next matches keys as substrings of
+   * the route, and "[id]" would be read as a glob character class).
+   */
+  outputFileTracingExcludes: {
+    "/api/studio/**": ["./database/generated/**"],
+  },
 };
 
 export default nextConfig;
