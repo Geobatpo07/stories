@@ -25,16 +25,17 @@ Kernel directly. Something has to sit between them, on a different cadence (buil
 not request time): read the Kernel once, write the artifacts the Runtime will later
 trust without re-validating. That's this package.
 
-## Opt-in Python producer (`STORIES_BUILD_PRODUCER`)
+## Python producer (`STORIES_BUILD_PRODUCER`)
 
 `pnpm build:knowledge` has two producers for the same two artifacts, selected by the
-`STORIES_BUILD_PRODUCER` environment variable: unset or `typescript` (the default, and what
-`vercel.json` and production use) runs the pipeline in this directory; `python` runs
+`STORIES_BUILD_PRODUCER` environment variable: `python` (the production producer since the
+Phase 7 cutover; `vercel.json` sets it explicitly) runs
 `python -m pipeline.cli --root <cwd>` from `backend/` (ADR-004, LadybugDB working graph) and
-writes the same `database/generated/{knowledge.duckdb,manifest.json}`. It exists for dev/CI
-validation only — it is **not** a production switch — and a Python failure (including a duplicate
+writes the same `database/generated/{knowledge.duckdb,manifest.json}`; unset or `typescript`
+runs the pipeline in this directory (local fallback). A Python failure (including a duplicate
 entity id, which the TypeScript pipeline does not check) exits non-zero. The interpreter is
-`STORIES_PYTHON`, or `backend/.venv` (`uv sync --frozen` in `backend/`).
+`STORIES_PYTHON`, or `backend/.venv` (`vercel.json`'s `installCommand` runs `uv sync --frozen`
+in `backend/` to create it).
 `pnpm build:knowledge:parity` builds this repository's real `content/` with both producers into
 temporary directories and diffs a canonical dump of the two artifacts (never touching
 `database/generated/`).

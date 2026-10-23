@@ -26,8 +26,8 @@ committed; the pipeline creates it before Next.js collects and statically render
 Do not deploy a previous `.next` directory with a newly generated manifest.
 
 `build:knowledge` uses the TypeScript producer unless `STORIES_BUILD_PRODUCER=python` is set;
-production sets nothing, so it always runs the TypeScript producer. The Python producer is a
-dev/CI validation path (see `build/README.md`), not a deployment option.
+`vercel.json` sets it, so production runs the Python producer (Phase 7 cutover; see
+`build/README.md`) and its `installCommand` installs uv and runs `uv sync --frozen` in `backend/`.
 
 Vercel's zero-config Next.js detection only runs `pnpm build` — it has no way to know
 `build:knowledge` must run first, and a deploy relying on that default fails with a missing

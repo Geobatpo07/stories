@@ -4,9 +4,9 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 /**
- * Opt-in Python knowledge-artifact producer (ADR-004 Phase 3), selected with
- * `STORIES_BUILD_PRODUCER=python`. Dev/CI validation only: production (`vercel.json`) sets no
- * variable and therefore keeps the TypeScript producer.
+ * Python knowledge-artifact producer (ADR-004 Phase 3), selected with
+ * `STORIES_BUILD_PRODUCER=python`. This is the production producer (Phase 7 cutover):
+ * `vercel.json` sets the variable explicitly. Unset still falls back to the TypeScript producer.
  *
  * Runs `python -m pipeline.cli --root <root>` from `backend/`, which writes the same
  * `database/generated/{knowledge.duckdb,manifest.json}` the TypeScript targets write.
