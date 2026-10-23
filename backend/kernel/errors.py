@@ -13,9 +13,9 @@ from typing import Any
 
 from pydantic import ValidationError
 
+from schemas.common import _SLUG_MESSAGE
 from schemas.content_status import CONTENT_STATUSES
 from schemas.knowledge import KNOWLEDGE_OBJECT_TYPES
-from schemas.common import _SLUG_MESSAGE
 
 
 class KnowledgeParseError(Exception):

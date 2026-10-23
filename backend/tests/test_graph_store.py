@@ -7,7 +7,6 @@ import pytest
 from kernel import KnowledgeRelationshipError, Relationship, ResolvedRef
 from pipeline.errors import DuplicateEntityError
 from pipeline.graph_store import GraphStore, byte_key
-
 from tests.helpers import reference_graph, scenario_entities
 
 
