@@ -89,6 +89,24 @@ No existing test changed result. The ported negative controls are the only delib
 `backend`: `uv run --frozen ruff check .` and `uv run --frozen mypy`. Run on this branch: see the PR
 below.
 
+Real run (the branch itself, PR [#12](https://github.com/Geobatpo07/stories/pull/12), cannot get one:
+it is `mergeable_state: dirty` against the current `main`, so GitHub starts no run; conflicts in
+`app/api/auth/login/route.ts` and a comment wrap in `backend/kernel/pipeline/factory.py`).
+So a throwaway probe branch `ci-probe/phase4-lint-reconcile` = this branch + a merge of `main`
+(PR [#13](https://github.com/Geobatpo07/stories/pull/13), draft, not to be merged) was used:
+
+- Run [39890883737](https://github.com/Geobatpo07/stories/actions/runs/39890883737): `python-artifact`
+  **success** with `ruff` and `mypy --strict` as success steps; `verify` **failure** in `pnpm test`:
+  `app/api/auth/login/route.test.ts`, 12 tests of `main`'s TypeScript rate-limit suite (PR #4).
+  The merge brings that file back; the relay removed the TypeScript limiter, so those tests have
+  nothing to test. Not a regression of this branch; **a merge-time decision**: when this lineage
+  goes to `main`, that suite is deleted (the limiter's tests live in `backend/tests/test_api_login.py`).
+- Run [39891084444](https://github.com/Geobatpo07/stories/actions/runs/39891084444) (probe with that
+  file deleted): `python-artifact` **success** (ruff, mypy --strict success), `verify` **success**
+  (`pnpm test` success).
+- Conflict resolution in the probe: `login/route.ts` = the relay, `factory.py` = this branch's wrapped
+  comment. The same two resolutions will be needed on a real merge.
+
 ## Not done
 
 - `ruff format --check` is not gated and 5 files would still be reformatted; only lint is gated.
