@@ -26,7 +26,9 @@ def reference_signals(entities: list[KnowledgeEntity]):
         for e in entities
         for r in e.relationships
     ]
-    incident: dict[str, list[tuple[str, str, float]]] = defaultdict(list)  # node -> (other, field, w)
+    incident: dict[str, list[tuple[str, str, float]]] = defaultdict(
+        list
+    )  # node -> (other, field, w)
     for s, t, f, w in edges:
         incident[s].append((t, f, w))
         incident[t].append((s, f, w))
@@ -54,13 +56,19 @@ def reference_signals(entities: list[KnowledgeEntity]):
             ((b, round(sc, 6)) for (x, b), sc in scores.items() if x == a),
             key=lambda item: (-item[1], byte_key(item[0])),
         )[:TOP_N]
-        related += [(a, b, sc, hops[(a, b)], ",".join(sorted(fields[(a, b)], key=byte_key))) for b, sc in ranked]
+        related += [
+            (a, b, sc, hops[(a, b)], ",".join(sorted(fields[(a, b)], key=byte_key)))
+            for b, sc in ranked
+        ]
     in_degree = defaultdict(int)
     out_degree = defaultdict(int)
     for s, t, _, _ in edges:
         out_degree[s] += 1
         in_degree[t] += 1
-    stats = [(e.id, in_degree[e.id], out_degree[e.id]) for e in sorted(entities, key=lambda e: byte_key(e.id))]
+    stats = [
+        (e.id, in_degree[e.id], out_degree[e.id])
+        for e in sorted(entities, key=lambda e: byte_key(e.id))
+    ]
     return related, stats
 
 
@@ -80,7 +88,8 @@ def test_known_scores_on_the_full_fixture():
         store.load(scenario_entities("ok-full"))
         related, _ = compute_search_signals(store)
     scores = {(a, b): (score, hops, fields) for a, b, score, hops, fields in related}
-    # program:lab <-> question:q-one: programSlug (one, 1.0) + relatedQuestionSlugs (many, 0.5), both
+    # program:lab <-> question:q-one: programSlug (one, 1.0) + relatedQuestionSlugs (many, 0.5),
+    # both
     # directions, plus 2-hop paths through shared neighbours (note n-one, presentation t-one).
     score, hops, fields = scores[("program:lab", "question:q-one")]
     assert hops == 1 and fields.startswith("programSlug") and "relatedQuestionSlugs" in fields
@@ -106,12 +115,21 @@ def test_rows_are_ordered_score_desc_then_byte_order():
 def test_tables_are_written_next_to_the_two_base_tables(tmp_path: Path):
     shutil.copytree(SCENARIOS / "ok-full" / "content", tmp_path / "content")
     assert run_build_pipeline(tmp_path).success
-    connection = duckdb.connect(str(tmp_path / "database/generated/knowledge.duckdb"), read_only=True)
-    tables = [r[0] for r in connection.execute(
-        "SELECT table_name FROM information_schema.tables WHERE table_schema = 'main' ORDER BY 1"
-    ).fetchall()]
+    connection = duckdb.connect(
+        str(tmp_path / "database/generated/knowledge.duckdb"), read_only=True
+    )
+    tables = [
+        r[0]
+        for r in connection.execute(
+            "SELECT table_name FROM information_schema.tables WHERE table_schema = 'main' ORDER "
+            "BY 1"
+        ).fetchall()
+    ]
     assert tables == [
-        "knowledge_entity", "knowledge_relationship", "knowledge_search_related", "knowledge_search_stats",
+        "knowledge_entity",
+        "knowledge_relationship",
+        "knowledge_search_related",
+        "knowledge_search_stats",
     ]
     assert connection.execute("SELECT count(*) FROM duckdb_constraints()").fetchone()[0] == 0
     # A search read is one indexed-by-nothing lookup on a static file: no live backend involved.
@@ -126,7 +144,9 @@ def test_tables_are_written_next_to_the_two_base_tables(tmp_path: Path):
 def test_search_index_can_be_skipped(tmp_path: Path):
     shutil.copytree(SCENARIOS / "ok-full" / "content", tmp_path / "content")
     assert run_build_pipeline(tmp_path, include_search_index=False).success
-    connection = duckdb.connect(str(tmp_path / "database/generated/knowledge.duckdb"), read_only=True)
+    connection = duckdb.connect(
+        str(tmp_path / "database/generated/knowledge.duckdb"), read_only=True
+    )
     count = connection.execute(
         "SELECT count(*) FROM information_schema.tables WHERE table_name LIKE 'knowledge_search%'"
     ).fetchone()[0]

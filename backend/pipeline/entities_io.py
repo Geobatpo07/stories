@@ -10,8 +10,18 @@ from kernel.types import KnowledgeEntity, Relationship, ResolvedRef
 
 _BASE_KEYS = frozenset(
     {
-        "id", "kind", "slug", "title", "summary", "status", "createdAt", "updatedAt",
-        "metadata", "relationships", "content", "filePath",
+        "id",
+        "kind",
+        "slug",
+        "title",
+        "summary",
+        "status",
+        "createdAt",
+        "updatedAt",
+        "metadata",
+        "relationships",
+        "content",
+        "filePath",
     }
 )
 
@@ -31,7 +41,12 @@ def entity_from_dict(data: dict[str, Any]) -> KnowledgeEntity:
             Relationship(
                 r["field"],
                 r["cardinality"],
-                ResolvedRef(r["target"]["id"], r["target"]["kind"], r["target"]["slug"], r["target"]["title"]),
+                ResolvedRef(
+                    r["target"]["id"],
+                    r["target"]["kind"],
+                    r["target"]["slug"],
+                    r["target"]["title"],
+                ),
             )
             for r in data["relationships"]
         ),

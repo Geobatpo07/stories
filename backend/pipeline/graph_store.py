@@ -40,7 +40,8 @@ class GraphStore:
         self._db = lb.Database(":memory:" if path is None else str(path))
         self._conn = lb.Connection(self._db)
         self._conn.execute(
-            "CREATE NODE TABLE Entity(id STRING PRIMARY KEY, kind STRING, slug STRING, title STRING,"
+            "CREATE NODE TABLE Entity(id STRING PRIMARY KEY, kind STRING, slug STRING, title "
+            "STRING,"
             " summary STRING, status STRING, created_at STRING, updated_at STRING, content STRING,"
             " file_path STRING, metadata STRING)"
         )
@@ -144,7 +145,8 @@ class GraphStore:
         return nodes, edges
 
     # getParents / getChildren / getRelated, as in kernel/pipeline/graph.ts: parents are the targets
-    # of outgoing edges, children the sources of incoming edges, related their union (no duplicates).
+    # of outgoing edges, children the sources of incoming edges, related their union (no
+    # duplicates).
     # The TypeScript versions return insertion order; these return byte order of the id.
 
     def get_parents(self, entity_id: str) -> list[str]:

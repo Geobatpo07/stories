@@ -1,4 +1,5 @@
-"""Step 3: `contentHash()` parity with build/targets/manifest-target.ts, and the pinned collation."""
+"""Step 3: `contentHash()` parity with build/targets/manifest-target.ts, and the pinned
+collation."""
 
 import json
 

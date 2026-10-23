@@ -1,4 +1,5 @@
-"""Port of build/targets/manifest-target.ts: the same fields, in the same order, same JSON layout."""
+"""Port of build/targets/manifest-target.ts: the same fields, in the same order, same JSON
+layout."""
 
 import json
 from datetime import UTC, datetime
@@ -13,7 +14,9 @@ BUILD_VERSION = "1.0.0"
 SCHEMA_VERSION = "1.0.0"
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-MANIFEST_DATABASE_PATH = "database/generated/knowledge.duckdb"  # recorded relative to the project root
+MANIFEST_DATABASE_PATH = (
+    "database/generated/knowledge.duckdb"  # recorded relative to the project root
+)
 
 
 def platform_version() -> str:
@@ -56,4 +59,6 @@ def build_manifest(
 def write_manifest(path: Path, manifest: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     # JSON.stringify(manifest, null, 2) + "\n"
-    path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    path.write_text(
+        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
+    )

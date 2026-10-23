@@ -1,0 +1,5 @@
+70	E501  	[ ] line-too-long
+ 5	RUF100	[*] unused-noqa
+ 1	C416  	[ ] unnecessary-comprehension
+Found 76 errors.
+[*] 5 fixable with `--fix` (1 unsafe fix available with `--fix --unsafe-fixes`).

@@ -9,8 +9,8 @@ runtime locale. `localeCompare` is ICU/locale-dependent in general, but entity i
 `[a-z0-9]+(-[a-z0-9]+)*` (enforced by the schemas), i.e. the alphabet `[a-z0-9:-]`. For ids in that
 alphabet Node's `localeCompare` and byte order give the same ordering.
 `fixtures/build-contract/id-collation.json` records that, produced by Node's real `localeCompare`
-over 261 ids that stress digit / hyphen / prefix ordering; backend/tests/test_content_hash.py and the
-Vitest test beside the fixture assert it. If the id alphabet ever widens (uppercase, non-ASCII),
+over 261 ids that stress digit / hyphen / prefix ordering; backend/tests/test_content_hash.py and
+the Vitest test beside the fixture assert it. If the id alphabet ever widens (uppercase, non-ASCII),
 those tests fail and this module must be revisited. Only `localeCompare` as run by one Node/ICU
 build was observed; a different ICU data version is not covered by anything but those tests.
 """

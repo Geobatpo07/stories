@@ -31,7 +31,9 @@ def test_parents_children_related_match_the_typescript_graph_logic(store, entiti
     for entity in entities:
         expected = reference[entity.id]
         assert store.get_parents(entity.id) == sorted(expected["parents"], key=byte_key), entity.id
-        assert store.get_children(entity.id) == sorted(expected["children"], key=byte_key), entity.id
+        assert store.get_children(entity.id) == sorted(expected["children"], key=byte_key), (
+            entity.id
+        )
         assert store.get_related(entity.id) == sorted(expected["related"], key=byte_key), entity.id
 
 
@@ -64,13 +66,16 @@ def test_export_reads_use_the_adapters_ordering(store):
     random.Random(7).shuffle(shuffled_entities)
     random.Random(7).shuffle(shuffled_relationships)
     connection.executemany("INSERT INTO knowledge_entity VALUES (?, ?)", shuffled_entities)
-    connection.executemany("INSERT INTO knowledge_relationship VALUES (?, ?, ?)", shuffled_relationships)
+    connection.executemany(
+        "INSERT INTO knowledge_relationship VALUES (?, ?, ?)", shuffled_relationships
+    )
 
     adapter_entities = connection.execute(
         "SELECT id FROM knowledge_entity ORDER BY created_at DESC, id ASC"
     ).fetchall()
     adapter_relationships = connection.execute(
-        "SELECT source_id, target_id, field FROM knowledge_relationship ORDER BY source_id, target_id, field"
+        "SELECT source_id, target_id, field FROM knowledge_relationship ORDER BY source_id, "
+        "target_id, field"
     ).fetchall()
     assert [(r[0],) for r in entity_rows] == adapter_entities
     assert [(r[0], r[1], r[2]) for r in relationship_rows] == adapter_relationships
@@ -124,6 +129,7 @@ def test_empty_graph_is_valid():
 
 
 def test_query_refuses_a_multi_statement_script_with_a_clear_error(store):
-    # Before the mypy fix this surfaced as AttributeError: 'list' object has no attribute 'has_next'.
+    # Before the mypy fix this surfaced as AttributeError: 'list' object has no attribute
+    # 'has_next'.
     with pytest.raises(TypeError, match="single Cypher statement"):
         store.query("MATCH (n:Entity) RETURN count(n); MATCH (n:Entity) RETURN count(n)")

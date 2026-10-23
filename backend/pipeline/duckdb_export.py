@@ -30,19 +30,32 @@ DROP_STATEMENTS = (
     "DROP TABLE IF EXISTS knowledge_entity;",
 )
 CREATE_ENTITY = (
-    "CREATE TABLE knowledge_entity (id VARCHAR, kind VARCHAR, slug VARCHAR, title VARCHAR, summary VARCHAR, status VARCHAR, created_at VARCHAR, updated_at VARCHAR, content VARCHAR, file_path VARCHAR, metadata JSON);"
+    "CREATE TABLE knowledge_entity (id VARCHAR, kind VARCHAR, slug VARCHAR, title VARCHAR, "
+    "summary VARCHAR, status VARCHAR, created_at VARCHAR, updated_at VARCHAR, content VARCHAR, "
+    "file_path VARCHAR, metadata JSON);"
 )
 CREATE_RELATIONSHIP = (
-    "CREATE TABLE knowledge_relationship (source_id VARCHAR, target_id VARCHAR, field VARCHAR, cardinality VARCHAR);"
+    "CREATE TABLE knowledge_relationship (source_id VARCHAR, target_id VARCHAR, field VARCHAR, "
+    "cardinality VARCHAR);"
 )
 ENTITY_COLUMNS = (
-    ("id", "VARCHAR"), ("kind", "VARCHAR"), ("slug", "VARCHAR"), ("title", "VARCHAR"),
-    ("summary", "VARCHAR"), ("status", "VARCHAR"), ("created_at", "VARCHAR"),
-    ("updated_at", "VARCHAR"), ("content", "VARCHAR"), ("file_path", "VARCHAR"),
+    ("id", "VARCHAR"),
+    ("kind", "VARCHAR"),
+    ("slug", "VARCHAR"),
+    ("title", "VARCHAR"),
+    ("summary", "VARCHAR"),
+    ("status", "VARCHAR"),
+    ("created_at", "VARCHAR"),
+    ("updated_at", "VARCHAR"),
+    ("content", "VARCHAR"),
+    ("file_path", "VARCHAR"),
     ("metadata", "VARCHAR"),  # JSON text, cast to the JSON column type on insert
 )
 RELATIONSHIP_COLUMNS = (
-    ("source_id", "VARCHAR"), ("target_id", "VARCHAR"), ("field", "VARCHAR"), ("cardinality", "VARCHAR"),
+    ("source_id", "VARCHAR"),
+    ("target_id", "VARCHAR"),
+    ("field", "VARCHAR"),
+    ("cardinality", "VARCHAR"),
 )
 
 
@@ -70,7 +83,9 @@ def insert_rows(
     )
     structure = json.dumps([dict(columns)])
     casts = casts or {}
-    select = ", ".join(f"r.{name}::{casts[name]}" if name in casts else f"r.{name}" for name in names)
+    select = ", ".join(
+        f"r.{name}::{casts[name]}" if name in casts else f"r.{name}" for name in names
+    )
     connection.execute(
         f"INSERT INTO {table} SELECT {select} FROM "
         f"(SELECT unnest(json_transform(CAST(? AS JSON), '{structure}')) AS r);",

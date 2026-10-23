@@ -31,7 +31,7 @@ TOKEN = "github_pat_FAKE_TOKEN_VALUE"
 
 
 def _sha(*parts: Any) -> str:
-    return hashlib.sha1(json.dumps(parts, sort_keys=True, default=str).encode()).hexdigest()  # noqa: S324
+    return hashlib.sha1(json.dumps(parts, sort_keys=True, default=str).encode()).hexdigest()
 
 
 def empty_repository() -> dict[str, bytes]:
@@ -92,7 +92,7 @@ class FakeGitHub:
                 tar.addfile(info, io.BytesIO(content))
         return buffer.getvalue()
 
-    def _handle(self, request: httpx.Request) -> httpx.Response:  # noqa: C901 - one switch
+    def _handle(self, request: httpx.Request) -> httpx.Response:
         path = request.url.path
         method = request.method
         if request.url.host == "codeload.github.com":

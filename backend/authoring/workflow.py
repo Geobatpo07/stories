@@ -127,7 +127,7 @@ class AuthoringWorkflow:
                 "issues": [],
                 "normalizedFields": field_validation["data"],
             }
-        except Exception as error:  # noqa: BLE001 - the TypeScript catch is deliberately total
+        except Exception as error:  # the TypeScript catch is deliberately total
             return {
                 "success": False,
                 "issues": [

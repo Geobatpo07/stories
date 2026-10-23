@@ -38,7 +38,9 @@ class ValidationIssue:
         return {"path": self.path, "message": self.message, "hint": self.hint}
 
 
-_FORMAT_HINT = "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+_FORMAT_HINT = (
+    "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+)
 
 
 def js_type_name(value: Any) -> str:
@@ -70,8 +72,13 @@ def _issues_for(error: ErrorDetails) -> list[ValidationIssue]:
     received = js_type_name(error.get("input"))
 
     def invalid_type(expected: str) -> list[ValidationIssue]:
-        return [ValidationIssue(path, f"Expected {expected}, received {received}",
-                                f"expected {expected}, received {received}")]
+        return [
+            ValidationIssue(
+                path,
+                f"Expected {expected}, received {received}",
+                f"expected {expected}, received {received}",
+            )
+        ]
 
     if kind == "missing":
         return [ValidationIssue(path, "Required", "this field is required")]
@@ -83,28 +90,41 @@ def _issues_for(error: ErrorDetails) -> list[ValidationIssue]:
         return invalid_type("object")
     if kind == "string_too_short":
         minimum = error["ctx"]["min_length"]
-        return [ValidationIssue(path, f"String must contain at least {minimum} character(s)",
-                                f"must be at least {minimum} character(s)")]
+        return [
+            ValidationIssue(
+                path,
+                f"String must contain at least {minimum} character(s)",
+                f"must be at least {minimum} character(s)",
+            )
+        ]
     if kind == "literal_error":
         options = _enum_options(path)
         if not isinstance(error.get("input"), str):
             # Zod's z.enum reports non-strings as invalid_type (expected = the joined options).
             expected = _enum_expected(options)
             return invalid_type(expected)
-        return [ValidationIssue(
-            path,
-            f"Invalid enum value. Expected {_enum_expected(options)}, received '{error['input']}'",
-            f"must be one of: {', '.join(options)}",
-        )]
+        return [
+            ValidationIssue(
+                path,
+                f"Invalid enum value. Expected {_enum_expected(options)}, received "
+                f"'{error['input']}'",
+                f"must be one of: {', '.join(options)}",
+            )
+        ]
     if kind == "slug_empty":
         return [
-            ValidationIssue(path, "String must contain at least 1 character(s)",
-                            "must be at least 1 character(s)"),
+            ValidationIssue(
+                path,
+                "String must contain at least 1 character(s)",
+                "must be at least 1 character(s)",
+            ),
             ValidationIssue(path, _SLUG_MESSAGE, _FORMAT_HINT),
         ]
     if kind == "format":
         return [ValidationIssue(path, error["ctx"]["msg"], _FORMAT_HINT)]
-    raise NotImplementedError(f"No Zod-equivalent mapping for Pydantic error type {kind!r} at {path}")
+    raise NotImplementedError(
+        f"No Zod-equivalent mapping for Pydantic error type {kind!r} at {path}"
+    )
 
 
 def _enum_options(path: str) -> tuple[str, ...]:
@@ -124,7 +144,8 @@ class KnowledgeValidationError(Exception):
     def __init__(self, file_path: str, error: ValidationError) -> None:
         self.file_path = file_path
         self.issues: tuple[ValidationIssue, ...] = tuple(
-            issue for item in error.errors(include_url=False, include_context=True)
+            issue
+            for item in error.errors(include_url=False, include_context=True)
             for issue in _issues_for(item)
         )
         body = "\n".join(f"  - {i.path}: {i.message} ({i.hint})" for i in self.issues)

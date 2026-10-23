@@ -86,7 +86,9 @@ def run_build_pipeline(
 
     def conclude() -> BuildResult:
         report.elapsedMs = elapsed_ms()
-        report.success = not report.validationIssues and all(t.success for t in report.targetResults)
+        report.success = not report.validationIssues and all(
+            t.success for t in report.targetResults
+        )
         return BuildResult(report.success, report)
 
     if entities is None:
@@ -110,9 +112,12 @@ def run_build_pipeline(
             report.validationIssues.append(_issue("kernel", error))
             return conclude()
         report.targetResults.append(
-            TargetOutcome("ladybug-graph", True,
-                          f"Loaded {len(loaded)} entities into the LadybugDB working graph.",
-                          int((time.monotonic() - graph_started) * 1000))
+            TargetOutcome(
+                "ladybug-graph",
+                True,
+                f"Loaded {len(loaded)} entities into the LadybugDB working graph.",
+                int((time.monotonic() - graph_started) * 1000),
+            )
         )
 
         database_started = time.monotonic()
@@ -120,9 +125,13 @@ def run_build_pipeline(
             store, output_directory / "knowledge.duckdb", include_search_index=include_search_index
         )
         report.targetResults.append(
-            TargetOutcome("duckdb", True,
-                          f"Wrote {counts['knowledgeEntity']} entities to database/generated/knowledge.duckdb.",
-                          int((time.monotonic() - database_started) * 1000))
+            TargetOutcome(
+                "duckdb",
+                True,
+                f"Wrote {counts['knowledgeEntity']} entities to "
+                f"database/generated/knowledge.duckdb.",
+                int((time.monotonic() - database_started) * 1000),
+            )
         )
 
         manifest_started = time.monotonic()
@@ -136,9 +145,13 @@ def run_build_pipeline(
         )
         write_manifest(output_directory / "manifest.json", manifest)
         report.targetResults.append(
-            TargetOutcome("manifest", True,
-                          f"Wrote manifest.json ({len(loaded)} entities, {relationship_count} relationships).",
-                          int((time.monotonic() - manifest_started) * 1000))
+            TargetOutcome(
+                "manifest",
+                True,
+                f"Wrote manifest.json ({len(loaded)} entities, {relationship_count} "
+                f"relationships).",
+                int((time.monotonic() - manifest_started) * 1000),
+            )
         )
     finally:
         store.close()

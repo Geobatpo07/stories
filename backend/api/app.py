@@ -137,7 +137,7 @@ def create_app(dependencies: AppDependencies | None = None) -> FastAPI:
     async def revalidate_quietly() -> None:
         try:
             await deps.revalidate()
-        except Exception:  # noqa: BLE001 - logged, never raised: it runs after the response
+        except Exception:  # logged, never raised: it runs after the response
             logger.exception("Site revalidation failed after a successful publication")
 
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
@@ -247,7 +247,7 @@ def create_app(dependencies: AppDependencies | None = None) -> FastAPI:
             return blocked
         try:
             result = await authoring.publish(id)
-        except Exception as error:  # noqa: BLE001 - the TypeScript route turns every failure into 422
+        except Exception as error:  # the TypeScript route turns every failure into 422
             return _json(422, {"error": str(error) or "Publication failed."})
         report = result["report"]
         body: dict[str, Any] = {"document": result["document"].to_row(), "report": report}

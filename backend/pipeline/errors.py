@@ -1,4 +1,5 @@
-"""Build-pipeline errors, in the style of kernel/errors: name the files, name the problem, say how to fix it."""
+"""Build-pipeline errors, in the style of kernel/errors: name the files, name the problem, say how
+to fix it."""
 
 
 class DuplicateEntityError(Exception):

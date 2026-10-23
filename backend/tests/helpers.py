@@ -14,7 +14,8 @@ def scenario_entities(name: str) -> list[KnowledgeEntity]:
 
 
 def reference_graph(entities: list[KnowledgeEntity]) -> dict[str, dict[str, list[str]]]:
-    """Independent pure-Python mirror of createGraph() (kernel/pipeline/graph.ts), insertion order."""
+    """Independent pure-Python mirror of createGraph() (kernel/pipeline/graph.ts), insertion
+    order."""
     by_id = {e.id for e in entities}
     outgoing: dict[str, list[str]] = defaultdict(list)
     incoming: dict[str, list[str]] = defaultdict(list)

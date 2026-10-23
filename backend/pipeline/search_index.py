@@ -33,15 +33,24 @@ HOP_DECAY = 0.5
 CARDINALITY_WEIGHT = {"one": 1.0, "many": 0.5}
 
 SEARCH_DDL = (
-    "CREATE TABLE knowledge_search_related (entity_id VARCHAR, related_id VARCHAR, score DOUBLE, hops INTEGER, fields VARCHAR);",
-    "CREATE TABLE knowledge_search_stats (entity_id VARCHAR, in_degree INTEGER, out_degree INTEGER);",
+    "CREATE TABLE knowledge_search_related (entity_id VARCHAR, related_id VARCHAR, score DOUBLE, "
+    "hops INTEGER, fields VARCHAR);",
+    "CREATE TABLE knowledge_search_stats (entity_id VARCHAR, in_degree INTEGER, out_degree "
+    "INTEGER);",
 )
 
 SEARCH_RELATED_COLUMNS = (
-    ("entity_id", "VARCHAR"), ("related_id", "VARCHAR"), ("score", "DOUBLE"),
-    ("hops", "INTEGER"), ("fields", "VARCHAR"),
+    ("entity_id", "VARCHAR"),
+    ("related_id", "VARCHAR"),
+    ("score", "DOUBLE"),
+    ("hops", "INTEGER"),
+    ("fields", "VARCHAR"),
 )
-SEARCH_STATS_COLUMNS = (("entity_id", "VARCHAR"), ("in_degree", "INTEGER"), ("out_degree", "INTEGER"))
+SEARCH_STATS_COLUMNS = (
+    ("entity_id", "VARCHAR"),
+    ("in_degree", "INTEGER"),
+    ("out_degree", "INTEGER"),
+)
 
 Related = tuple[str, str, float, int, str]  # entity_id, related_id, score, hops, fields
 Stats = tuple[str, int, int]
@@ -89,11 +98,21 @@ def compute_search_signals(store: GraphStore) -> tuple[list[Related], list[Stats
         for related_id, score in ranked:
             key = (entity_id, related_id)
             related.append(
-                (entity_id, related_id, score, min_hops[key], ",".join(sorted(fields[key], key=byte_key)))
+                (
+                    entity_id,
+                    related_id,
+                    score,
+                    min_hops[key],
+                    ",".join(sorted(fields[key], key=byte_key)),
+                )
             )
 
-    out_degree = {r[0]: r[1] for r in store.query("MATCH (a:Entity)-[r:Rel]->() RETURN a.id, count(r)")}
-    in_degree = {r[0]: r[1] for r in store.query("MATCH ()-[r:Rel]->(b:Entity) RETURN b.id, count(r)")}
+    out_degree = {
+        r[0]: r[1] for r in store.query("MATCH (a:Entity)-[r:Rel]->() RETURN a.id, count(r)")
+    }
+    in_degree = {
+        r[0]: r[1] for r in store.query("MATCH ()-[r:Rel]->(b:Entity) RETURN b.id, count(r)")
+    }
     ids = [r[0] for r in store.query("MATCH (n:Entity) RETURN n.id")]
     stats: list[Stats] = [
         (i, int(in_degree.get(i, 0)), int(out_degree.get(i, 0))) for i in sorted(ids, key=byte_key)

@@ -23,64 +23,42 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "mypy>=1.11",
-    "pytest>=8",
-    "ruff>=0.6",
-=======
-=======
     "mypy==2.4.0",
->>>>>>> 3641145 (Pin mypy and write its strict configuration into pyproject)
     "pytest>=8",
     "ruff==0.17.2",
->>>>>>> a96584b (Pin ruff and write the ruff configuration out explicitly)
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
 
-<<<<<<< HEAD
-# Lint and types are enforced on the Studio API port (ADR-004 phase 4); the older Kernel / build
-# packages predate this configuration and are not yet held to it.
-=======
-# Written out on purpose: ruff's default rule set changes between releases (0.17 default is ~700
-# rules), so "green" must not depend on the version of the day. The version is pinned in the lock.
->>>>>>> a96584b (Pin ruff and write the ruff configuration out explicitly)
+# Written out on purpose: ruff's default rule set changes between releases, so "green" must not
+# depend on the version of the day. The version is pinned in the lock. `E`, `UP` and `ASYNC` come
+# from the Studio API port's own configuration (ADR-004 phase 4) and are kept; the rest is the
+# pinned set from the Python pipeline cleanup.
 [tool.ruff]
 line-length = 100
 target-version = "py312"
 
 [tool.ruff.lint]
-<<<<<<< HEAD
-select = ["E", "F", "I", "B", "UP", "ASYNC"]
+select = [
+    "E", "F", "I", "B", "UP", "ASYNC",
+    "C4",              # comprehensions, C408 (dict() call instead of a literal)
+    "RUF100",          # unused noqa
+    "RUF034", "FURB167", "FURB188", "PLC0206", "PYI034",  # the other five findings of ruff 0.17's defaults
+]
 
+# The scenario generator embeds MDX/YAML fixture documents as one-line literals; wrapping them would
+# make the source harder to compare with the fixture they produce.
+[tool.ruff.lint.per-file-ignores]
+"tools/generate_kernel_contract_scenarios.py" = ["E501"]
+
+# Strict typing for the whole backend. The version is pinned in the lock; `uv run mypy` with no
+# arguments checks exactly `files`.
 [tool.mypy]
 python_version = "3.12"
 strict = true
 plugins = ["pydantic.mypy"]
 mypy_path = "."
 explicit_package_bases = true
-=======
-select = [
-    "E4", "E7", "E9",  # pycodestyle errors (no style-only rules)
-    "F",               # pyflakes: unused imports and variables, undefined names
-    "I",               # import sorting
-    "B",               # bugbear, including B023 (closure over a loop variable)
-    "C4",              # comprehensions, C408 (dict() call instead of a literal)
-    "RUF100",          # unused noqa
-    "RUF034", "FURB167", "FURB188", "PLC0206", "PYI034",  # the other five findings of ruff 0.17's defaults
-]
-<<<<<<< HEAD
->>>>>>> a96584b (Pin ruff and write the ruff configuration out explicitly)
-=======
-
-# Strict typing for the packages the Python build pipeline is made of. The version is pinned in the
-# lock; `uv run mypy` with no arguments checks exactly `files`.
-[tool.mypy]
-python_version = "3.12"
-strict = true
-explicit_package_bases = true
-files = ["kernel", "pipeline", "schemas"]
->>>>>>> 3641145 (Pin mypy and write its strict configuration into pyproject)
+files = ["api", "auth", "authoring", "kernel", "pipeline", "publication", "runtime", "schemas", "tests", "tools"]

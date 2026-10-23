@@ -69,7 +69,8 @@ def split_frontmatter(raw: str) -> tuple[Any, str]:
     rest = text[len(_OPEN) :]
     length = len(rest)
 
-    # matter.language(): everything up to the first newline; `search` == -1 slices off the last char.
+    # matter.language(): everything up to the first newline; `search` == -1 slices off the last
+    # char.
     newline = re.search(r"\r?\n", rest)
     end = newline.start() if newline else -1
     language_raw = rest[:end] if end != -1 else rest[:-1]
@@ -104,7 +105,8 @@ def split_frontmatter(raw: str) -> tuple[Any, str]:
 
 
 def extract_slug(data: Any, source_path: str) -> str:
-    """Port of lib/markdown's `extractSlug`: frontmatter slug, else the filename without .md/.mdx."""
+    """Port of lib/markdown's `extractSlug`: frontmatter slug, else the filename without
+    .md/.mdx."""
     slug = data.get("slug") if isinstance(data, dict) else None
     if isinstance(slug, str):
         return slug

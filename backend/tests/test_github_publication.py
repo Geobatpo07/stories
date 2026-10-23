@@ -135,7 +135,7 @@ def test_republishing_identical_content_makes_no_commit_and_needs_no_deployment(
 
 def test_other_files_in_the_repository_are_left_alone():
     github = FakeGitHub()
-    others = {k: v for k, v in github.files.items()}
+    others = dict(github.files)
     publish(github, rendered())
     assert {k: v for k, v in github.files.items() if k != PATH} == others
 

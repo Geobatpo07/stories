@@ -18,9 +18,15 @@ from .entities_io import entity_from_dict
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="pipeline.cli")
-    parser.add_argument("--root", type=Path, default=Path.cwd(), help="project root (holds content/)")
-    parser.add_argument("--entities-json", type=Path, help="serialized KnowledgeEntity[] instead of content/")
-    parser.add_argument("--no-search-index", action="store_true", help="skip the knowledge_search_* tables")
+    parser.add_argument(
+        "--root", type=Path, default=Path.cwd(), help="project root (holds content/)"
+    )
+    parser.add_argument(
+        "--entities-json", type=Path, help="serialized KnowledgeEntity[] instead of content/"
+    )
+    parser.add_argument(
+        "--no-search-index", action="store_true", help="skip the knowledge_search_* tables"
+    )
     args = parser.parse_args(argv)
 
     entities = None

@@ -54,7 +54,9 @@ def test_fixture(kind: str, path: Path):
     fixture = json.loads(path.read_text(encoding="utf8"))
     model = DOMAIN_MODELS[kind]
     if fixture["valid"]:
-        assert model.parse_frontmatter(fixture["input"]) == fixture["expected"], fixture["description"]
+        assert model.parse_frontmatter(fixture["input"]) == fixture["expected"], fixture[
+            "description"
+        ]
     else:
         with pytest.raises(ValidationError):
             model.parse_frontmatter(fixture["input"])
