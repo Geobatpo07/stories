@@ -1,25 +1,7 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
-import { contentTypeSchema } from "@/schemas";
-import { authoringWorkflow, isStudioEnabled, knowledgeObjectRepository } from "@/authoring/server";
+import { isStudioEnabled, knowledgeObjectRepository } from "@/authoring/server";
 import { getStudioSession } from "@/auth/server";
-
-const draftSchema = z.object({
-  id: z.string().uuid(),
-  kind: contentTypeSchema,
-  fields: z.record(z.unknown()),
-  content: z.string(),
-  createdAt: z.string().datetime(),
-  publicationState: z.enum(["draft", "published"]).optional(),
-  publication: z
-    .object({
-      kind: contentTypeSchema,
-      slug: z.string(),
-      path: z.string(),
-      publishedAt: z.string().datetime(),
-    })
-    .optional(),
-});
+import { pythonApiRelay } from "@/lib/python-api";
 
 export async function GET() {
   if (!isStudioEnabled()) return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -28,19 +10,7 @@ export async function GET() {
   return NextResponse.json({ documents: await knowledgeObjectRepository.list() });
 }
 
+/** Pure relay: gating, validation, slug derivation and the draft save are the Python endpoint's. */
 export async function POST(request: Request) {
-  if (!isStudioEnabled()) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  if (!(await getStudioSession()))
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const parsed = draftSchema.safeParse(await request.json());
-  if (!parsed.success) {
-    return NextResponse.json({ error: "The draft payload is incomplete." }, { status: 400 });
-  }
-  const input = parsed.data;
-  const fields = { ...input.fields };
-  if (!fields.slug && typeof fields.title === "string" && fields.title.trim()) {
-    fields.slug = authoringWorkflow.slugFromTitle(fields.title);
-  }
-  const result = await authoringWorkflow.saveDraft({ ...input, fields });
-  return NextResponse.json(result);
+  return pythonApiRelay(request, "/api/studio/documents");
 }
