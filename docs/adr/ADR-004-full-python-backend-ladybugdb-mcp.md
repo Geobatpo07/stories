@@ -314,16 +314,13 @@ including every public page; adding a network call to a second service there wou
 latency and a new failure mode to all site traffic for a check that must stay minimal.
 This was decided, not overlooked.
 
-**Open as of Phase 4, step 2d:** the original Phase 4 plan below already called for
-`components/authoring/`'s form-submission code to be repointed to Python (not just the
-Studio's read-only Server Components) and for the old Next.js API routes to be deleted
-once that repoint lands. Step 2d's report confirms only the three read-only Server
-Components were repointed; it does not confirm whether `app/api/studio/documents/route.ts`
-(save draft) and `app/api/studio/documents/[id]/publish/route.ts` (publish) still run
-`authoringWorkflow`'s TypeScript logic directly or already delegate to the Python ports
-built in steps 2a/2c. Until this is checked against the real code, treat it as an open
-finding, not a closed one — the same goes for whether `app/api/auth/**` routes still run
-`auth/workflow.ts` in TypeScript or the step-2a Python auth port.
+**Resolved by the write-path audit below, and it is the bad case:** all six write routes
+(`app/api/studio/documents/route.ts`, `.../[id]/publish/route.ts`, and the four
+`app/api/auth/**` routes that change state) still run their original TypeScript logic
+on every branch checked, including the most recent one (step 2d). The Python ports built
+in steps 2a/2c (`backend/api/app.py`) are complete and pass their own tests but are called
+by nothing — exactly the "tested dead code" this section warns against, not a hypothetical.
+See "Phase 4, write-path audit results" below for the finding and the decision taken.
 
 ## Phase 0 — Small spike, not a go/no-go gate
 
@@ -1007,6 +1004,56 @@ logout) still call TypeScript's `/api/auth/*` routes, not Python — explicitly 
 scope for this step; Vercel deployment-status tracking, the revalidation call's real
 trigger point, real Supabase/GitHub/Resend/Vercel validation, and the full CI matrix
 remain open, tracked against Phase 7's gating criteria as before.
+
+## Phase 4, write-path audit results — confirmed: every write route is still TypeScript
+
+Audit only, no code changed, verified by reading `git show <branch>:<path>` on each of the
+five local branches that had never been pushed (`migration/phase3-build-pipeline`,
+`migration/phase4-audit`, and steps 2a/2c/2d), then pushed as-is as PRs
+[#7](https://github.com/Geobatpo07/stories/pull/7)-[#11](https://github.com/Geobatpo07/stories/pull/11)
+(all diverged from `main` at `2969512`, before this migration's own fixes; none merged).
+Findings file: `backend/PHASE4-WRITE-PATH-AUDIT.md` on branch
+`migration/phase4-write-path-audit` (`93e2b0b`). Independently re-verified against the real
+pushed code, not just the report's narrative: confirmed by reading
+`app/api/auth/login/route.ts`, `app/api/studio/documents/route.ts`, and
+`app/api/studio/documents/[id]/publish/route.ts` directly on `migration/phase4-frontend-repoint`
+— all three import only `@/auth/server` / `@/authoring/server`, no Python client.
+
+**The answer, confirmed on every one of the five branches:** all six write routes
+(`studio/documents` POST, `.../publish`, `auth/login`, `auth/logout`,
+`auth/reset-password`, `.../confirm`) still run their original TypeScript logic. The Python
+ports in `backend/api/app.py` (steps 2a/2c) implement all six endpoints, under the same
+paths, and pass their own tests — and are called by nothing. This is the "tested dead code"
+this ADR's duplication policy warns against, confirmed as real rather than hypothetical.
+
+**What is actually rewired, confirmed by reading the code:** only on
+`migration/phase4-frontend-repoint` (step 2d) — the three read-only Server Components (via
+`lib/python-api.ts`) and the Studio editor's two write calls (`components/authoring/studio-editor.tsx`,
+via `lib/studio-client.ts`'s `studioApiFetch`). `studioApiFetch` is "hybrid by
+configuration": with `NEXT_PUBLIC_PYTHON_API_BASE_URL` unset it falls back to the
+same-origin Next.js route — so the editor's requests still land on the TypeScript handler
+today, by default, confirmed by reading `studioApiFetch`'s empty-string fallback. No branch,
+including step 2d, repoints the login or reset-password forms; all still call
+`/api/auth/*` same-origin.
+
+**One more confirmed duplication, found while reading the login route for this audit, not
+previously called out:** the in-memory rate limiter (`MAX_ATTEMPTS`, `WINDOW_MS`, keyed by
+client IP since the `fix/login-rate-limit-by-ip` hotfix) lives in
+`app/api/auth/login/route.ts`. `backend/api/app.py` has its own `rate_limited()`/`client_key()`
+pair implementing the same check independently in Python. Repointing the route to Python
+without removing the TypeScript limiter would stack two independent rate limiters rather
+than replacing one with the other — tracked explicitly so the next step doesn't leave it
+behind as a new, undetected duplication.
+
+**Decision:** repoint the six write routes and the login/reset forms to Python the same way
+the read path was done in step 2d — a thin Node-side proxy (`lib/python-api.ts` gains a
+POST-capable sibling of `pythonApiGet`) forwarding the request and session cookie, removing
+the route's own business logic (including the now-redundant TypeScript rate limiter) as
+part of the same change, not after. A platform-level rewrite (Vercel Services routing
+`/api/studio/*` and `/api/auth/*` to Python directly, bypassing Next.js's own routing
+entirely) is deferred to Phase 6: it needs a stable deployed Python URL this migration
+doesn't have yet, and once it exists, the thin proxies built now have no business logic
+left to migrate — only the routing itself would change.
 
 ## Phase 4 — Authoring and auth
 
