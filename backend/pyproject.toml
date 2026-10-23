@@ -24,10 +24,14 @@ dependencies = [
 [dependency-groups]
 dev = [
 <<<<<<< HEAD
+<<<<<<< HEAD
     "mypy>=1.11",
     "pytest>=8",
     "ruff>=0.6",
 =======
+=======
+    "mypy==2.4.0",
+>>>>>>> 3641145 (Pin mypy and write its strict configuration into pyproject)
     "pytest>=8",
     "ruff==0.17.2",
 >>>>>>> a96584b (Pin ruff and write the ruff configuration out explicitly)
@@ -68,4 +72,15 @@ select = [
     "RUF100",          # unused noqa
     "RUF034", "FURB167", "FURB188", "PLC0206", "PYI034",  # the other five findings of ruff 0.17's defaults
 ]
+<<<<<<< HEAD
 >>>>>>> a96584b (Pin ruff and write the ruff configuration out explicitly)
+=======
+
+# Strict typing for the packages the Python build pipeline is made of. The version is pinned in the
+# lock; `uv run mypy` with no arguments checks exactly `files`.
+[tool.mypy]
+python_version = "3.12"
+strict = true
+explicit_package_bases = true
+files = ["kernel", "pipeline", "schemas"]
+>>>>>>> 3641145 (Pin mypy and write its strict configuration into pyproject)
