@@ -282,6 +282,49 @@ Builds on ADR-003's phase discipline (prove parity before deleting anything; reu
 existing `round-trip.test.ts` pattern for every new artifact contract) but widens it to
 the full scope.
 
+## No TypeScript/Python duplication left standing
+
+A porting phase is not done when Python code exists and its own tests pass. It is done
+only when one of two things is also true: the real TypeScript caller has been repointed
+to delegate to Python (as `lib/python-api.ts` did for the three Studio Server Components
+in step 2d), or the old TypeScript implementation has been deleted. A Python port with no
+repointed caller is an incomplete phase, not a separately-closed one — it is tested dead
+code until proven otherwise, and future phase reports must say explicitly, for every
+route or component touched, which of the two is now true rather than stopping at "the
+Python side works."
+
+Two kinds of duplication are accepted, both narrow and named, everything else is not:
+
+- **Temporary, bounded to one phase's cutover window.** TypeScript and Python run the
+  same logic in parallel only long enough for characterization tests to prove Python
+  matches TypeScript's real behavior, before the real caller is repointed and the
+  TypeScript implementation is deleted (Phase 7). This is the existing phase discipline
+  above, restated, not a new rule.
+- **Narrow, pure, and contract-tested.** A client-side function with no side effects and
+  no business rules beyond shaping data, kept on both sides because a round trip to
+  Python would cost latency a person typing in a form would notice — `createDraft()`
+  building an empty draft's in-memory shape is the one instance so far. Guarded by a
+  cross-language contract test mirroring `fixtures/authoring-contract`, so drift between
+  the two sides fails a test instead of silently diverging.
+
+One exception is permanent, not decay to watch for: `middleware.ts` and
+`auth/server.ts`'s session check call Supabase directly and will never delegate to
+Python (see "Explicitly unchanged" above). The Edge runtime runs on every request,
+including every public page; adding a network call to a second service there would add
+latency and a new failure mode to all site traffic for a check that must stay minimal.
+This was decided, not overlooked.
+
+**Open as of Phase 4, step 2d:** the original Phase 4 plan below already called for
+`components/authoring/`'s form-submission code to be repointed to Python (not just the
+Studio's read-only Server Components) and for the old Next.js API routes to be deleted
+once that repoint lands. Step 2d's report confirms only the three read-only Server
+Components were repointed; it does not confirm whether `app/api/studio/documents/route.ts`
+(save draft) and `app/api/studio/documents/[id]/publish/route.ts` (publish) still run
+`authoringWorkflow`'s TypeScript logic directly or already delegate to the Python ports
+built in steps 2a/2c. Until this is checked against the real code, treat it as an open
+finding, not a closed one — the same goes for whether `app/api/auth/**` routes still run
+`auth/workflow.ts` in TypeScript or the step-2a Python auth port.
+
 ## Phase 0 — Small spike, not a go/no-go gate
 
 Build a minimal LadybugDB graph from Python (a handful of entities across two or three
@@ -804,6 +847,166 @@ as every phase before it: nothing has run against a real Supabase or Resend; rou
 exercised via Starlette's `TestClient`, not `uvicorn` or a real Vercel deployment; only
 Python 3.13 was used; the `python-artifact` CI job will pick these tests up but hasn't run
 on GitHub itself; login tests take ~50s since each does a real scrypt computation.
+
+## Phase 4, step 2c results — GitHub-API publish implemented, never run against real GitHub
+
+Done on `migration/phase4-github-publish` (`d57ca21`, on top of `9af1ba6`), not pushed —
+`backend/PHASE4C-FINDINGS.md`, evidence in `backend/evidence/phase-4c/`. Both stubs from
+step 2a are implemented; everything runs against an in-memory fake GitHub
+(`backend/tests/github_fake.py`) — the real GitHub API has never been called. `pytest`:
+1,125 passed (1,096 before). `pnpm test`: 777/1 skipped (766 before) — two new files only,
+the revalidation route and its test; nothing existing changed. `ruff`/`mypy --strict` clean
+on the new code.
+
+**Design, and why:** fetch the branch head and its tarball (Vercel's filesystem is
+read-only and ephemeral, ruling out a synced local clone), extract only `content/`'s
+regular files into a temp directory with path-traversal/absolute-path/symlink guards and a
+200MB cap, apply the change, then run the real Phase 3 Python build pipeline against it —
+duplicate-id check included. Only if that passes does it commit: one Git Data API tree
+(covering both the new/changed file and, if the slug changed, the old path's removal via
+`sha: null`), one commit whose parent is the snapshotted head, one unforced ref update. If
+the branch moved underneath it, the ref update fails closed ("nothing was published, try
+again") rather than overwriting. Identical content commits nothing at all (verified: a
+retry after a failed Supabase save is a no-op, not a duplicate commit). The stored
+`publication` row keeps `publicationState: "published"` even though nothing is visibly live
+yet — the existing TypeScript app reads this field through a closed enum, and a real commit
+genuinely has happened; this is a deliberate, explicitly limited choice pending the
+deployment-tracking work below, not an oversight.
+
+**GitHub API research:** chose the Git Data API (tree + commit + ref update) over the
+Contents API specifically for atomicity — a slug change needs both an add and a delete, and
+GitHub's own Contents API docs are cited as requiring such operations to be serialized or
+risk a conflict, which the Git Data API's one-tree-one-commit shape avoids entirely. I could
+not independently re-fetch GitHub's exact doc text myself (a tool permission gate blocked
+it), but an open, actively-discussed GitHub issue independently corroborates the underlying
+mechanism (concurrent Contents API writes to the same branch conflicting on the blob
+`sha`), and the tree+commit+ref-update pattern chosen here is the standard, well-established
+approach other git-backed publishing tools use for exactly this atomicity guarantee — the
+architectural choice is sound independent of pinning the literal citation. Explicitly
+unconfirmed by the report itself and worth checking on first real use: whether the tarball
+endpoint accepts a commit SHA, the archive's root folder naming, the exact status code for a
+non-fast-forward ref rejection (409 and 422 are both treated as a conflict, defensively),
+and one additional permission the ref-update endpoint might require (its docs page was
+truncated) — to be confirmed via the `X-Accepted-GitHub-Permissions` response header.
+Needs a real, human-created fine-grained token (`contents: read/write`, scoped to this one
+repo, stored as `GITHUB_PUBLISH_TOKEN`) before any of this can run for real — none exists
+yet, none is hardcoded.
+
+**Revalidation route** (`app/api/internal/revalidate/route.ts`, new): compares
+`x-revalidate-secret` against `REVALIDATE_SECRET` by hashing both with SHA-256 before
+`timingSafeEqual` (equalizes length, avoids both a length-mismatch exception and a timing
+leak), calls only `revalidatePath("/", "layout")`, returns 401 on a wrong secret and 503 if
+unconfigured (fails closed), and is deliberately not covered by `middleware.ts` (it's a
+service-to-service call, not a user session). The Python side calls it fire-and-forget after
+a successful commit; a failure is logged, never surfaces as anything other than 200 to the
+publish caller.
+
+**Two residual risks, both already self-identified and tracked, not new surprises:**
+
+- **Pre-commit validation runs the Python build pipeline, not the TypeScript one
+  `vercel.json` actually deploys with.** Content that passes this check could still fail the
+  real Vercel build — which is exactly the production-build-fidelity question Phase 7
+  already gates on (real-content parity, full CI matrix) before TypeScript's build pipeline
+  is retired. This doesn't make the publish path unsafe today (a failed Vercel build simply
+  doesn't go live; the site keeps serving its last good deployment), but it does mean a
+  "successful" publish response here is not yet a guarantee of a successful deployment.
+- **Revalidating immediately after the commit cannot make the new content appear** — the
+  MDX only reaches the site once Vercel's next deployment for that commit is live;
+  revalidating now just re-caches the _current_ (old) deployment's output. The call is
+  wired per the original design, but its real trigger point belongs to the deployment-
+  tracking work, explicitly out of scope here.
+
+Fourteen negative controls were tried; thirteen caught immediately (ignoring a failed
+build, persisting state after a failed commit, forcing the ref update, dropping the delete
+entry or the commit's parent, recommitting identical content, deleting an absent path,
+omitting the token, swallowing a revalidation failure, dropping the deployment status field,
+and three TypeScript ones: `===` instead of constant-time comparison, a changed
+`revalidatePath` argument, a missing secret no longer refusing). The fourteenth — removing
+the archive path-traversal guard — survived alone because a second, independent
+normalization guard behind it still catches the same case; removing both together does fail
+a test. Reported honestly rather than silently dropped, which is exactly the right call.
+
+One flaky test, pre-existing from step 1 (a 404-unless-exactly-"true" Studio-enablement
+check that reloads its route's graph four times), timed out once under load past its 5s
+limit and passed on retry including in the final check — not touched, correctly left alone
+rather than loosened to hide the flake.
+
+Not done or observed, consistent with every phase before it: the real GitHub API, a real
+token, real branch protection, real rate limits, and the tarball-by-SHA endpoint have never
+been exercised; Vercel deployment-status tracking and automatic rollback of a commit whose
+deployment fails remain explicitly out of scope; Python 3.12/Linux/the `python-artifact` CI
+job have not run (Python 3.13, Windows only, as before).
+
+## Phase 4, step 2d results — Studio frontend repointed to the Python API
+
+Done on `migration/phase4-frontend-repoint` (`e8a480f`), not pushed. The three Studio
+Server Components (`app/studio/(protected)/page.tsx`, `documents/[id]/page.tsx`,
+`new/[kind]/page.tsx`) no longer import `knowledgeObjectRepository`/`authoringWorkflow`
+in-process from `authoring/server.ts` — this was the second consumer the Phase 4 audit
+flagged (the first being the `/api/studio/*` routes themselves, already ported). They now
+call the Python API over HTTP, through a new `lib/python-api.ts` helper. `pnpm test`:
+800/1 skipped (777 before) — new files only, nothing existing changed. `pytest`: 1,130
+passed (1,125 before).
+
+**`lib/python-api.ts` design:** Server Components don't get cookies forwarded
+automatically on a server-to-server `fetch()`, so the helper reads the session cookie via
+`cookies()` from `next/headers` and attaches it as an explicit `Cookie` header on every
+call to the Python API. Errors from the Python side are mapped to the same shape the
+Studio pages already handled from the old in-process path, so the pages' existing
+error-rendering branches didn't need to change.
+
+**Unplanned but necessary: CORS.** The Python API and the Next.js app aren't on the same
+origin in this topology, so a CORS-permissive middleware had to be added on the Python
+side for these calls to succeed at all. Reasoned correctly: `Access-Control-Allow-Origin`
+is scoped to the Studio's own origin (not `*`), because it must be combined with
+`Access-Control-Allow-Credentials: true` to carry the session cookie, and the CORS spec
+forbids pairing a wildcard origin with credentialed requests.
+
+**`SameSite=lax` limitation, correctly identified and deferred, not fixed here:** the
+session cookie is `SameSite=lax`, which still rides along on these calls today because
+Server Component server-to-server calls aren't the cross-site top-level navigation
+`SameSite=lax` is designed to block — but a genuinely cross-domain deployment (Python API
+on its own subdomain, per the Phase 6 Vercel Services plan) could put this on the wrong
+side of that line. Correctly scoped out of this step and flagged for Phase 6, not treated
+as resolved.
+
+**Negative controls:** 10/10 caught on the new `lib/python-api.ts` cookie-forwarding and
+error-mapping logic. 3/4 caught on the CORS middleware; the survivor was reported as an
+equivalent mutant (a change that alters the code without altering any observable behavior
+the test suite can distinguish — e.g. reordering two header-set calls — rather than a gap
+in coverage) and the reasoning for calling it equivalent was included rather than asserted.
+
+**First real end-to-end exercise of login + Python API together:** a manual test against
+a fake Supabase/PostgREST (not a unit or characterization test) logged in through the
+existing TypeScript `/api/auth/login` route, then loaded a Studio page that fetches
+through the new Python path — the first time in this migration that the TypeScript-issued
+session cookie and the Python API have been exercised together end-to-end, even in a fake
+environment.
+
+**`newStudioDraft` left as-is, flagged as an open question by the report:** the Studio's
+"new document" flow still calls TypeScript's `createDraft()` directly rather than a Python
+route, because no Python draft-creation route exists yet. Decision: no new route is
+needed. `createDraft()` is pure and deterministic — it builds an in-memory draft shape
+client-side and persists nothing until the existing (already-ported) save path is called
+— so duplicating its logic in TypeScript carries no correctness risk the way a persisting
+operation would. Adding a Python route here would force a decision (should an empty draft
+be persisted server-side on creation?) that nothing in this migration currently needs
+answered. Instead: add a cross-language contract test mirroring the existing
+`fixtures/authoring-contract` pattern, asserting the TypeScript `createDraft()` shape and
+the Python schema it will eventually be saved against stay in sync, so future drift is
+caught instead of silently diverging.
+
+**Pre-existing, unrelated to this change, noted for completeness:** Next.js's streaming
+SSR can commit an HTTP 200 status before a Python API error thrown deeper in the tree is
+rendered, because the route's `loading.tsx` Suspense shell is sent to the client first.
+This is a property of Next.js App Router streaming generally, not something this phase's
+changes introduced or could fix at this layer.
+
+Not done or observed, consistent with every phase before it: auth forms (login, reset,
+logout) still call TypeScript's `/api/auth/*` routes, not Python — explicitly out of
+scope for this step; Vercel deployment-status tracking, the revalidation call's real
+trigger point, real Supabase/GitHub/Resend/Vercel validation, and the full CI matrix
+remain open, tracked against Phase 7's gating criteria as before.
 
 ## Phase 4 — Authoring and auth
 
