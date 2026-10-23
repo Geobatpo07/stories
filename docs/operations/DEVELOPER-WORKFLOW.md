@@ -51,6 +51,12 @@ validation (`middleware.ts`, `auth/server.ts`) still reads Supabase directly fro
 Python service is down, Studio pages show the app error page (`app/error.tsx`), not an empty list.
 Public pages do not need the Python service.
 
+The Studio write routes (`/api/studio/documents` POST, `.../publish`, `/api/auth/*`) are pure relays to
+the Python API: `PYTHON_API_BASE_URL` is required in every environment that serves them, including
+production (unset: 503, unreachable: 502; there is no TypeScript fallback any more). The login
+limiter keys on `x-real-ip`, which the relay forwards, so set `VERCEL=1` on the Python service as
+well when it sits behind Vercel.
+
 ## Presentation boundaries
 
 - `app/` composes Runtime data and components.

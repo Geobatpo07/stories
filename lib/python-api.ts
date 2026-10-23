@@ -54,3 +54,47 @@ export async function pythonApiGet<T>(path: string): Promise<T> {
   }
   return (await response.json()) as T;
 }
+
+const WRITE_TIMEOUT_MS = 30_000;
+
+/**
+ * Server-side relay of a state-changing request to the Python API. Same cookie rule as
+ * `pythonApiGet` (only the Studio session cookie is forwarded, explicitly), plus the raw body and
+ * content type, and `x-real-ip` so Python's per-IP login limiter sees the visitor, not this
+ * server. The Python status, body and every `Set-Cookie` come back untouched: the route's external
+ * contract is the Python endpoint's, this function holds no business rule. The only responses it
+ * makes itself are for "no Python answer at all": 503 when the base URL is unset, 502 when the
+ * service is unreachable or times out.
+ */
+export async function pythonApiRelay(request: Request, path: string): Promise<Response> {
+  const base = process.env.PYTHON_API_BASE_URL?.replace(/\/+$/, "");
+  if (!base) return Response.json({ error: "PYTHON_API_BASE_URL is not set." }, { status: 503 });
+
+  const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
+  const headers = new Headers();
+  if (token) headers.set("cookie", `${SESSION_COOKIE_NAME}=${token}`);
+  for (const name of ["content-type", "x-real-ip"]) {
+    const value = request.headers.get(name);
+    if (value !== null) headers.set(name, value);
+  }
+
+  let upstream: Response;
+  try {
+    upstream = await fetch(`${base}${path}`, {
+      method: "POST",
+      headers,
+      body: await request.text(),
+      cache: "no-store",
+      redirect: "manual",
+      signal: AbortSignal.timeout(WRITE_TIMEOUT_MS),
+    });
+  } catch {
+    return Response.json({ error: `The Python API is unreachable at ${base}.` }, { status: 502 });
+  }
+
+  const out = new Headers();
+  const contentType = upstream.headers.get("content-type");
+  if (contentType !== null) out.set("content-type", contentType);
+  for (const cookie of upstream.headers.getSetCookie()) out.append("set-cookie", cookie);
+  return new Response(await upstream.text(), { status: upstream.status, headers: out });
+}

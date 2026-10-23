@@ -1,0 +1,15 @@
+   ✓ publish: success > moves the file and deletes the previous one when the slug changed since the last publication  729ms
+   ✓ publish: rollback when the artifact build fails > deletes a newly written file, answers 422 with the build report, and refreshes nothing  506ms
+   ✓ publish: rollback when the artifact build fails > restores the previous bytes of an overwritten file  418ms
+   ✓ publish: rollback when the artifact build fails > restores the previous file and removes the new one when a slug change fails to build  444ms
+   ✓ publish: path safety > refuses a recorded publication path that leaves the project root and writes nothing  352ms
+ ✓ app/api/auth/logout/route.test.ts (6 tests) 3528ms
+   ✓ POST /api/auth/logout > answers 200 {success:true}, deletes only the caller's session row, keeps others  1506ms
+   ✓ POST /api/auth/logout > clears the browser cookie with an empty value and an epoch expiry, dropping HttpOnly/SameSite  395ms
+   ✓ POST /api/auth/logout > without a cookie still answers 200, clears the cookie, and deletes nothing  434ms
+   ✓ POST /api/auth/logout > with an unknown token still answers 200 and leaves every real session in place  403ms
+   ✓ POST /api/auth/logout > deletes an already-expired session row too (no expiry check on logout)  402ms
+   ✓ POST /api/auth/logout > ignores a cookie with an empty value (nothing deleted, cookie still cleared)  382ms
+ ✓ app/api/internal/revalidate/route.test.ts (11 tests) 403ms
+ Test Files  7 passed (7)
+      Tests  115 passed (115)
