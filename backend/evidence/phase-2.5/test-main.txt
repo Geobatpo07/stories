@@ -1,0 +1,189 @@
+
+> stories@3.0.0 test C:\Users\gblaguerre\Documents\Data Analytics Projects\stories
+> vitest run
+
+
+ RUN  v3.2.7 C:/Users/gblaguerre/Documents/Data Analytics Projects/stories
+
+ ✓ runtime/adapters/artifact-knowledge-source-adapter.test.ts (2 tests) 302ms
+ ✓ build/pipeline.kernel-failure.test.ts (1 test) 1055ms
+   ✓ runBuildPipeline — Kernel failure > never rejects; a Kernel error becomes a validationIssue and success: false  1051ms
+ ✓ build/duckdb/populate.test.ts (3 tests) 266ms
+ ✓ build/targets/duckdb-target.test.ts (3 tests) 628ms
+ ❯ build/pipeline/validate-artifacts.test.ts (4 tests | 2 failed) 614ms
+   × validateArtifacts > returns no issues when row counts and checksums all match 177ms
+     → connect is not a function
+   × validateArtifacts > reports a row-count-entity issue when the actual row count differs from expected 225ms
+     → connect is not a function
+   ✓ validateArtifacts > reports a checksum-mismatch issue when an artifact was tampered with after the manifest recorded its checksum 199ms
+   ✓ validateArtifacts > reports artifact-exists when the DuckDB file is missing 9ms
+ ✓ build/pipeline.chain.test.ts (1 test) 1705ms
+   ✓ runBuildPipeline — target chain > skips remaining targets once one fails, without ever rejecting  1698ms
+ ✓ auth/passwords.test.ts (5 tests) 1859ms
+   ✓ hashPassword / verifyPassword > verifies the correct password against its own hash  457ms
+   ✓ hashPassword / verifyPassword > rejects a wrong password  404ms
+   ✓ hashPassword / verifyPassword > salts independently, so the same password hashes differently each time  358ms
+   ✓ hashPassword / verifyPassword > rejects a hash computed under a different salt  626ms
+ ✓ fixtures/schema-contract/schema-contract.test.ts (421 tests) 570ms
+ ✓ build/targets/manifest-target.test.ts (3 tests) 49ms
+ ✓ build/targets/round-trip.test.ts (1 test) 412ms
+   ✓ DuckDB + Manifest targets round-tripped through ArtifactKnowledgeSourceAdapter > reads back the same entities and relationships that were written  409ms
+ ✓ fixtures/kernel-contract/kernel-contract.test.ts (22 tests) 240ms
+ ✓ authoring/workflow.test.ts (3 tests) 438ms
+ ✓ build/pipeline.test.ts (2 tests) 337ms
+ ✓ runtime/adapters/file-system-persistence-adapter.test.ts (2 tests) 51ms
+ ✓ build/hash/content-hash.test.ts (5 tests) 48ms
+ ✓ kernel/parsers/markdown-parser.test.ts (4 tests) 48ms
+ ✓ lib/presentation/search.test.ts (3 tests) 51ms
+ ✓ app/presentation.test.ts (5 tests) 119ms
+ ✓ kernel/authoring.test.ts (3 tests) 40ms
+ ✓ authoring/renderers/mdx-renderer.test.ts (2 tests) 139ms
+ ✓ components/authoring/studio-editor.test.tsx (2 tests) 66ms
+ ✓ runtime/platform-runtime.test.ts (12 tests) 33ms
+ ✓ runtime/adapters/supabase-persistence-adapter.test.ts (7 tests) 37ms
+ ✓ kernel/api.test.ts (6 tests) 42ms
+ ✓ lib/presentation/knowledge.test.ts (2 tests) 53ms
+ ✓ build/hash/checksum.test.ts (2 tests) 25ms
+ ✓ kernel/errors.test.ts (4 tests) 23ms
+ ✓ components/knowledge/reading.test.ts (2 tests) 242ms
+ ✓ kernel/registry/registrations.test.ts (4 tests) 19ms
+ ✓ runtime/composition-root.test.ts (7 tests) 21ms
+ ✓ kernel/pipeline/validation.test.ts (3 tests) 20ms
+ ✓ kernel/cache.test.ts (3 tests) 18ms
+ ✓ auth/workflow.test.ts (11 tests) 5156ms
+   ✓ AuthWorkflow.login > succeeds with the correct email and password, and the session validates  467ms
+   ✓ AuthWorkflow.login > fails with the wrong password  487ms
+   ✓ AuthWorkflow.login > fails for an unregistered email  500ms
+   ✓ AuthWorkflow.logout / validateSession > destroys the session so it no longer validates  506ms
+   ✓ AuthWorkflow.logout / validateSession > rejects and cleans up an expired session  363ms
+   ✓ AuthWorkflow.confirmPasswordReset > updates the password, signs out every session, and consumes the token  1254ms
+   ✓ AuthWorkflow.confirmPasswordReset > rejects an expired token without changing the password  567ms
+ ✓ runtime/adapters/identifier-service.test.ts (6 tests) 22ms
+ ✓ runtime/adapters/console-logger.test.ts (2 tests) 16ms
+ ✓ runtime/adapters/kernel-knowledge-source-adapter.test.ts (2 tests) 18ms
+ ❯ build/manifest/build-manifest.test.ts (2 tests | 2 failed) 22ms
+   × buildManifest > carries version constants, counts, contentHash, and generationDuration >= 0 15ms
+     → (0 , getPlatformVersion) is not a function
+   × buildManifest > populates artifacts generically from priorResults, keyed by BuildTargetResult.key, never by target name 3ms
+     → (0 , getPlatformVersion) is not a function
+ ✓ runtime/lifecycle.test.ts (13 tests) 15ms
+ ✓ build/pipeline/checks/circular-dependencies.test.ts (3 tests) 16ms
+ ✓ build/pipeline/validate-graph.test.ts (2 tests) 12ms
+ ✓ build/pipeline/report.test.ts (3 tests) 15ms
+ ✓ runtime/adapters/in-memory-event-bus.test.ts (5 tests) 16ms
+ ✓ runtime/adapters/null-persistence-adapter.test.ts (5 tests) 15ms
+ ✓ build/pipeline/checks/missing-metadata.test.ts (2 tests) 15ms
+ ✓ build/pipeline/checks/duplicate-slugs.test.ts (2 tests) 14ms
+ ✓ runtime/adapters/clock.test.ts (2 tests) 10ms
+ ✓ kernel/pipeline/relationships.test.ts (3 tests) 14ms
+ ✓ build/pipeline/checks/broken-references.test.ts (2 tests) 15ms
+ ✓ build/duckdb/extra-fields.test.ts (2 tests) 12ms
+ ✓ kernel/pipeline/graph.test.ts (3 tests) 15ms
+ ✓ runtime/adapters/environment-configuration.test.ts (5 tests) 17ms
+ ✓ build/pipeline/checks/duplicate-ids.test.ts (2 tests) 15ms
+ ✓ kernel/pipeline/factory.test.ts (2 tests) 13ms
+ ✓ runtime/context.test.ts (2 tests) 14ms
+ ✓ kernel/pipeline/normalization.test.ts (2 tests) 14ms
+ ✓ build/hash/canonical-json.test.ts (4 tests) 11ms
+ ✓ runtime/errors.test.ts (4 tests) 13ms
+ ✓ build/report.test.ts (4 tests) 17ms
+ ✓ build/pipeline/load.test.ts (1 test) 19ms
+ ✓ lib/utils/group-by.test.ts (3 tests) 12ms
+ ❯ build/version.test.ts (2 tests | 1 failed) 18ms
+   × getPlatformVersion > reads the real package.json's version field 12ms
+     → (0 , getPlatformVersion) is not a function
+   ✓ version constants > are non-empty semver-shaped strings 2ms
+ ✓ build/errors.test.ts (2 tests) 11ms
+ ✓ build/targets/registry.test.ts (1 test) 4ms
+ ✓ spikes/ladybugdb-phase0/artifact-contract.spike.test.ts (1 test) 55ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  build/pipeline/orchestrator.test.ts [ build/pipeline/orchestrator.test.ts ]
+TypeError: DuckDBBuildTarget is not a constructor
+ ❯ build/targets/registrations.ts:25:54
+     23|  * EmbeddingBuildTarget, VectorIndexBuildTarget.
+     24|  */
+     25| export const buildTargets: readonly BuildTarget[] = [new DuckDBBuildTa…
+       |                                                      ^
+     26| 
+ ❯ build/pipeline/orchestrator.ts:4:1
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  build/version.test.ts > getPlatformVersion > reads the real package.json's version field
+TypeError: (0 , getPlatformVersion) is not a function
+ ❯ build/version.test.ts:6:12
+      4| describe("getPlatformVersion", () => {
+      5|   it("reads the real package.json's version field", () => {
+      6|     expect(getPlatformVersion()).toBe("3.0.0");
+       |            ^
+      7|   });
+      8| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  build/manifest/build-manifest.test.ts > buildManifest > carries version constants, counts, contentHash, and generationDuration >= 0
+TypeError: (0 , getPlatformVersion) is not a function
+ ❯ buildManifest build/manifest/build-manifest.ts:25:22
+     23| 
+     24|   return {
+     25|     platformVersion: getPlatformVersion(),
+       |                      ^
+     26|     kernelVersion: KERNEL_VERSION,
+     27|     buildVersion: BUILD_VERSION,
+ ❯ build/manifest/build-manifest.test.ts:40:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  build/manifest/build-manifest.test.ts > buildManifest > populates artifacts generically from priorResults, keyed by BuildTargetResult.key, never by target name
+TypeError: (0 , getPlatformVersion) is not a function
+ ❯ buildManifest build/manifest/build-manifest.ts:25:22
+     23| 
+     24|   return {
+     25|     platformVersion: getPlatformVersion(),
+       |                      ^
+     26|     kernelVersion: KERNEL_VERSION,
+     27|     buildVersion: BUILD_VERSION,
+ ❯ build/manifest/build-manifest.test.ts:64:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  build/pipeline/validate-artifacts.test.ts > validateArtifacts > returns no issues when row counts and checksums all match
+TypeError: connect is not a function
+ ❯ validateDuckDBArtifact build/pipeline/validate-artifacts.ts:49:28
+     47| 
+     48|   const issues: ValidationIssue[] = [];
+     49|   const connection = await connect(result.file);
+       |                            ^
+     50|   try {
+     51|     const entityCount = await countRows(connection, "knowledge_entity"…
+ ❯ validateArtifacts build/pipeline/validate-artifacts.ts:28:27
+ ❯ build/pipeline/validate-artifacts.test.ts:69:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  build/pipeline/validate-artifacts.test.ts > validateArtifacts > reports a row-count-entity issue when the actual row count differs from expected
+TypeError: connect is not a function
+ ❯ validateDuckDBArtifact build/pipeline/validate-artifacts.ts:49:28
+     47| 
+     48|   const issues: ValidationIssue[] = [];
+     49|   const connection = await connect(result.file);
+       |                            ^
+     50|   try {
+     51|     const entityCount = await countRows(connection, "knowledge_entity"…
+ ❯ validateArtifacts build/pipeline/validate-artifacts.ts:28:27
+ ❯ build/pipeline/validate-artifacts.test.ts:82:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  4 failed | 61 passed (65)
+      Tests  5 failed | 649 passed (654)
+   Start at  15:41:32
+   Duration  15.05s (transform 8.79s, setup 0ms, collect 44.67s, tests 15.22s, environment 40ms, prepare 36.38s)
+
+ ELIFECYCLE  Test failed. See above for more details.

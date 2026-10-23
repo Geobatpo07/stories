@@ -1,0 +1,10 @@
+{
+  "description": "required field description missing",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "date": "2026-10-22",
+    "programSlug": "some-program"
+  },
+  "valid": false
+}

@@ -1,0 +1,12 @@
+{
+  "description": "DD/MM/YYYY",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "22/10/2026",
+    "theme": "Climate",
+    "leadResearcher": "A. Person"
+  },
+  "valid": false
+}

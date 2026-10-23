@@ -1,0 +1,21 @@
+{
+  "description": "status paused",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "research-note",
+    "status": "paused"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "research-note",
+    "status": "paused",
+    "tags": []
+  }
+}

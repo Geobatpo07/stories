@@ -1,0 +1,57 @@
+{
+  "outcome": "ok",
+  "entities": [
+    {
+      "id": "software:colon",
+      "kind": "software",
+      "slug": "colon",
+      "title": "A: B",
+      "summary": "Description of colon",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "colon",
+      "filePath": "content/software/colon.mdx"
+    },
+    {
+      "id": "publication:block",
+      "kind": "publication",
+      "slug": "block",
+      "title": "Block",
+      "summary": "folded text\n",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "coAuthors": []
+      },
+      "relationships": [],
+      "content": "body",
+      "filePath": "content/publications/block.mdx",
+      "coAuthors": []
+    },
+    {
+      "id": "dataset:quirks",
+      "kind": "dataset",
+      "slug": "quirks",
+      "title": "Yes",
+      "summary": "Description of quirks",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "license": "on"
+      },
+      "relationships": [],
+      "content": "quirks",
+      "filePath": "content/datasets/quirks.mdx",
+      "license": "on"
+    }
+  ]
+}

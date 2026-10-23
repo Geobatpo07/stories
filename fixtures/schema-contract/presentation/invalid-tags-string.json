@@ -1,0 +1,11 @@
+{
+  "description": "tags must be an array",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "tags": "a"
+  },
+  "valid": false
+}

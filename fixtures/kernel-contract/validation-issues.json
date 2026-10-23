@@ -1,0 +1,2329 @@
+{
+  "dataset/invalid-date-format": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "dataset/invalid-date-not-string": [
+    {
+      "path": "date",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "dataset/invalid-date-single-digit": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "dataset/invalid-date-trailing-newline": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "dataset/invalid-date-unicode-digits": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "dataset/invalid-empty-description": [
+    {
+      "path": "description",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "dataset/invalid-empty-license": [
+    {
+      "path": "license",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "dataset/invalid-empty-title": [
+    {
+      "path": "title",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "dataset/invalid-input-array": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received array",
+      "hint": "expected object, received array"
+    }
+  ],
+  "dataset/invalid-input-null": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received null",
+      "hint": "expected object, received null"
+    }
+  ],
+  "dataset/invalid-input-string": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received string",
+      "hint": "expected object, received string"
+    }
+  ],
+  "dataset/invalid-missing-date": [
+    {
+      "path": "date",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "dataset/invalid-missing-description": [
+    {
+      "path": "description",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "dataset/invalid-missing-slug": [
+    {
+      "path": "slug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "dataset/invalid-missing-title": [
+    {
+      "path": "title",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "dataset/invalid-null-license": [
+    {
+      "path": "license",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "dataset/invalid-slug-casing": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "dataset/invalid-slug-double-hyphen": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "dataset/invalid-slug-empty": [
+    {
+      "path": "slug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "dataset/invalid-slug-trailing-newline": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "dataset/invalid-slug-underscore": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "dataset/invalid-status-case": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'Draft'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "dataset/invalid-status-null": [
+    {
+      "path": "status",
+      "message": "Expected 'draft' | 'active' | 'paused' | 'concluded', received null",
+      "hint": "expected 'draft' | 'active' | 'paused' | 'concluded', received null"
+    }
+  ],
+  "dataset/invalid-status": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "dataset/invalid-tag-empty": [
+    {
+      "path": "tags.1",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "dataset/invalid-tag-number": [
+    {
+      "path": "tags.0",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "dataset/invalid-tags-null": [
+    {
+      "path": "tags",
+      "message": "Expected array, received null",
+      "hint": "expected array, received null"
+    }
+  ],
+  "dataset/invalid-tags-string": [
+    {
+      "path": "tags",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "dataset/invalid-title-number": [
+    {
+      "path": "title",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "dataset/invalid-url-sourceUrl-empty": [
+    {
+      "path": "sourceUrl",
+      "message": "Invalid url",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "dataset/invalid-url-sourceUrl-null": [
+    {
+      "path": "sourceUrl",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "dataset/invalid-url-sourceUrl-number": [
+    {
+      "path": "sourceUrl",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "dataset/invalid-url-sourceUrl": [
+    {
+      "path": "sourceUrl",
+      "message": "Invalid url",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-date-format": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-date-not-string": [
+    {
+      "path": "date",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "experiment/invalid-date-single-digit": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-date-trailing-newline": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-date-unicode-digits": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-empty-description": [
+    {
+      "path": "description",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "experiment/invalid-empty-title": [
+    {
+      "path": "title",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "experiment/invalid-input-array": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received array",
+      "hint": "expected object, received array"
+    }
+  ],
+  "experiment/invalid-input-null": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received null",
+      "hint": "expected object, received null"
+    }
+  ],
+  "experiment/invalid-input-string": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received string",
+      "hint": "expected object, received string"
+    }
+  ],
+  "experiment/invalid-missing-date": [
+    {
+      "path": "date",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "experiment/invalid-missing-description": [
+    {
+      "path": "description",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "experiment/invalid-missing-questionSlug": [
+    {
+      "path": "questionSlug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "experiment/invalid-missing-slug": [
+    {
+      "path": "slug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "experiment/invalid-missing-title": [
+    {
+      "path": "title",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "experiment/invalid-rel-hypothesisSlug-casing": [
+    {
+      "path": "hypothesisSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-rel-hypothesisSlug-empty": [
+    {
+      "path": "hypothesisSlug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "hypothesisSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-rel-hypothesisSlug-list": [
+    {
+      "path": "hypothesisSlug",
+      "message": "Expected string, received array",
+      "hint": "expected string, received array"
+    }
+  ],
+  "experiment/invalid-rel-hypothesisSlug-null": [
+    {
+      "path": "hypothesisSlug",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "experiment/invalid-rel-hypothesisSlug-number": [
+    {
+      "path": "hypothesisSlug",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "experiment/invalid-rel-questionSlug-casing": [
+    {
+      "path": "questionSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-rel-questionSlug-empty": [
+    {
+      "path": "questionSlug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "questionSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-rel-questionSlug-list": [
+    {
+      "path": "questionSlug",
+      "message": "Expected string, received array",
+      "hint": "expected string, received array"
+    }
+  ],
+  "experiment/invalid-rel-questionSlug-number": [
+    {
+      "path": "questionSlug",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "experiment/invalid-slug-casing": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-slug-double-hyphen": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-slug-empty": [
+    {
+      "path": "slug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-slug-trailing-newline": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-slug-underscore": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "experiment/invalid-status-case": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'Draft'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "experiment/invalid-status-null": [
+    {
+      "path": "status",
+      "message": "Expected 'draft' | 'active' | 'paused' | 'concluded', received null",
+      "hint": "expected 'draft' | 'active' | 'paused' | 'concluded', received null"
+    }
+  ],
+  "experiment/invalid-status": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "experiment/invalid-tag-empty": [
+    {
+      "path": "tags.1",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "experiment/invalid-tag-number": [
+    {
+      "path": "tags.0",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "experiment/invalid-tags-null": [
+    {
+      "path": "tags",
+      "message": "Expected array, received null",
+      "hint": "expected array, received null"
+    }
+  ],
+  "experiment/invalid-tags-string": [
+    {
+      "path": "tags",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "experiment/invalid-title-number": [
+    {
+      "path": "title",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "hypothesis/invalid-date-format": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-date-not-string": [
+    {
+      "path": "date",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "hypothesis/invalid-date-single-digit": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-date-trailing-newline": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-date-unicode-digits": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-empty-description": [
+    {
+      "path": "description",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "hypothesis/invalid-empty-title": [
+    {
+      "path": "title",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "hypothesis/invalid-input-array": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received array",
+      "hint": "expected object, received array"
+    }
+  ],
+  "hypothesis/invalid-input-null": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received null",
+      "hint": "expected object, received null"
+    }
+  ],
+  "hypothesis/invalid-input-string": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received string",
+      "hint": "expected object, received string"
+    }
+  ],
+  "hypothesis/invalid-missing-date": [
+    {
+      "path": "date",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "hypothesis/invalid-missing-description": [
+    {
+      "path": "description",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "hypothesis/invalid-missing-questionSlug": [
+    {
+      "path": "questionSlug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "hypothesis/invalid-missing-slug": [
+    {
+      "path": "slug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "hypothesis/invalid-missing-title": [
+    {
+      "path": "title",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "hypothesis/invalid-rel-questionSlug-casing": [
+    {
+      "path": "questionSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-rel-questionSlug-empty": [
+    {
+      "path": "questionSlug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "questionSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-rel-questionSlug-list": [
+    {
+      "path": "questionSlug",
+      "message": "Expected string, received array",
+      "hint": "expected string, received array"
+    }
+  ],
+  "hypothesis/invalid-rel-questionSlug-number": [
+    {
+      "path": "questionSlug",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "hypothesis/invalid-slug-casing": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-slug-double-hyphen": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-slug-empty": [
+    {
+      "path": "slug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-slug-trailing-newline": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-slug-underscore": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "hypothesis/invalid-status-case": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'Draft'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "hypothesis/invalid-status-null": [
+    {
+      "path": "status",
+      "message": "Expected 'draft' | 'active' | 'paused' | 'concluded', received null",
+      "hint": "expected 'draft' | 'active' | 'paused' | 'concluded', received null"
+    }
+  ],
+  "hypothesis/invalid-status": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "hypothesis/invalid-tag-empty": [
+    {
+      "path": "tags.1",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "hypothesis/invalid-tag-number": [
+    {
+      "path": "tags.0",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "hypothesis/invalid-tags-null": [
+    {
+      "path": "tags",
+      "message": "Expected array, received null",
+      "hint": "expected array, received null"
+    }
+  ],
+  "hypothesis/invalid-tags-string": [
+    {
+      "path": "tags",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "hypothesis/invalid-title-number": [
+    {
+      "path": "title",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "knowledge/invalid-date-format": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-date-not-string": [
+    {
+      "path": "date",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "knowledge/invalid-date-single-digit": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-date-trailing-newline": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-date-unicode-digits": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-empty-description": [
+    {
+      "path": "description",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "knowledge/invalid-empty-title": [
+    {
+      "path": "title",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "knowledge/invalid-input-array": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received array",
+      "hint": "expected object, received array"
+    }
+  ],
+  "knowledge/invalid-input-null": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received null",
+      "hint": "expected object, received null"
+    }
+  ],
+  "knowledge/invalid-input-string": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received string",
+      "hint": "expected object, received string"
+    }
+  ],
+  "knowledge/invalid-missing-date": [
+    {
+      "path": "date",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "knowledge/invalid-missing-description": [
+    {
+      "path": "description",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "knowledge/invalid-missing-noteType": [
+    {
+      "path": "noteType",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "knowledge/invalid-missing-slug": [
+    {
+      "path": "slug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "knowledge/invalid-missing-title": [
+    {
+      "path": "title",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "knowledge/invalid-noteType-case": [
+    {
+      "path": "noteType",
+      "message": "Invalid enum value. Expected 'research-note' | 'development-log' | 'reading-note' | 'tutorial' | 'conference-note' | 'book-review' | 'essay', received 'Research-Note'",
+      "hint": "must be one of: research-note, development-log, reading-note, tutorial, conference-note, book-review, essay"
+    }
+  ],
+  "knowledge/invalid-noteType-unknown": [
+    {
+      "path": "noteType",
+      "message": "Invalid enum value. Expected 'research-note' | 'development-log' | 'reading-note' | 'tutorial' | 'conference-note' | 'book-review' | 'essay', received 'blog'",
+      "hint": "must be one of: research-note, development-log, reading-note, tutorial, conference-note, book-review, essay"
+    }
+  ],
+  "knowledge/invalid-rel-programSlug-casing": [
+    {
+      "path": "programSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-rel-programSlug-empty": [
+    {
+      "path": "programSlug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "programSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-rel-programSlug-list": [
+    {
+      "path": "programSlug",
+      "message": "Expected string, received array",
+      "hint": "expected string, received array"
+    }
+  ],
+  "knowledge/invalid-rel-programSlug-null": [
+    {
+      "path": "programSlug",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "knowledge/invalid-rel-programSlug-number": [
+    {
+      "path": "programSlug",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "knowledge/invalid-slug-casing": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-slug-double-hyphen": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-slug-empty": [
+    {
+      "path": "slug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-slug-trailing-newline": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-slug-underscore": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "knowledge/invalid-status-case": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'Draft'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "knowledge/invalid-status-null": [
+    {
+      "path": "status",
+      "message": "Expected 'draft' | 'active' | 'paused' | 'concluded', received null",
+      "hint": "expected 'draft' | 'active' | 'paused' | 'concluded', received null"
+    }
+  ],
+  "knowledge/invalid-status": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "knowledge/invalid-tag-empty": [
+    {
+      "path": "tags.1",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "knowledge/invalid-tag-number": [
+    {
+      "path": "tags.0",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "knowledge/invalid-tags-null": [
+    {
+      "path": "tags",
+      "message": "Expected array, received null",
+      "hint": "expected array, received null"
+    }
+  ],
+  "knowledge/invalid-tags-string": [
+    {
+      "path": "tags",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "knowledge/invalid-title-number": [
+    {
+      "path": "title",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "presentation/invalid-date-format": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-date-not-string": [
+    {
+      "path": "date",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "presentation/invalid-date-single-digit": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-date-trailing-newline": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-date-unicode-digits": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-empty-description": [
+    {
+      "path": "description",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "presentation/invalid-empty-title": [
+    {
+      "path": "title",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "presentation/invalid-empty-venue": [
+    {
+      "path": "venue",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "presentation/invalid-input-array": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received array",
+      "hint": "expected object, received array"
+    }
+  ],
+  "presentation/invalid-input-null": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received null",
+      "hint": "expected object, received null"
+    }
+  ],
+  "presentation/invalid-input-string": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received string",
+      "hint": "expected object, received string"
+    }
+  ],
+  "presentation/invalid-missing-date": [
+    {
+      "path": "date",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "presentation/invalid-missing-description": [
+    {
+      "path": "description",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "presentation/invalid-missing-slug": [
+    {
+      "path": "slug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "presentation/invalid-missing-title": [
+    {
+      "path": "title",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "presentation/invalid-null-venue": [
+    {
+      "path": "venue",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "presentation/invalid-rel-programSlug-casing": [
+    {
+      "path": "programSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-rel-programSlug-empty": [
+    {
+      "path": "programSlug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "programSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-rel-programSlug-list": [
+    {
+      "path": "programSlug",
+      "message": "Expected string, received array",
+      "hint": "expected string, received array"
+    }
+  ],
+  "presentation/invalid-rel-programSlug-null": [
+    {
+      "path": "programSlug",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "presentation/invalid-rel-programSlug-number": [
+    {
+      "path": "programSlug",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "presentation/invalid-rel-questionSlug-casing": [
+    {
+      "path": "questionSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-rel-questionSlug-empty": [
+    {
+      "path": "questionSlug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "questionSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-rel-questionSlug-list": [
+    {
+      "path": "questionSlug",
+      "message": "Expected string, received array",
+      "hint": "expected string, received array"
+    }
+  ],
+  "presentation/invalid-rel-questionSlug-null": [
+    {
+      "path": "questionSlug",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "presentation/invalid-rel-questionSlug-number": [
+    {
+      "path": "questionSlug",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "presentation/invalid-slug-casing": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-slug-double-hyphen": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-slug-empty": [
+    {
+      "path": "slug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-slug-trailing-newline": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-slug-underscore": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-status-case": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'Draft'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "presentation/invalid-status-null": [
+    {
+      "path": "status",
+      "message": "Expected 'draft' | 'active' | 'paused' | 'concluded', received null",
+      "hint": "expected 'draft' | 'active' | 'paused' | 'concluded', received null"
+    }
+  ],
+  "presentation/invalid-status": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "presentation/invalid-tag-empty": [
+    {
+      "path": "tags.1",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "presentation/invalid-tag-number": [
+    {
+      "path": "tags.0",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "presentation/invalid-tags-null": [
+    {
+      "path": "tags",
+      "message": "Expected array, received null",
+      "hint": "expected array, received null"
+    }
+  ],
+  "presentation/invalid-tags-string": [
+    {
+      "path": "tags",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "presentation/invalid-title-number": [
+    {
+      "path": "title",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "presentation/invalid-url-slidesUrl-empty": [
+    {
+      "path": "slidesUrl",
+      "message": "Invalid url",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-url-slidesUrl-null": [
+    {
+      "path": "slidesUrl",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "presentation/invalid-url-slidesUrl-number": [
+    {
+      "path": "slidesUrl",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "presentation/invalid-url-slidesUrl": [
+    {
+      "path": "slidesUrl",
+      "message": "Invalid url",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-url-videoUrl-empty": [
+    {
+      "path": "videoUrl",
+      "message": "Invalid url",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "presentation/invalid-url-videoUrl-null": [
+    {
+      "path": "videoUrl",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "presentation/invalid-url-videoUrl-number": [
+    {
+      "path": "videoUrl",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "presentation/invalid-url-videoUrl": [
+    {
+      "path": "videoUrl",
+      "message": "Invalid url",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-date-format": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-date-not-string": [
+    {
+      "path": "date",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "program/invalid-date-single-digit": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-date-trailing-newline": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-date-unicode-digits": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-empty-description": [
+    {
+      "path": "description",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "program/invalid-empty-leadResearcher": [
+    {
+      "path": "leadResearcher",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "program/invalid-empty-theme": [
+    {
+      "path": "theme",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "program/invalid-empty-title": [
+    {
+      "path": "title",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "program/invalid-input-array": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received array",
+      "hint": "expected object, received array"
+    }
+  ],
+  "program/invalid-input-null": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received null",
+      "hint": "expected object, received null"
+    }
+  ],
+  "program/invalid-input-string": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received string",
+      "hint": "expected object, received string"
+    }
+  ],
+  "program/invalid-missing-date": [
+    {
+      "path": "date",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "program/invalid-missing-description": [
+    {
+      "path": "description",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "program/invalid-missing-leadResearcher": [
+    {
+      "path": "leadResearcher",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "program/invalid-missing-slug": [
+    {
+      "path": "slug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "program/invalid-missing-theme": [
+    {
+      "path": "theme",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "program/invalid-missing-title": [
+    {
+      "path": "title",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "program/invalid-rel-relatedQuestionSlugs-bad-element": [
+    {
+      "path": "relatedQuestionSlugs.1",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-rel-relatedQuestionSlugs-null": [
+    {
+      "path": "relatedQuestionSlugs",
+      "message": "Expected array, received null",
+      "hint": "expected array, received null"
+    }
+  ],
+  "program/invalid-rel-relatedQuestionSlugs-number-element": [
+    {
+      "path": "relatedQuestionSlugs.0",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "program/invalid-rel-relatedQuestionSlugs-string": [
+    {
+      "path": "relatedQuestionSlugs",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "program/invalid-slug-casing": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-slug-double-hyphen": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-slug-empty": [
+    {
+      "path": "slug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-slug-trailing-newline": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-slug-underscore": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "program/invalid-status-case": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'Draft'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "program/invalid-status-null": [
+    {
+      "path": "status",
+      "message": "Expected 'draft' | 'active' | 'paused' | 'concluded', received null",
+      "hint": "expected 'draft' | 'active' | 'paused' | 'concluded', received null"
+    }
+  ],
+  "program/invalid-status": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "program/invalid-tag-empty": [
+    {
+      "path": "tags.1",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "program/invalid-tag-number": [
+    {
+      "path": "tags.0",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "program/invalid-tags-null": [
+    {
+      "path": "tags",
+      "message": "Expected array, received null",
+      "hint": "expected array, received null"
+    }
+  ],
+  "program/invalid-tags-string": [
+    {
+      "path": "tags",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "program/invalid-title-number": [
+    {
+      "path": "title",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "publication/invalid-coAuthors-empty-element": [
+    {
+      "path": "coAuthors.1",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "publication/invalid-coAuthors-string": [
+    {
+      "path": "coAuthors",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "publication/invalid-date-format": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "publication/invalid-date-not-string": [
+    {
+      "path": "date",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "publication/invalid-date-single-digit": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "publication/invalid-date-trailing-newline": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "publication/invalid-date-unicode-digits": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "publication/invalid-empty-description": [
+    {
+      "path": "description",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "publication/invalid-empty-doi": [
+    {
+      "path": "doi",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "publication/invalid-empty-title": [
+    {
+      "path": "title",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "publication/invalid-empty-venue": [
+    {
+      "path": "venue",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "publication/invalid-input-array": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received array",
+      "hint": "expected object, received array"
+    }
+  ],
+  "publication/invalid-input-null": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received null",
+      "hint": "expected object, received null"
+    }
+  ],
+  "publication/invalid-input-string": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received string",
+      "hint": "expected object, received string"
+    }
+  ],
+  "publication/invalid-missing-date": [
+    {
+      "path": "date",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "publication/invalid-missing-description": [
+    {
+      "path": "description",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "publication/invalid-missing-slug": [
+    {
+      "path": "slug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "publication/invalid-missing-title": [
+    {
+      "path": "title",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "publication/invalid-null-doi": [
+    {
+      "path": "doi",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "publication/invalid-null-venue": [
+    {
+      "path": "venue",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "publication/invalid-slug-casing": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "publication/invalid-slug-double-hyphen": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "publication/invalid-slug-empty": [
+    {
+      "path": "slug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "publication/invalid-slug-trailing-newline": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "publication/invalid-slug-underscore": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "publication/invalid-status-case": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'Draft'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "publication/invalid-status-null": [
+    {
+      "path": "status",
+      "message": "Expected 'draft' | 'active' | 'paused' | 'concluded', received null",
+      "hint": "expected 'draft' | 'active' | 'paused' | 'concluded', received null"
+    }
+  ],
+  "publication/invalid-status": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "publication/invalid-tag-empty": [
+    {
+      "path": "tags.1",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "publication/invalid-tag-number": [
+    {
+      "path": "tags.0",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "publication/invalid-tags-null": [
+    {
+      "path": "tags",
+      "message": "Expected array, received null",
+      "hint": "expected array, received null"
+    }
+  ],
+  "publication/invalid-tags-string": [
+    {
+      "path": "tags",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "publication/invalid-title-number": [
+    {
+      "path": "title",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "publication/invalid-url-preprintUrl-empty": [
+    {
+      "path": "preprintUrl",
+      "message": "Invalid url",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "publication/invalid-url-preprintUrl-null": [
+    {
+      "path": "preprintUrl",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "publication/invalid-url-preprintUrl-number": [
+    {
+      "path": "preprintUrl",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "publication/invalid-url-preprintUrl": [
+    {
+      "path": "preprintUrl",
+      "message": "Invalid url",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-date-format": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-date-not-string": [
+    {
+      "path": "date",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "question/invalid-date-single-digit": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-date-trailing-newline": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-date-unicode-digits": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-empty-description": [
+    {
+      "path": "description",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "question/invalid-empty-title": [
+    {
+      "path": "title",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "question/invalid-input-array": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received array",
+      "hint": "expected object, received array"
+    }
+  ],
+  "question/invalid-input-null": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received null",
+      "hint": "expected object, received null"
+    }
+  ],
+  "question/invalid-input-string": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received string",
+      "hint": "expected object, received string"
+    }
+  ],
+  "question/invalid-missing-date": [
+    {
+      "path": "date",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "question/invalid-missing-description": [
+    {
+      "path": "description",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "question/invalid-missing-programSlug": [
+    {
+      "path": "programSlug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "question/invalid-missing-slug": [
+    {
+      "path": "slug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "question/invalid-missing-title": [
+    {
+      "path": "title",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "question/invalid-rel-programSlug-casing": [
+    {
+      "path": "programSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-rel-programSlug-empty": [
+    {
+      "path": "programSlug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "programSlug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-rel-programSlug-list": [
+    {
+      "path": "programSlug",
+      "message": "Expected string, received array",
+      "hint": "expected string, received array"
+    }
+  ],
+  "question/invalid-rel-programSlug-number": [
+    {
+      "path": "programSlug",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "question/invalid-slug-casing": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-slug-double-hyphen": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-slug-empty": [
+    {
+      "path": "slug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-slug-trailing-newline": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-slug-underscore": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "question/invalid-status-case": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'Draft'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "question/invalid-status-null": [
+    {
+      "path": "status",
+      "message": "Expected 'draft' | 'active' | 'paused' | 'concluded', received null",
+      "hint": "expected 'draft' | 'active' | 'paused' | 'concluded', received null"
+    }
+  ],
+  "question/invalid-status": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "question/invalid-tag-empty": [
+    {
+      "path": "tags.1",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "question/invalid-tag-number": [
+    {
+      "path": "tags.0",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "question/invalid-tags-null": [
+    {
+      "path": "tags",
+      "message": "Expected array, received null",
+      "hint": "expected array, received null"
+    }
+  ],
+  "question/invalid-tags-string": [
+    {
+      "path": "tags",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "question/invalid-title-number": [
+    {
+      "path": "title",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "software/invalid-date-format": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "software/invalid-date-not-string": [
+    {
+      "path": "date",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "software/invalid-date-single-digit": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "software/invalid-date-trailing-newline": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "software/invalid-date-unicode-digits": [
+    {
+      "path": "date",
+      "message": "Date must be in YYYY-MM-DD format",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "software/invalid-empty-description": [
+    {
+      "path": "description",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "software/invalid-empty-license": [
+    {
+      "path": "license",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "software/invalid-empty-title": [
+    {
+      "path": "title",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "software/invalid-input-array": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received array",
+      "hint": "expected object, received array"
+    }
+  ],
+  "software/invalid-input-null": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received null",
+      "hint": "expected object, received null"
+    }
+  ],
+  "software/invalid-input-string": [
+    {
+      "path": "(root)",
+      "message": "Expected object, received string",
+      "hint": "expected object, received string"
+    }
+  ],
+  "software/invalid-missing-date": [
+    {
+      "path": "date",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "software/invalid-missing-description": [
+    {
+      "path": "description",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "software/invalid-missing-slug": [
+    {
+      "path": "slug",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "software/invalid-missing-title": [
+    {
+      "path": "title",
+      "message": "Required",
+      "hint": "this field is required"
+    }
+  ],
+  "software/invalid-null-license": [
+    {
+      "path": "license",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "software/invalid-slug-casing": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "software/invalid-slug-double-hyphen": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "software/invalid-slug-empty": [
+    {
+      "path": "slug",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    },
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "software/invalid-slug-trailing-newline": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "software/invalid-slug-underscore": [
+    {
+      "path": "slug",
+      "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "software/invalid-status-case": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'Draft'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "software/invalid-status-null": [
+    {
+      "path": "status",
+      "message": "Expected 'draft' | 'active' | 'paused' | 'concluded', received null",
+      "hint": "expected 'draft' | 'active' | 'paused' | 'concluded', received null"
+    }
+  ],
+  "software/invalid-status": [
+    {
+      "path": "status",
+      "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'",
+      "hint": "must be one of: draft, active, paused, concluded"
+    }
+  ],
+  "software/invalid-tag-empty": [
+    {
+      "path": "tags.1",
+      "message": "String must contain at least 1 character(s)",
+      "hint": "must be at least 1 character(s)"
+    }
+  ],
+  "software/invalid-tag-number": [
+    {
+      "path": "tags.0",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "software/invalid-tags-null": [
+    {
+      "path": "tags",
+      "message": "Expected array, received null",
+      "hint": "expected array, received null"
+    }
+  ],
+  "software/invalid-tags-string": [
+    {
+      "path": "tags",
+      "message": "Expected array, received string",
+      "hint": "expected array, received string"
+    }
+  ],
+  "software/invalid-title-number": [
+    {
+      "path": "title",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "software/invalid-url-repositoryUrl-empty": [
+    {
+      "path": "repositoryUrl",
+      "message": "Invalid url",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ],
+  "software/invalid-url-repositoryUrl-null": [
+    {
+      "path": "repositoryUrl",
+      "message": "Expected string, received null",
+      "hint": "expected string, received null"
+    }
+  ],
+  "software/invalid-url-repositoryUrl-number": [
+    {
+      "path": "repositoryUrl",
+      "message": "Expected string, received number",
+      "hint": "expected string, received number"
+    }
+  ],
+  "software/invalid-url-repositoryUrl": [
+    {
+      "path": "repositoryUrl",
+      "message": "Invalid url",
+      "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+    }
+  ]
+}

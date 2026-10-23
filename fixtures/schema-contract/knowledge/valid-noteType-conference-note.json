@@ -1,0 +1,20 @@
+{
+  "description": "noteType=conference-note",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "conference-note"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "conference-note",
+    "status": "draft",
+    "tags": []
+  }
+}

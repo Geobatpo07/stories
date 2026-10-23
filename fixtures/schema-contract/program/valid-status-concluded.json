@@ -1,0 +1,24 @@
+{
+  "description": "status concluded",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "theme": "Climate",
+    "leadResearcher": "A. Person",
+    "status": "concluded"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "theme": "Climate",
+    "leadResearcher": "A. Person",
+    "status": "concluded",
+    "tags": [],
+    "relatedQuestionSlugs": []
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "description": "date is a number",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": 20261022,
+    "theme": "Climate",
+    "leadResearcher": "A. Person"
+  },
+  "valid": false
+}

@@ -1,0 +1,20 @@
+{
+  "description": "noteType=essay",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "essay"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "essay",
+    "status": "draft",
+    "tags": []
+  }
+}

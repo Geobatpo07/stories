@@ -1,0 +1,10 @@
+{
+  "outcome": "error",
+  "error": {
+    "name": "KnowledgeRelationshipError",
+    "sourceId": "question:orphan",
+    "field": "programSlug",
+    "danglingTargetId": "program:no-such-program",
+    "message": "Entity \"question:orphan\" has a dangling reference in \"programSlug\": target \"program:no-such-program\" does not exist."
+  }
+}

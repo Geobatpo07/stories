@@ -1,0 +1,10 @@
+{
+  "description": "required field date missing",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "noteType": "research-note"
+  },
+  "valid": false
+}

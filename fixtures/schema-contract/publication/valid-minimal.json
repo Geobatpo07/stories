@@ -1,0 +1,19 @@
+{
+  "description": "required fields only; defaults filled",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "status": "draft",
+    "tags": [],
+    "coAuthors": []
+  }
+}

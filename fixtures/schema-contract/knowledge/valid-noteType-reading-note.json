@@ -1,0 +1,20 @@
+{
+  "description": "noteType=reading-note",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "reading-note"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "reading-note",
+    "status": "draft",
+    "tags": []
+  }
+}

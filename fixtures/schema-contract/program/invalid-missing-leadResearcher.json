@@ -1,0 +1,11 @@
+{
+  "description": "required field leadResearcher missing",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "theme": "Climate"
+  },
+  "valid": false
+}

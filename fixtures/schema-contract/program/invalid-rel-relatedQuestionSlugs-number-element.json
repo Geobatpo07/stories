@@ -1,0 +1,15 @@
+{
+  "description": "relatedQuestionSlugs has a non-string element",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "theme": "Climate",
+    "leadResearcher": "A. Person",
+    "relatedQuestionSlugs": [
+      1
+    ]
+  },
+  "valid": false
+}

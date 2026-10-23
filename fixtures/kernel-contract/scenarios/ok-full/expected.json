@@ -1,0 +1,433 @@
+{
+  "outcome": "ok",
+  "entities": [
+    {
+      "id": "program:lab",
+      "kind": "program",
+      "slug": "lab",
+      "title": "Laboratory",
+      "summary": "Description of lab",
+      "status": "active",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [
+          "alpha",
+          "zeta",
+          "😀",
+          "ﬁ"
+        ],
+        "theme": "Climate",
+        "leadResearcher": "A. Person",
+        "relatedQuestionSlugs": [
+          "q-two",
+          "q-one"
+        ]
+      },
+      "relationships": [
+        {
+          "field": "relatedQuestionSlugs",
+          "cardinality": "many",
+          "target": {
+            "id": "question:q-two",
+            "kind": "question",
+            "slug": "q-two",
+            "title": "Title of q-two"
+          }
+        },
+        {
+          "field": "relatedQuestionSlugs",
+          "cardinality": "many",
+          "target": {
+            "id": "question:q-one",
+            "kind": "question",
+            "slug": "q-one",
+            "title": "Title of q-one"
+          }
+        }
+      ],
+      "content": "Program body.\n\n---\n\nAfter a horizontal rule.",
+      "filePath": "content/programs/lab.mdx",
+      "theme": "Climate",
+      "leadResearcher": "A. Person",
+      "relatedQuestionSlugs": [
+        "q-two",
+        "q-one"
+      ]
+    },
+    {
+      "id": "program:sandbox",
+      "kind": "program",
+      "slug": "sandbox",
+      "title": "Title of sandbox",
+      "summary": "Description of sandbox",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "theme": "Misc",
+        "leadResearcher": "B. Person",
+        "relatedQuestionSlugs": []
+      },
+      "relationships": [],
+      "content": "Sandbox.",
+      "filePath": "content/programs/sandbox.md",
+      "theme": "Misc",
+      "leadResearcher": "B. Person",
+      "relatedQuestionSlugs": []
+    },
+    {
+      "id": "question:q-one",
+      "kind": "question",
+      "slug": "q-one",
+      "title": "Title of q-one",
+      "summary": "Description of q-one",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [
+          "a",
+          "b"
+        ],
+        "programSlug": "lab"
+      },
+      "relationships": [
+        {
+          "field": "programSlug",
+          "cardinality": "one",
+          "target": {
+            "id": "program:lab",
+            "kind": "program",
+            "slug": "lab",
+            "title": "Laboratory"
+          }
+        }
+      ],
+      "content": "Q one body éàü — “quoted”.",
+      "filePath": "content/questions/q-one.mdx",
+      "programSlug": "lab"
+    },
+    {
+      "id": "question:q-two",
+      "kind": "question",
+      "slug": "q-two",
+      "title": "Title of q-two",
+      "summary": "Description of q-two",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "programSlug": "lab"
+      },
+      "relationships": [
+        {
+          "field": "programSlug",
+          "cardinality": "one",
+          "target": {
+            "id": "program:lab",
+            "kind": "program",
+            "slug": "lab",
+            "title": "Laboratory"
+          }
+        }
+      ],
+      "content": "Q two.",
+      "filePath": "content/questions/q-two.mdx",
+      "programSlug": "lab"
+    },
+    {
+      "id": "hypothesis:h-one",
+      "kind": "hypothesis",
+      "slug": "h-one",
+      "title": "Title of h-one",
+      "summary": "Description of h-one",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "questionSlug": "q-one"
+      },
+      "relationships": [
+        {
+          "field": "questionSlug",
+          "cardinality": "one",
+          "target": {
+            "id": "question:q-one",
+            "kind": "question",
+            "slug": "q-one",
+            "title": "Title of q-one"
+          }
+        }
+      ],
+      "content": "H one.",
+      "filePath": "content/hypotheses/h-one.mdx",
+      "questionSlug": "q-one"
+    },
+    {
+      "id": "experiment:e-one",
+      "kind": "experiment",
+      "slug": "e-one",
+      "title": "Title of e-one",
+      "summary": "Description of e-one",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "questionSlug": "q-two",
+        "hypothesisSlug": "h-one"
+      },
+      "relationships": [
+        {
+          "field": "questionSlug",
+          "cardinality": "one",
+          "target": {
+            "id": "question:q-two",
+            "kind": "question",
+            "slug": "q-two",
+            "title": "Title of q-two"
+          }
+        },
+        {
+          "field": "hypothesisSlug",
+          "cardinality": "one",
+          "target": {
+            "id": "hypothesis:h-one",
+            "kind": "hypothesis",
+            "slug": "h-one",
+            "title": "Title of h-one"
+          }
+        }
+      ],
+      "content": "E one.",
+      "filePath": "content/experiments/e-one.mdx",
+      "questionSlug": "q-two",
+      "hypothesisSlug": "h-one"
+    },
+    {
+      "id": "experiment:e-two",
+      "kind": "experiment",
+      "slug": "e-two",
+      "title": "Title of e-two",
+      "summary": "Description of e-two",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "questionSlug": "q-one"
+      },
+      "relationships": [
+        {
+          "field": "questionSlug",
+          "cardinality": "one",
+          "target": {
+            "id": "question:q-one",
+            "kind": "question",
+            "slug": "q-one",
+            "title": "Title of q-one"
+          }
+        }
+      ],
+      "content": "",
+      "filePath": "content/experiments/e-two.mdx",
+      "questionSlug": "q-one"
+    },
+    {
+      "id": "note:n-one",
+      "kind": "note",
+      "slug": "n-one",
+      "title": "Title of n-one",
+      "summary": "Description of n-one",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "noteType": "essay",
+        "programSlug": "lab"
+      },
+      "relationships": [
+        {
+          "field": "programSlug",
+          "cardinality": "one",
+          "target": {
+            "id": "program:lab",
+            "kind": "program",
+            "slug": "lab",
+            "title": "Laboratory"
+          }
+        }
+      ],
+      "content": "Note.",
+      "filePath": "content/notes/n-one.mdx",
+      "noteType": "essay",
+      "programSlug": "lab"
+    },
+    {
+      "id": "note:n-two",
+      "kind": "note",
+      "slug": "n-two",
+      "title": "Title of n-two",
+      "summary": "Description of n-two",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "noteType": "tutorial"
+      },
+      "relationships": [],
+      "content": "Note two.",
+      "filePath": "content/notes/n-two.mdx",
+      "noteType": "tutorial"
+    },
+    {
+      "id": "software:s-crlf",
+      "kind": "software",
+      "slug": "s-crlf",
+      "title": "Title of s-crlf",
+      "summary": "Description of s-crlf",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "Line one\r\nLine two",
+      "filePath": "content/software/s-crlf.mdx"
+    },
+    {
+      "id": "software:s-one",
+      "kind": "software",
+      "slug": "s-one",
+      "title": "Title of s-one",
+      "summary": "Description of s-one",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "repositoryUrl": "https://example.org/repo",
+        "license": "MIT"
+      },
+      "relationships": [],
+      "content": "S.",
+      "filePath": "content/software/s-one.mdx",
+      "repositoryUrl": "https://example.org/repo",
+      "license": "MIT"
+    },
+    {
+      "id": "publication:p-one",
+      "kind": "publication",
+      "slug": "p-one",
+      "title": "Title of p-one",
+      "summary": "Description of p-one",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "venue": "A Venue",
+        "doi": "10.1000/xyz",
+        "coAuthors": [
+          "C. Author",
+          "D. Author"
+        ]
+      },
+      "relationships": [],
+      "content": "P.",
+      "filePath": "content/publications/p-one.mdx",
+      "venue": "A Venue",
+      "doi": "10.1000/xyz",
+      "coAuthors": [
+        "C. Author",
+        "D. Author"
+      ]
+    },
+    {
+      "id": "dataset:d-one",
+      "kind": "dataset",
+      "slug": "d-one",
+      "title": "Title of d-one",
+      "summary": "Description of d-one",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "sourceUrl": "https://example.org/data"
+      },
+      "relationships": [],
+      "content": "D.",
+      "filePath": "content/datasets/d-one.mdx",
+      "sourceUrl": "https://example.org/data"
+    },
+    {
+      "id": "dataset:d-two",
+      "kind": "dataset",
+      "slug": "d-two",
+      "title": "Title of d-two",
+      "summary": "Description of d-two",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "Different filename.",
+      "filePath": "content/datasets/file-name-differs.mdx"
+    },
+    {
+      "id": "presentation:t-one",
+      "kind": "presentation",
+      "slug": "t-one",
+      "title": "Title of t-one",
+      "summary": "Description of t-one",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": [],
+        "venue": "A Conf",
+        "slidesUrl": "https://example.org/s",
+        "programSlug": "lab",
+        "questionSlug": "q-one"
+      },
+      "relationships": [
+        {
+          "field": "programSlug",
+          "cardinality": "one",
+          "target": {
+            "id": "program:lab",
+            "kind": "program",
+            "slug": "lab",
+            "title": "Laboratory"
+          }
+        },
+        {
+          "field": "questionSlug",
+          "cardinality": "one",
+          "target": {
+            "id": "question:q-one",
+            "kind": "question",
+            "slug": "q-one",
+            "title": "Title of q-one"
+          }
+        }
+      ],
+      "content": "T.",
+      "filePath": "content/presentations/t-one.mdx",
+      "venue": "A Conf",
+      "slidesUrl": "https://example.org/s",
+      "programSlug": "lab",
+      "questionSlug": "q-one"
+    }
+  ]
+}

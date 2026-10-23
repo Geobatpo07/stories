@@ -1,0 +1,23 @@
+{
+  "description": "required fields only; defaults filled",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "theme": "Climate",
+    "leadResearcher": "A. Person"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "theme": "Climate",
+    "leadResearcher": "A. Person",
+    "status": "draft",
+    "tags": [],
+    "relatedQuestionSlugs": []
+  }
+}

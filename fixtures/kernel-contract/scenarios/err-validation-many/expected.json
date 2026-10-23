@@ -1,0 +1,54 @@
+{
+  "outcome": "error",
+  "error": {
+    "name": "KnowledgeValidationError",
+    "filePath": "content/programs/bad.mdx",
+    "issues": [
+      {
+        "path": "title",
+        "message": "String must contain at least 1 character(s)",
+        "hint": "must be at least 1 character(s)"
+      },
+      {
+        "path": "slug",
+        "message": "Slug must be lowercase kebab-case (e.g. cyclone-modeling)",
+        "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+      },
+      {
+        "path": "description",
+        "message": "Required",
+        "hint": "this field is required"
+      },
+      {
+        "path": "date",
+        "message": "Date must be in YYYY-MM-DD format",
+        "hint": "check the format (e.g. lowercase kebab-case for a slug, YYYY-MM-DD for a date, a full URL)"
+      },
+      {
+        "path": "status",
+        "message": "Invalid enum value. Expected 'draft' | 'active' | 'paused' | 'concluded', received 'published'",
+        "hint": "must be one of: draft, active, paused, concluded"
+      },
+      {
+        "path": "tags.1",
+        "message": "String must contain at least 1 character(s)",
+        "hint": "must be at least 1 character(s)"
+      },
+      {
+        "path": "theme",
+        "message": "Required",
+        "hint": "this field is required"
+      },
+      {
+        "path": "leadResearcher",
+        "message": "Required",
+        "hint": "this field is required"
+      },
+      {
+        "path": "relatedQuestionSlugs",
+        "message": "Expected array, received string",
+        "hint": "expected array, received string"
+      }
+    ]
+  }
+}

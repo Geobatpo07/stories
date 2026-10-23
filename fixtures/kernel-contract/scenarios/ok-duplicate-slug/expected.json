@@ -1,0 +1,37 @@
+{
+  "outcome": "ok",
+  "entities": [
+    {
+      "id": "dataset:same",
+      "kind": "dataset",
+      "slug": "same",
+      "title": "First",
+      "summary": "Description of same",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "first",
+      "filePath": "content/datasets/a-first.mdx"
+    },
+    {
+      "id": "dataset:same",
+      "kind": "dataset",
+      "slug": "same",
+      "title": "Second",
+      "summary": "Description of same",
+      "status": "draft",
+      "createdAt": "2026-03-01",
+      "updatedAt": "2026-03-01",
+      "metadata": {
+        "tags": []
+      },
+      "relationships": [],
+      "content": "second",
+      "filePath": "content/datasets/b-second.mdx"
+    }
+  ]
+}

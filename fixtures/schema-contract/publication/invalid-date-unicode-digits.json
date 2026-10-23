@@ -1,0 +1,10 @@
+{
+  "description": "Arabic-Indic digits (\\d is ASCII-only in JS)",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-\u0662\u0662"
+  },
+  "valid": false
+}

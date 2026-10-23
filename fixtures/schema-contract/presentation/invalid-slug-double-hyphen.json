@@ -1,0 +1,10 @@
+{
+  "description": "double hyphen",
+  "input": {
+    "title": "A title",
+    "slug": "bad--slug",
+    "description": "A description",
+    "date": "2026-10-22"
+  },
+  "valid": false
+}

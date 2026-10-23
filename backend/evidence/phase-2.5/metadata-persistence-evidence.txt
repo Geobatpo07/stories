@@ -1,0 +1,20 @@
+Run in a clean checkout of origin/main (48c2145) with a temporary Vitest file (deleted afterwards):
+real Kernel stages over fixtures/kernel-contract/scenarios/ok-full -> real duckDBBuildTarget -> real manifestBuildTarget -> real ArtifactKnowledgeSourceAdapter.create()
+
+KERNEL ENTITY program:lab theme = "Climate" | metadata = {"tags":["alpha","zeta","😀","ﬁ"]}
+ARTIFACT-HYDRATED program:lab theme = undefined | leadResearcher = undefined | metadata = {"tags":["alpha","zeta","😀","ﬁ"]}
+ARTIFACT-HYDRATED question:q-one programSlug = undefined | relationships = [{"field":"programSlug","cardinality":"one","target":{"id":"program:lab","kind":"program","slug":"lab","title":"Laboratory"}}]
+
+$ git grep -n "function field" -A8 lib/presentation/knowledge.ts
+export function field(entity: LaboratoryEntity, key: string): string | undefined {
+  const value =
+    (entity as unknown as Readonly<Record<string, unknown>>)[key] ?? entity.metadata[key];
+  return typeof value === "string" && value.length > 0 ? value : undefined;
+}
+
+$ git grep -n "ArtifactKnowledgeSourceAdapter.create" -- lib app
+lib/presentation/runtime.ts:24:  const knowledgeSource = await ArtifactKnowledgeSourceAdapter.create();
+
+$ git grep -n 'field(program, "theme")\|field(program, "leadResearcher")' -- app
+app/programs/[slug]/page.tsx:62:                value: field(program, "leadResearcher") ?? "Not specified",
+app/programs/[slug]/page.tsx:64:                { label: "Theme", value: field(program, "theme") ?? "Open inquiry" },

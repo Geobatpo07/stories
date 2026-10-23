@@ -1,0 +1,20 @@
+{
+  "description": "noteType=tutorial",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "tutorial"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-10-22",
+    "noteType": "tutorial",
+    "status": "draft",
+    "tags": []
+  }
+}

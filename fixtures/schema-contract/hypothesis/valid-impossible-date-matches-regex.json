@@ -1,0 +1,20 @@
+{
+  "description": "2026-13-45 passes: the schema only checks the shape",
+  "input": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-13-45",
+    "questionSlug": "some-question"
+  },
+  "valid": true,
+  "expected": {
+    "title": "A title",
+    "slug": "a-slug",
+    "description": "A description",
+    "date": "2026-13-45",
+    "questionSlug": "some-question",
+    "status": "draft",
+    "tags": []
+  }
+}
