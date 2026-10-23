@@ -37,17 +37,17 @@ class TargetOutcome:
     name: str
     success: bool
     message: str
-    durationMs: int  # noqa: N815 - serialized with the TypeScript report's field names
+    durationMs: int  # serialized with the TypeScript report field names
 
 
 @dataclass
 class BuildReport:
-    countsByKind: dict[str, int] = field(default_factory=dict)  # noqa: N815
-    entityCount: int = 0  # noqa: N815
-    relationshipCount: int = 0  # noqa: N815
-    targetResults: list[TargetOutcome] = field(default_factory=list)  # noqa: N815
-    validationIssues: list[dict[str, str]] = field(default_factory=list)  # noqa: N815
-    elapsedMs: int = 0  # noqa: N815
+    countsByKind: dict[str, int] = field(default_factory=dict)
+    entityCount: int = 0
+    relationshipCount: int = 0
+    targetResults: list[TargetOutcome] = field(default_factory=list)
+    validationIssues: list[dict[str, str]] = field(default_factory=list)
+    elapsedMs: int = 0
     success: bool = False
 
 
