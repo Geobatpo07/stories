@@ -12,6 +12,7 @@ from datetime import date, datetime
 from typing import Any
 
 from pydantic import ValidationError
+from pydantic_core import ErrorDetails
 
 from schemas.common import _SLUG_MESSAGE
 from schemas.content_status import CONTENT_STATUSES
@@ -63,7 +64,7 @@ def _enum_expected(options: tuple[str, ...]) -> str:
     return " | ".join(f"'{option}'" for option in options)
 
 
-def _issues_for(error: dict[str, Any]) -> list[ValidationIssue]:
+def _issues_for(error: ErrorDetails) -> list[ValidationIssue]:
     path = ".".join(str(part) for part in error["loc"]) or "(root)"
     kind = error["type"]
     received = js_type_name(error.get("input"))

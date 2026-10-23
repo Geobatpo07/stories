@@ -11,7 +11,9 @@ base tables.
 
 import hashlib
 import json
+from collections.abc import Sequence
 from pathlib import Path
+from typing import Any
 
 import duckdb
 
@@ -44,7 +46,13 @@ RELATIONSHIP_COLUMNS = (
 )
 
 
-def insert_rows(connection, table: str, columns, rows: list, casts: dict[str, str] | None = None) -> None:
+def insert_rows(
+    connection: duckdb.DuckDBPyConnection,
+    table: str,
+    columns: Sequence[tuple[str, str]],
+    rows: Sequence[Sequence[Any]],
+    casts: dict[str, str] | None = None,
+) -> None:
     """Insert every row with ONE statement and ONE bound parameter (a JSON document).
 
     Why not `executemany` or one `?` per value: the DuckDB Python client probes optional modules

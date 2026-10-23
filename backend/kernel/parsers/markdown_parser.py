@@ -18,6 +18,7 @@ frontmatter library:
 import io
 import json
 import re
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -45,7 +46,7 @@ def _parse_yaml(text: str) -> Any:
     return yaml.load(io.StringIO(text))
 
 
-def _engine(language: str):
+def _engine(language: str) -> Callable[[str], Any]:
     name = language.lower()
     if name in ("yaml", "yml"):
         return _parse_yaml
@@ -104,8 +105,9 @@ def split_frontmatter(raw: str) -> tuple[Any, str]:
 
 def extract_slug(data: Any, source_path: str) -> str:
     """Port of lib/markdown's `extractSlug`: frontmatter slug, else the filename without .md/.mdx."""
-    if isinstance(data, dict) and isinstance(data.get("slug"), str):
-        return data["slug"]
+    slug = data.get("slug") if isinstance(data, dict) else None
+    if isinstance(slug, str):
+        return slug
     return re.sub(r"\.mdx?$", "", source_path.rsplit("/", 1)[-1])
 
 
