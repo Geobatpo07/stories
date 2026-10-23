@@ -20,6 +20,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "mypy==2.4.0",
     "pytest>=8",
     "ruff==0.17.2",
 ]
@@ -44,3 +45,11 @@ select = [
     "RUF100",          # unused noqa
     "RUF034", "FURB167", "FURB188", "PLC0206", "PYI034",  # the other five findings of ruff 0.17's defaults
 ]
+
+# Strict typing for the packages the Python build pipeline is made of. The version is pinned in the
+# lock; `uv run mypy` with no arguments checks exactly `files`.
+[tool.mypy]
+python_version = "3.12"
+strict = true
+explicit_package_bases = true
+files = ["kernel", "pipeline", "schemas"]
