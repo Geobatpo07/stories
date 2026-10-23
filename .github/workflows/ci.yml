@@ -104,7 +104,7 @@ jobs:
 
       # Static checks run LAST and independently (`!cancelled()`), so a lint or typing failure never
       # hides the test results above. They are tools fetched ad hoc (`--with`): the lock is untouched.
-      # First observation of this older code under ruff defaults and `mypy --strict`: a signal, not a gate.
+      # First observation of this older code under ruff (latest, unpinned, default rule set) and `mypy --strict`: a signal, not a gate.
       - name: ruff (default rules)
         if: ${{ !cancelled() }}
         working-directory: backend
