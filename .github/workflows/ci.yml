@@ -102,15 +102,12 @@ jobs:
       - name: Real content parity (build:knowledge under both producers)
         run: pnpm build:knowledge:parity
 
-      # Static checks run LAST and independently (`!cancelled()`), so a lint or typing failure never
-      # hides the test results above. They are tools fetched ad hoc (`--with`): the lock is untouched.
-      # First observation of this older code under ruff (latest, unpinned, default rule set) and `mypy --strict`: a signal, not a gate.
-      - name: ruff (default rules)
-        if: ${{ !cancelled() }}
+      # Static checks run last, with the versions pinned in backend/uv.lock (dev dependencies, installed
+      # by `uv sync --frozen`) and the configuration in backend/pyproject.toml. They gate the job.
+      - name: ruff
         working-directory: backend
-        run: uv run --frozen --with ruff ruff check .
+        run: uv run --frozen ruff check .
 
       - name: mypy --strict
-        if: ${{ !cancelled() }}
         working-directory: backend
-        run: uv run --frozen --with mypy mypy --strict --explicit-package-bases kernel pipeline schemas
+        run: uv run --frozen mypy
