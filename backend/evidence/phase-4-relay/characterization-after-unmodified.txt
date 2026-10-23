@@ -1,0 +1,85 @@
+ ❯ app/api/auth/login/route.test.ts (31 tests | 30 failed) 6868ms
+ ❯ app/api/studio/documents/route.test.ts (27 tests | 20 failed) 9002ms
+ ❯ app/api/auth/reset-password/confirm/route.test.ts (18 tests | 17 failed) 2944ms
+ ❯ app/api/auth/reset-password/route.test.ts (12 tests | 11 failed) 2046ms
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts (10 tests | 10 failed) 712ms
+ ❯ app/api/auth/logout/route.test.ts (6 tests | 6 failed) 1174ms
+ ✓ app/api/internal/revalidate/route.test.ts (11 tests) 261ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 94 ⎯⎯⎯⎯⎯⎯⎯
+ ❯ app/api/auth/logout/route.test.ts:46:29
+ ❯ app/api/auth/logout/route.test.ts:58:40
+ ❯ app/api/auth/logout/route.test.ts:67:29
+ ❯ app/api/auth/logout/route.test.ts:79:29
+ ❯ app/api/auth/logout/route.test.ts:90:35
+ ❯ app/api/auth/logout/route.test.ts:97:35
+ ❯ app/api/auth/login/route.test.ts:55:29
+ ❯ app/api/auth/login/route.test.ts:64:20
+ ❯ app/api/auth/login/route.test.ts:75:20
+ ❯ app/api/auth/login/route.test.ts:87:27
+ ❯ app/api/auth/login/route.test.ts:122:66
+ ❯ app/api/auth/login/route.test.ts:129:46
+ ❯ app/api/auth/login/route.test.ts:154:29
+ ❯ app/api/auth/login/route.test.ts:169:31
+ ❯ app/api/auth/login/route.test.ts:184:29
+ ❯ app/api/auth/login/route.test.ts:191:29
+ ❯ app/api/auth/login/route.test.ts:196:51
+ ❯ app/api/auth/login/route.test.ts:211:81
+ ❯ app/api/auth/login/route.test.ts:222:91
+ ❯ app/api/auth/login/route.test.ts:231:31
+ ❯ app/api/auth/login/route.test.ts:242:62
+ ❯ app/api/auth/login/route.test.ts:250:29
+ ❯ app/api/auth/login/route.test.ts:260:59
+ ❯ app/api/auth/login/route.test.ts:266:59
+ ❯ app/api/auth/login/route.test.ts:274:59
+ ❯ app/api/auth/login/route.test.ts:282:49
+ ❯ app/api/auth/login/route.test.ts:296:42
+ ❯ app/api/auth/login/route.test.ts:308:73
+ ❯ app/api/auth/login/route.test.ts:317:69
+ ❯ app/api/auth/login/route.test.ts:327:55
+ ❯ app/api/auth/reset-password/route.test.ts:50:29
+ ❯ app/api/auth/reset-password/route.test.ts:63:29
+ ❯ app/api/auth/reset-password/route.test.ts:89:41
+ ❯ app/api/auth/reset-password/route.test.ts:98:29
+ ❯ app/api/auth/reset-password/route.test.ts:107:29
+ ❯ app/api/auth/reset-password/route.test.ts:115:29
+ ❯ app/api/auth/reset-password/route.test.ts:124:70
+ ❯ app/api/auth/reset-password/route.test.ts:145:72
+ ❯ app/api/auth/reset-password/route.test.ts:153:49
+ ❯ app/api/studio/documents/route.test.ts:77:33
+ ❯ app/api/studio/documents/route.test.ts:98:31
+ ❯ app/api/studio/documents/route.test.ts:118:68
+ ❯ app/api/studio/documents/route.test.ts:140:63
+ ❯ app/api/studio/documents/route.test.ts:168:29
+ ❯ app/api/studio/documents/route.test.ts:175:46
+ ❯ app/api/studio/documents/route.test.ts:183:29
+ ❯ app/api/studio/documents/route.test.ts:207:29
+ ❯ app/api/studio/documents/route.test.ts:223:23
+ ❯ app/api/studio/documents/route.test.ts:233:21
+ ❯ app/api/studio/documents/route.test.ts:243:33
+ ❯ app/api/studio/documents/route.test.ts:255:22
+ ❯ app/api/studio/documents/route.test.ts:275:22
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:59:29
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:70:29
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:75:49
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:88:29
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:121:53
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:136:27
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:154:29
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:165:29
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:176:29
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:183:93
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:193:29
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:204:29
+ ❯ app/api/auth/reset-password/confirm/route.test.ts:217:5
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts:123:29
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts:132:29
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts:141:29
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts:155:29
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts:169:29
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts:248:29
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts:263:29
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts:282:38
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts:306:38
+ ❯ app/api/studio/documents/[id]/publish/route.test.ts:331:29
+ Test Files  6 failed | 1 passed (7)
+      Tests  94 failed | 21 passed (115)
