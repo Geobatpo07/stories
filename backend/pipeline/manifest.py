@@ -18,7 +18,10 @@ MANIFEST_DATABASE_PATH = "database/generated/knowledge.duckdb"  # recorded relat
 
 def platform_version() -> str:
     """`PLATFORM_VERSION` in TypeScript is package.json's version, read statically."""
-    return json.loads((REPO_ROOT / "package.json").read_text(encoding="utf-8"))["version"]
+    version = json.loads((REPO_ROOT / "package.json").read_text(encoding="utf-8"))["version"]
+    if not isinstance(version, str):
+        raise TypeError(f"package.json version must be a string, got {type(version).__name__}")
+    return version
 
 
 def iso_now() -> str:

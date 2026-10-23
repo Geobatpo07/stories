@@ -128,9 +128,14 @@ class GraphStore:
 
     def query(self, cypher: str, params: dict[str, Any] | None = None) -> list[list[Any]]:
         result = self._conn.execute(cypher, params or {})
+        if isinstance(result, list):  # execute() returns a list for a multi-statement script
+            raise TypeError("query() runs a single Cypher statement")
         rows: list[list[Any]] = []
         while result.has_next():
-            rows.append(result.get_next())
+            row = result.get_next()
+            if not isinstance(row, list):
+                raise TypeError(f"expected a list row, got {type(row).__name__}")
+            rows.append(row)
         return rows
 
     def counts(self) -> tuple[int, int]:
