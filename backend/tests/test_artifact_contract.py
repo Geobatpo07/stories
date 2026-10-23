@@ -47,7 +47,7 @@ def test_version_constants_match_build_version_ts():
 def test_manifest_has_exactly_the_typescript_fields_in_the_same_order():
     body = MANIFEST_TARGET[MANIFEST_TARGET.index("const manifest = {") :]
     body = body[: body.index("};")]
-    typescript_keys = re.findall(r"^\s{6}(\w+):", body, re.M)
+    typescript_keys = re.findall(r"^\s{6}(\w+):", body, re.MULTILINE)
     produced = manifest.build_manifest(
         content_hash="h", entity_count=0, relationship_count=0,
         database_checksum="c", generation_duration_ms=0,

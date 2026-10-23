@@ -34,8 +34,8 @@ def reference_signals(entities: list[KnowledgeEntity]):
     scores: dict[tuple[str, str], float] = defaultdict(float)
     hops: dict[tuple[str, str], int] = {}
     fields: dict[tuple[str, str], set[str]] = defaultdict(set)
-    for a in incident:
-        for m, f1, w1 in incident[a]:
+    for a, neighbours in incident.items():
+        for m, f1, w1 in neighbours:
             if m == a:
                 continue
             scores[(a, m)] += w1

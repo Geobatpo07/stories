@@ -60,7 +60,7 @@ def insert_rows(connection, table: str, columns, rows: list, casts: dict[str, st
     document = json.dumps(
         [dict(zip(names, row, strict=True)) for row in rows], ensure_ascii=False, allow_nan=False
     )
-    structure = json.dumps([{name: sql_type for name, sql_type in columns}])
+    structure = json.dumps([dict(columns)])
     casts = casts or {}
     select = ", ".join(f"r.{name}::{casts[name]}" if name in casts else f"r.{name}" for name in names)
     connection.execute(
