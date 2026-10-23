@@ -19,8 +19,28 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest>=8"]
+dev = [
+    "pytest>=8",
+    "ruff==0.17.2",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+# Written out on purpose: ruff's default rule set changes between releases (0.17 default is ~700
+# rules), so "green" must not depend on the version of the day. The version is pinned in the lock.
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E4", "E7", "E9",  # pycodestyle errors (no style-only rules)
+    "F",               # pyflakes: unused imports and variables, undefined names
+    "I",               # import sorting
+    "B",               # bugbear, including B023 (closure over a loop variable)
+    "C4",              # comprehensions, C408 (dict() call instead of a literal)
+    "RUF100",          # unused noqa
+    "RUF034", "FURB167", "FURB188", "PLC0206", "PYI034",  # the other five findings of ruff 0.17's defaults
+]
