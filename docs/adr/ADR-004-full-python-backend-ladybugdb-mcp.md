@@ -1055,6 +1055,97 @@ entirely) is deferred to Phase 6: it needs a stable deployed Python URL this mig
 doesn't have yet, and once it exists, the thin proxies built now have no business logic
 left to migrate — only the routing itself would change.
 
+## Phase 4, write-path repoint results — the six write routes now relay to Python, confirmed
+
+Branch `migration/phase4-write-relay`, based on `migration/phase4-frontend-repoint`
+(`e8a480f`) and pushed (head `889e9b1`), seven commits. No PR opened, nothing merged,
+PRs #7-#10 and the step 2a/2b/2c branches untouched — all confirmed by checking the
+lineage directly (`git merge-base --is-ancestor e8a480f origin/migration/phase4-write-relay`
+succeeds).
+
+**The relay.** `lib/python-api.ts` gains `pythonApiRelay(request, path)`, read directly:
+forwards only the Studio session cookie (explicit `Cookie` header, same rule as
+`pythonApiGet`), the raw body, `content-type`, and `x-real-ip` (without it, Python's
+per-IP login limiter would see the Next server for every visitor, not the real client).
+Returns the Python status, body and every `Set-Cookie` untouched. It invents exactly two
+responses of its own, for "no Python answer at all": 503 when `PYTHON_API_BASE_URL` is
+unset, 502 when the service is unreachable or times out. Publish ids are URL-encoded into
+the path.
+
+**The six routes, confirmed by reading each file on the pushed branch:** `auth/login`,
+`auth/logout`, `auth/reset-password`, `.../confirm`, `studio/documents` POST, and
+`.../publish` are now 3-7 lines each, every one solely `return pythonApiRelay(request,
+"<path>")` (plus id-encoding for publish). `studio/documents` GET is untouched — still
+TypeScript, still not called by anything since step 2d, now the one remaining duplicate
+on that route file. The login route's commit (`0dc6a8c`, read in full) deletes
+`MAX_ATTEMPTS`, `WINDOW_MS`, and the in-memory `Map` in the same diff that repoints the
+handler — confirmed only one rate limiter (Python's, already correctly IP-based per the
+prior audit) is ever active.
+
+**Characterization tests: the hard part was discovering they couldn't be reused, not
+reusing them.** Before: 115 passing (104 across the six routes, 11 for
+`internal/revalidate`). After repointing with the tests unmodified: 94 of the 104 failed
+— not from a behavior regression, but structurally: those tests drove the TypeScript
+workflow against in-memory fake Supabase/Resend adapters, and the route no longer runs
+that code at all. Correctly not patched to pass; instead deleted (recoverable from
+`e8a480f`) and replaced with `app/api/relay.test.ts`, independently read in full: 73
+tests (6 routes × method/path/body/cookie/status-passthrough/Set-Cookie/502/503, plus one
+id-encoding case), exercising the relay's generic contract rather than each route's old
+business logic — the old behavior is now pinned on the Python side
+(`backend/tests/test_api_login.py` etc. from step 2a), not re-verified case-by-case here.
+
+**Independently reproduced, not just read:** checked out the branch in an isolated
+worktree and ran it for real. `pnpm typecheck` and `pnpm lint` both clean. `pnpm vitest
+run`: 763 passed, 7 skipped in this environment (no Python backend wired up here) —
+the report's "769 passed, 1 skipped" is the same 770 total tests with 6 Python-gated
+tests (`describe.skipIf(!pythonAvailable)` in `python-artifact.test.ts` and
+`python-producer.test.ts`) running instead of skipping wherever a live Python backend is
+reachable; not a discrepancy once traced to its cause. Reproduced one of the three
+claimed negative controls directly: with `Set-Cookie` passthrough deleted from
+`pythonApiRelay`, exactly 6 of the 73 relay tests fail — matching the report exactly.
+
+**The decision this phase made and flagged rather than silently resolving:**
+`auth-forms.tsx` (confirmed by reading it) still does hard-coded same-origin
+`fetch("/api/auth/login" | ".../reset-password" | ".../confirm")`. Since those routes now
+relay to Python, the forms already run Python logic with no code change — but they were
+deliberately _not_ switched to `studioApiFetch` (direct cross-origin to Python), because a
+login `Set-Cookie` issued by the Python host instead of the Next origin would stop
+`middleware.ts` from seeing it the moment the two run on different hosts. The same
+exposure already exists, unflagged until now, in the editor's direct `studioApiFetch`
+calls from step 2d. **Decision: leave both on same-origin relay paths; do not move either
+to direct cross-origin calls before Phase 6 settles how the client authenticates against
+Python** (the service-level-credential option already on the table for that phase is the
+real fix — a relayed browser cookie was always going to hit this wall once something
+tried to bypass the relay).
+
+**One more behavior change, confirmed against both languages' code, not just claimed:**
+publish is not merely re-executed in Python — it does less on the Next.js side than
+before. The TypeScript route published to the local filesystem, then called
+`resetRuntimeContext()` and `resetLaboratory()` (confirmed still defined in
+`lib/presentation/runtime.ts` / `knowledge.ts`, now confirmed unreferenced anywhere in
+`backend/`) before `revalidatePath`. Python commits to GitHub instead and calls
+`/api/internal/revalidate` as a background task (confirmed in `backend/api/app.py`,
+`publish_document`), which does only `revalidatePath`. The two in-process cache resets
+are gone, not ported — not yet exercised end-to-end against real GitHub/Vercel, flagged
+openly rather than assumed harmless.
+
+**Fallback check, confirmed:** no documented deployment or CI sets `PYTHON_API_BASE_URL`
+or `NEXT_PUBLIC_PYTHON_API_BASE_URL` today, but there is no silent TypeScript fallback
+left to fall into — the TypeScript logic is deleted, not bypassed. Unset
+`PYTHON_API_BASE_URL` now fails loudly (503); a misconfigured environment breaks visibly
+instead of quietly running the old code path. One new operational note, confirmed in
+`backend/api/app.py` and not yet acted on: Python's limiter trusts `x-real-ip` only when
+`VERCEL=1` is set on **the Python service itself** — behind Next.js this needs setting
+there explicitly, separately from the Node process's own `VERCEL=1`, or production falls
+back to one shared bucket.
+
+**Net effect:** of the two architectural concerns raised when this gap was first found —
+"does Python ever actually run?" and "is there a duplicate to clean up?" — both are now
+closed for the six write routes. What remains open is `studio/documents` GET (still
+TypeScript, low-stakes, no caller), the forms/editor same-origin-vs-direct question
+(deliberately deferred to Phase 6), and the two dropped cache-reset calls (flagged, not
+yet exercised against real infrastructure).
+
 ## Phase 4 — Authoring and auth
 
 Step 1: write characterization tests against the real, current behavior of the six
