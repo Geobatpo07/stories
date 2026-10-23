@@ -84,6 +84,9 @@ describe("POST /api/auth/reset-password", () => {
   });
 
   it("defaults the link base to http://localhost:3000 and the sender to onboarding@resend.dev", async () => {
+    // CI exports placeholder values for these; the test is about their absence.
+    for (const name of ["NEXT_PUBLIC_SITE_URL", "RESEND_API_KEY", "STUDIO_ADMIN_RESET_FROM_EMAIL"])
+      vi.stubEnv(name, undefined);
     const { support, POST } = await load();
     await POST(request(support, { email: support.ADMIN_EMAIL }));
     expect(support.sentEmails[0]?.text).toContain(
