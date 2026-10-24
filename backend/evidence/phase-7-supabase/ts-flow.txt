@@ -1,0 +1,29 @@
+DRAFT_ID 44448c66-78ed-42cc-a58f-14e7e223aaa1
+session row for the user's cookie in Supabase: [{'id': 'eaea73...', 'updated_at': '2026-10-23T17:58:12.28+00:00', 'value_keys': ['token', 'createdAt', 'expiresAt']}]
+
+--- 2. /studio with the real cookie
+GET /studio  body=None
+-> HTTP 200
+   body: <!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/_next/static/css/7cce990b3daa7e6d.css" data-precedence="next"/><link rel="stylesheet" href="/_next/static/css/e4d37a0968bba206.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-74357650f2b230b7.js"/><script src="/_next/static/chunks/620846f1-e5762408a18b67ac.js" async=""></script><script src="/_next/static/chunks/8336-681f4dad056a9f61.js" async=""></script><script src="/_n
+
+--- 2b. API list with the real cookie
+GET /api/studio/documents  body=None
+-> HTTP 200
+   body: {"documents":[]}
+
+--- 3. save draft (Next relay -> Python -> Supabase)
+POST /api/studio/documents  body={"id": "44448c66-78ed-42cc-a58f-14e7e223aaa1", "kind": "software", "fields": {"title": "PHASE7 validation draft", "description": "Real Supabase round trip.", "date": "2026-10-23", "status": "active", "tags": [], "slug": "phase7-validation-draft"}, "content": "Draft body written by the Phase 7 valida
+-> HTTP 200
+   body: {"document":{"version":1,"id":"44448c66-78ed-42cc-a58f-14e7e223aaa1","kind":"software","publicationState":"draft","fields":{"title":"PHASE7 validation draft","description":"Real Supabase round trip.","date":"2026-10-23","status":"active","tags":[],"slug":"phase7-validation-draft"},"content":"Draft body written by the Phase 7 validation pass.","createdAt":"2026-10-23T12:00:00.000Z","updatedAt":"2026-10-23T17:58:52.252Z"},"validation":{"success":true,"issues":[],"normalizedFields":{"title":"PHASE7 validation draft","slug":"phase7-validation-draft","description":"Real Supabase round trip.","date"
+row in Supabase: [{"namespace": "knowledge", "collection": "software", "id": "44448c66-78ed-42cc-a58f-14e7e223aaa1", "updated_at": "2026-10-23T17:58:52.252+00:00"}]
+
+--- 4. read back (TypeScript repository)
+GET /api/studio/documents  body=None
+-> HTTP 200
+   body: {"documents":[{"version":1,"id":"44448c66-78ed-42cc-a58f-14e7e223aaa1","kind":"software","publicationState":"draft","fields":{"date":"2026-10-23","slug":"phase7-validation-draft","tags":[],"title":"PHASE7 validation draft","status":"active","description":"Real Supabase round trip."},"content":"Draft body written by the Phase 7 validation pass.","createdAt":"2026-10-23T12:00:00.000Z","updatedAt":"2026-10-23T17:58:52.252Z"}]}
+>>> draft present in TS read: True
+
+--- 4b. editor page for the draft
+GET /studio/documents/44448c66-78ed-42cc-a58f-14e7e223aaa1  body=None
+-> HTTP 200
+   body: <!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/_next/static/css/7cce990b3daa7e6d.css" data-precedence="next"/><link rel="stylesheet" href="/_next/static/css/e4d37a0968bba206.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-74357650f2b230b7.js"/><script src="/_next/static/chunks/620846f1-e5762408a18b67ac.js" async=""></script><script src="/_next/static/chunks/8336-681f4dad056a9f61.js" async=""></script><script src="/_n

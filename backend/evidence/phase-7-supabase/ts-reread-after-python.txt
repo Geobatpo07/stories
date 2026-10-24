@@ -1,0 +1,30 @@
+
+--- R. TypeScript read after the Python writes
+GET /api/studio/documents  body=None
+-> HTTP 200
+   body: {"documents":[{"version":1,"id":"55558c66-78ed-42cc-a58f-14e7e223aaa2","kind":"software","publicationState":"draft","fields":{"date":"2026-10-23","slug":"phase7-python-draft","tags":[],"title":"PHASE7 python draft","status":"active","description":"Created by the MCP server."},"content":"python-created","createdAt":"2026-10-23T17:59:13.376Z","updatedAt":"2026-10-23T17:59:16.023Z"},{"version":1,"id":"44448c66-78ed-42cc-a58f-14e7e223aaa1","kind":"software","publicationState":"draft","fields":{"date":"2026-10-23","slug":"phase7-validation-draft","tags":[],"title":"PHASE7 validation draft","status"
+   >>> 55558c66-78ed-42cc-a58f-14e7e223aaa2 | PHASE7 python draft | python-created
+   >>> 44448c66-78ed-42cc-a58f-14e7e223aaa1 | PHASE7 validation draft | EDITED FROM PYTHON (MCP) in the Phase 7 pass.
+count of rows with the draft id: 1
+
+--- 5. logout with the same cookie
+POST /api/auth/logout  body=None
+-> HTTP 200
+   Set-Cookie: stories_studio_session=<0 chars, starts ...>; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT
+   body: {"success":true}
+session row after logout: []
+
+--- 6. /studio with the dead cookie
+GET /studio  body=None
+-> HTTP 307  Location: /studio/login
+   body: /studio/login
+
+--- 6b. draft page with the dead cookie
+GET /studio/documents/44448c66-78ed-42cc-a58f-14e7e223aaa1  body=None
+-> HTTP 307  Location: /studio/login
+   body: /studio/login
+
+--- 6c. API with the dead cookie
+GET /api/studio/documents  body=None
+-> HTTP 401
+   body: {"error":"Unauthorized"}
