@@ -13,7 +13,7 @@ from .definitions import get_authoring_definition, validate_authoring_fields
 from .types import AuthoringDocument, RenderedDocument
 
 # ECMAScript WhiteSpace + LineTerminator, the characters `trim()` removes.
-_JS_WHITESPACE = "\t\n\v\f\r                  　﻿"
+_JS_WHITESPACE = "\t\n\v\f\r                　﻿"
 _LONE_SURROGATE = re.compile("[\ud800-\udfff]")
 
 

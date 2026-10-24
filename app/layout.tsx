@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { SiteShell } from "@/components/layout/site-shell";
 import { createSearchRecords, getLaboratory } from "@/lib/presentation";
 import "@/styles/globals.css";
@@ -51,6 +52,7 @@ export default async function RootLayout({
       </head>
       <body>
         <SiteShell searchRecords={searchRecords}>{children}</SiteShell>
+        <Analytics />
       </body>
     </html>
   );

@@ -57,6 +57,17 @@ production (unset: 503, unreachable: 502; there is no TypeScript fallback any mo
 limiter keys on `x-real-ip`, which the relay forwards, so set `VERCEL=1` on the Python service as
 well when it sits behind Vercel.
 
+In production, with the Python API on a separate host (Render, Fly.io, a VPS — see
+`docs/operations/DEPLOYMENT.md`), these TypeScript relay routes are exactly what the browser
+reaches: `NEXT_PUBLIC_PYTHON_API_BASE_URL` is left unset there, so the editor's calls resolve to
+these same-origin routes instead of going to Python directly, and the routes do the cross-host
+forwarding server-side where cross-origin cookie rules do not apply. Locally, by contrast,
+`NEXT_PUBLIC_PYTHON_API_BASE_URL` is set (see `.env.example`), so the editor calls Python directly
+and cross-origin, which is why `STUDIO_ALLOWED_ORIGINS` is also needed locally but not in
+production. (A different production setup — Vercel Services, ADR-004 phase 6 — would route
+`/api/studio/**` etc. to the Python service at the platform level instead, making these same
+TypeScript relay routes unreachable; see `DEPLOYMENT.md` for both options.)
+
 ## Presentation boundaries
 
 - `app/` composes Runtime data and components.

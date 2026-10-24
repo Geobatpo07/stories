@@ -39,6 +39,43 @@ The host must support the native DuckDB package during build. The deployed serve
 not need a writable database. Preserve the Node and pnpm versions declared in
 `package.json`.
 
+## Deploying the Studio (Python API on a separate host)
+
+Host `backend/` (FastAPI/uvicorn) anywhere that runs a long-lived ASGI process — Render, Fly.io, a
+VPS. No Vercel-specific setup is required for this to work correctly, because the Studio's browser
+traffic never needs to reach Python directly: with `NEXT_PUBLIC_PYTHON_API_BASE_URL` left unset in
+production, the editor's save/publish calls (`lib/studio-client.ts`) fall back to same-origin
+relative paths, which land on the Next.js relay routes that already exist and are already tested
+(`app/api/studio/**/route.ts`, `app/api/auth/*/route.ts`, via `pythonApiRelay` in
+`lib/python-api.ts`). Those routes forward the session cookie themselves, server-to-server — a
+server-to-server `fetch()` is never subject to the browser's cross-origin cookie rules, so the
+Python host can be on a completely different domain with no CORS configuration and no shared
+cookie domain needed.
+
+Set, in the Next.js app's (Vercel) environment:
+
+- `PYTHON_API_BASE_URL` — the Python host's URL (e.g. `https://stories-api.onrender.com`). This is
+  the only Python-location variable production needs; it is read server-side only.
+- Leave `NEXT_PUBLIC_PYTHON_API_BASE_URL` and `STUDIO_ALLOWED_ORIGINS` **unset**. Setting either
+  one re-introduces the direct-browser-to-Python cross-origin path this setup avoids.
+
+Set, on the Python host itself:
+
+- `STORIES_ENV=production` — `backend/api/settings.py`'s `is_production` otherwise falls back to
+  checking for `VERCEL=1`, which a non-Vercel host never sets. This flag controls the session
+  cookie's `Secure` attribute and the login rate limiter's fail-closed behavior, so set it
+  explicitly rather than relying on the Vercel-shaped default.
+- The usual `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`,
+  `STUDIO_ADMIN_RESET_FROM_EMAIL`, `GITHUB_PUBLISH_TOKEN`, `GITHUB_REPOSITORY`,
+  `GITHUB_PUBLISH_BRANCH`, `REVALIDATE_SECRET`, `NEXT_PUBLIC_SITE_URL`, and
+  `STORIES_STUDIO_ENABLED=true` — same values as the Next.js app.
+
+See `.env.example` for the full local-vs-production split, including an alternative: deploying
+Next.js and the Python API as two services of the same Vercel project (ADR-004 phase 6, Vercel
+Services, Beta as of this writing). That gets genuine same-origin routing at the platform level
+instead of same-origin-via-relay as above, but is not required for the Studio to work correctly —
+only worth adopting if consolidating onto one Vercel project matters on its own terms.
+
 ## Publishing from the Studio (Python API)
 
 The Python Studio API (`backend/`, ADR-004 phase 4) publishes by committing to GitHub, because the
