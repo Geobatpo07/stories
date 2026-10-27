@@ -1,0 +1,60 @@
+# Render Blueprint for the Stories Studio Python API (backend/, ADR-004).
+# Deploy: Render dashboard -> New -> Blueprint -> pick this repo. Render reads this file
+# from the repo root automatically.
+#
+# IMPORTANT — do not also set NEXT_PUBLIC_PYTHON_API_BASE_URL on the Vercel project once this
+# is live. The browser must never call this service's URL directly: the session cookie this
+# API sets (SameSite=lax, pinned by backend/tests/test_api_login.py) only works because every
+# browser-facing call is relayed server-side through Next.js (lib/python-api.ts), which keeps
+# the cookie scoped to the Next.js origin regardless of where this service runs. Setting
+# NEXT_PUBLIC_PYTHON_API_BASE_URL would switch the Studio editor to calling this service
+# directly from the browser (lib/studio-client.ts) and silently break login/session checks
+# cross-domain. Only PYTHON_API_BASE_URL (server-only, no NEXT_PUBLIC_ prefix) should point at
+# this service's Render URL.
+services:
+  - type: web
+    name: stories-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: curl -LsSf https://astral.sh/uv/install.sh | sh && $HOME/.local/bin/uv sync --frozen
+    startCommand: $HOME/.local/bin/uv run uvicorn main:app --host 0.0.0.0 --port $PORT
+    # No healthCheckPath: every route in api/app.py either requires a session (401) or is
+    # POST-only (405 on Render's GET probe) — there is no unauthenticated GET route to point
+    # it at today. Render falls back to checking the port is listening. Add a plain `/health`
+    # route later if a real HTTP-level health check becomes worth it.
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      # production / dev / test — see api/settings.py. Also gates STORIES_STUDIO_ENABLED below.
+      - key: STORIES_ENV
+        value: production
+      # Settings.studio_enabled is `not is_production or STORIES_STUDIO_ENABLED == "true"` — in
+      # production this must be "true" or every /api/studio/* and /api/authoring/* call 404s.
+      - key: STORIES_STUDIO_ENABLED
+        value: "true"
+      # Only needed if something ever calls this API directly from a browser (not the relay
+      # path above). Harmless to set; CORSMiddleware is only added when this is non-empty.
+      - key: STUDIO_ALLOWED_ORIGINS
+        value: https://stories.geovanylaguerre.net
+      # Must be the same public origin the Next.js app uses in production (reset-password
+      # links, revalidation target).
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://stories.geovanylaguerre.net
+      # Shared secret with Next.js's app/api/internal/revalidate — set the SAME value there.
+      - key: REVALIDATE_SECRET
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: STUDIO_ADMIN_RESET_FROM_EMAIL
+        value: onboarding@resend.dev
+      # Fine-grained GitHub PAT, this repo only, "Contents: Read and write".
+      - key: GITHUB_PUBLISH_TOKEN
+        sync: false
+      - key: GITHUB_REPOSITORY
+        value: Geobatpo07/stories
+      - key: GITHUB_PUBLISH_BRANCH
+        value: main
