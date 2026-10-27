@@ -12,8 +12,14 @@ from typing import Any
 from .definitions import get_authoring_definition, validate_authoring_fields
 from .types import AuthoringDocument, RenderedDocument
 
-# ECMAScript WhiteSpace + LineTerminator, the characters `trim()` removes.
-_JS_WHITESPACE = "\t\n\v\f\r                　﻿"
+# ECMAScript WhiteSpace + LineTerminator, the characters `trim()` removes. Written as explicit
+# \uXXXX escapes, not the literal invisible characters: an editor silently dropped U+2028/U+2029
+# from the old literal form on save without changing the visible diff (790559b), which broke
+# JS-parity trimming for any body ending in a line/paragraph separator.
+_JS_WHITESPACE = (
+    "\t\n\v\f\r \u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a"
+    "\u2028\u2029\u202f\u205f\u3000\ufeff"
+)
 _LONE_SURROGATE = re.compile("[\ud800-\udfff]")
 
 
