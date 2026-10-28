@@ -1,5 +1,11 @@
 # auth/ — Studio authentication
 
+> **Current state (ADR-004).** Login, logout, password reset and session creation now run in the
+> Python service (`backend/auth/`, same scrypt parameters and `persistence_records` storage, reached
+> through the Next.js relay routes in `app/api/auth/`). What remains in this TypeScript module is the
+> session check (`middleware.ts`, `getStudioSession()`) and `pnpm studio:auth:init`. The rest of this
+> file describes the original TypeScript implementation, kept until ADR-004 Phase 7 retires it.
+
 Protects the private Knowledge Authoring Studio (`app/studio/**`, `app/api/studio/**`) with
 a single admin account: login, session validation, logout, and a password-reset-by-email
 flow. Mirrors `authoring/`'s shape — a thin, framework-free module plus a `server.ts` that

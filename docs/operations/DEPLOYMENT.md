@@ -42,7 +42,16 @@ not need a writable database. Preserve the Node and pnpm versions declared in
 ## Deploying the Studio (Python API on a separate host)
 
 Host `backend/` (FastAPI/uvicorn) anywhere that runs a long-lived ASGI process — Render, Fly.io, a
-VPS. No Vercel-specific setup is required for this to work correctly, because the Studio's browser
+VPS. The repository ships a Render Blueprint, `render.yaml` (Render dashboard → New → Blueprint →
+this repo). It builds with a venv inside `backend/` (`python3 -m venv .venv && .venv/bin/pip
+install uv && .venv/bin/uv sync --frozen`) and starts `uvicorn main:app`. Do not install uv with
+the astral.sh curl script there: it writes to `$HOME/.local/bin`, which the start phase does not
+see ("uv: No such file or directory"). The Blueprint sets the non-secret variables; the secrets
+(`REVALIDATE_SECRET`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`,
+`GITHUB_PUBLISH_TOKEN`) are `sync: false` and must be entered in the Render dashboard. The
+Blueprint uses `plan: free`, which spins the service down when idle: the first Studio request
+after a pause is slow. It declares no health check path, because no route answers an
+unauthenticated GET. No Vercel-specific setup is required for this to work correctly, because the Studio's browser
 traffic never needs to reach Python directly: with `NEXT_PUBLIC_PYTHON_API_BASE_URL` left unset in
 production, the editor's save/publish calls (`lib/studio-client.ts`) fall back to same-origin
 relative paths, which land on the Next.js relay routes that already exist and are already tested
@@ -56,8 +65,10 @@ Set, in the Next.js app's (Vercel) environment:
 
 - `PYTHON_API_BASE_URL` — the Python host's URL (e.g. `https://stories-api.onrender.com`). This is
   the only Python-location variable production needs; it is read server-side only.
-- Leave `NEXT_PUBLIC_PYTHON_API_BASE_URL` and `STUDIO_ALLOWED_ORIGINS` **unset**. Setting either
-  one re-introduces the direct-browser-to-Python cross-origin path this setup avoids.
+- Leave `NEXT_PUBLIC_PYTHON_API_BASE_URL` **unset** on Vercel. Setting it switches the editor to
+  calling Python directly from the browser and breaks the session cookie cross-domain.
+  `STUDIO_ALLOWED_ORIGINS` is unnecessary on this path; `render.yaml` sets it to the site origin,
+  which is harmless (CORS is only enabled for the origins listed).
 
 Set, on the Python host itself:
 

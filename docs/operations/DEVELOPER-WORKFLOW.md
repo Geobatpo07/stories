@@ -31,6 +31,19 @@ pnpm build
 
 Use `pnpm release:verify` for the complete release sequence, including artifact rebuild.
 
+When you touch `backend/`, also run, from `backend/` (Python 3.12; run `uv sync` first):
+
+```bash
+uv run pytest
+uv run ruff check .
+uv run mypy
+```
+
+CI runs the same three, plus a Python-writes/Node-reads artifact round trip and a TypeScript-vs-
+Python artifact parity check (`pnpm build:knowledge:parity` locally). `backend/pyproject.toml`
+pins `duckdb` to the version `@duckdb/node-api` reads; bump them together
+(`backend/duckdb-compat.json`).
+
 ### Working on the Studio (needs the Python service)
 
 The Studio pages read documents and field definitions from the Python API, so Studio work needs

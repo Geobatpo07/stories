@@ -1,6 +1,9 @@
 # ADR-004: Full Python backend, LadybugDB as the knowledge store, and an authoring MCP
 
-- **Status:** Proposed
+- **Status:** In progress (Phases 0-5 implemented; Phase 6 deployment being validated; Phase 7
+  cleanup open). Deviations from the plan below: the MCP server is a local stdio process with no
+  token (Phase 5, `backend/mcp_server/README.md`), and the Python API is hosted on Render
+  (`render.yaml`) behind the Next.js relay, not on Vercel Services (Phase 6).
 - **Date:** 2026-10-21
 - **Supersedes:** ADR-003 (Python owned only the two Build Targets; this widens the
   boundary to the whole backend and changes the storage engine)

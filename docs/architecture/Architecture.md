@@ -68,6 +68,39 @@ direction_ above (`runtime/ → @/kernel`, `build/ → @/kernel`); both descript
 simultaneously true. See runtime/README.md and build/README.md for the full
 explanations.
 
+## Python backend (ADR-004)
+
+`backend/` is a Python 3.12 service (FastAPI, managed with uv, `mypy --strict`) that takes over
+everything behind the public site: the Studio API and authentication, the authoring workflow and
+GitHub publication, the Kernel port (parse, validate, normalize, relationships), and the
+knowledge build pipeline. LadybugDB is its internal working graph, rebuilt on every run; it is
+never a store and Next.js never opens it.
+
+```text
+Next.js (public site, Studio UI, relay routes)
+  │  server-side fetch, session cookie forwarded      ┌───────────────────────────────┐
+  ├──────────────────────────────────────────────────▶│ backend/api (FastAPI)          │
+  │                                                    │  auth/ authoring/ publication/ │
+  │  reads only                                        │  mcp_server/ (local, stdio)    │
+  ▼                                                    └──────────────┬────────────────┘
+database/generated/{knowledge.duckdb, manifest.json} ◀── backend/pipeline (build)
+```
+
+- **The artifact contract is unchanged.** `knowledge.duckdb` and `manifest.json` keep the same
+  two-table shape, so `ArtifactKnowledgeSourceAdapter` and `lib/duckdb/` need no change. The DuckDB
+  version is pinned on both sides (`backend/duckdb-compat.json`, enforced in CI).
+- **Next.js stays a thin client.** `lib/python-api.ts` relays Studio calls server-side, so the
+  session cookie (`SameSite=lax`) stays on the Next.js origin. The browser never calls the Python
+  host directly in production.
+- **The TypeScript Kernel, `authoring/`, `auth/` and `build/` are being retired per area**, each
+  gated on its own parity proof (ADR-004, Phase 7). Until an area is deleted, the paragraphs
+  above about `kernel/`, `runtime/` and `build/` still describe the code that exists. The Python
+  producer is already the production default for `build:knowledge`.
+- **`middleware.ts` keeps reading Supabase directly** for the session check.
+
+See `backend/mcp_server/README.md` for the MCP server, `docs/architecture/AUTHORING-STUDIO.md`
+for the Studio flow, and `docs/operations/DEPLOYMENT.md` for hosting.
+
 ## Domain-Driven Design, applied narrowly
 
 Each entity — Research Program, Scientific Question, Hypothesis, Experiment, Knowledge
@@ -100,9 +133,10 @@ from a page, a script, or (later) an API route without duplicating logic in JSX.
 
 ## Knowledge Objects and generated publication artifacts
 
-ADR-002 supersedes ADR-001. Canonical authoring state lives under `knowledge/`. Publishing
-validates that model through the Kernel and generates readable MDX under `content/`. The
-existing artifact pipeline then produces DuckDB and manifest snapshots for the Runtime.
+ADR-002 supersedes ADR-001. Canonical authoring state lives in Supabase drafts (it was
+`knowledge/` before the Studio moved to hosted storage). Publishing validates that model and
+generates readable MDX under `content/` as a GitHub commit. The artifact pipeline then produces
+DuckDB and manifest snapshots for the Runtime.
 
 The public website never reads canonical objects or MDX. It continues to consume only the
 Platform Runtime. See `docs/architecture/AUTHORING-STUDIO.md` for the private authoring

@@ -1,6 +1,6 @@
 # ADR-003: Python owns the Knowledge Artifact Pipeline's data targets
 
-- **Status:** Proposed
+- **Status:** Superseded by ADR-004
 - **Date:** 2026-10-21
 - **Relates to:** ADR-001 (MDX is the source of truth; DuckDB is a generated index), ADR-002
   (Knowledge Objects are the source of truth)
