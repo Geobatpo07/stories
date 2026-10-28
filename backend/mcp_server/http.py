@@ -22,13 +22,20 @@ from api.deps import AppDependencies
 
 from .server import build_server
 
-TOKEN_HEADER = b"x-mcp-token"
+TOKEN_HEADER = b"x-token"
 
 
 class RequireToken:
-    """ASGI middleware: refuses any HTTP request whose `x-mcp-token` header does not match
+    """ASGI middleware: refuses any HTTP request whose `x-token` header does not match
     `token`, in constant time. Lifespan messages (the MCP session manager's startup/shutdown)
-    pass straight through untouched."""
+    pass straight through untouched.
+
+    Named `x-token`, not something more descriptive like `x-mcp-token`: claude.ai's custom
+    connector UI only sends request header names Anthropic has pre-approved (its docs list
+    authorization, x-api-key, and x-auth-token as examples of the approved set, "and more" —
+    a custom name outside that set is rejected at save time). `x-token` was observed as one of
+    the offered names in that UI; a more specific name would need a support request to get
+    approved first."""
 
     def __init__(self, app: ASGIApp, token: str) -> None:
         self._app = app
