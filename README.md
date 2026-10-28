@@ -25,6 +25,82 @@ validation, MDX rendering, publication and the knowledge build. See `docs/adr/AD
 
 See `docs/architecture/Architecture.md` for the full picture.
 
+## Architecture
+
+```mermaid
+flowchart LR
+    Visitor([Visitor]) --> Site
+    Admin([Admin in the Studio]) --> Site
+
+    subgraph Vercel
+        Site["Next.js<br/>public site, /studio UI,<br/>relay routes, middleware"]
+    end
+
+    subgraph Render
+        API["Python API (FastAPI)<br/>auth, authoring, publication"]
+    end
+
+    Site -- "server-side relay<br/>PYTHON_API_BASE_URL" --> API
+    Site -. "session check" .-> DB[("Supabase<br/>drafts, sessions")]
+    API --> DB
+    API -- "one commit" --> Git[("GitHub<br/>content/*.mdx")]
+    Git -- "push triggers build" --> Build["build:knowledge<br/>(Python pipeline)"]
+    Build --> Artifacts[/"knowledge.duckdb<br/>manifest.json"/]
+    Artifacts -- "read at build time" --> Site
+    MCP["MCP server<br/>(local, stdio)"] --> API_Core["AuthoringWorkflow"]
+    API_Core --> DB
+    API_Core --> Git
+```
+
+The browser only ever calls Next.js. The Python API is reached server-side, and public pages
+need no live backend: they are rendered from the generated artifacts.
+
+## Workflows
+
+### Publishing a document
+
+```mermaid
+sequenceDiagram
+    actor Admin
+    participant Next as Next.js relay
+    participant API as Python API
+    participant DB as Supabase
+    participant GH as GitHub
+    participant V as Vercel
+
+    Admin->>Next: Save (autosave)
+    Next->>API: POST /api/studio/documents
+    API->>DB: store draft (validated or not)
+    Admin->>Next: Publish
+    Next->>API: POST /api/studio/documents/{id}/publish
+    API->>DB: load draft
+    API->>API: validate, render MDX, check path
+    API->>GH: one tree, one commit, fast-forward ref
+    API->>DB: mark published
+    API-->>Next: 200, deployment: pending
+    API->>Next: revalidate (best effort)
+    GH->>V: new commit
+    V->>V: build:knowledge, then next build
+```
+
+Any failure before the commit leaves the draft unchanged. A failed validation or commit comes
+back as a 422 with the reason.
+
+### Development and release
+
+```mermaid
+flowchart LR
+    Dev["Branch + PR"] --> CI
+    subgraph CI["GitHub Actions"]
+        direction TB
+        V1["verify:<br/>build:knowledge, typecheck,<br/>lint, test, build"]
+        V2["python-artifact:<br/>pytest, round trip, parity,<br/>ruff, mypy --strict"]
+    end
+    CI --> Merge["Merge to main"]
+    Merge --> Deploy["Vercel build and deploy"]
+    Merge --> Render2["Render redeploys the API"]
+```
+
 ## Project structure
 
 ```
