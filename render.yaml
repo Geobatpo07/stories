@@ -17,8 +17,13 @@ services:
     runtime: python
     plan: free
     rootDir: backend
-    buildCommand: curl -LsSf https://astral.sh/uv/install.sh | sh && $HOME/.local/bin/uv sync --frozen
-    startCommand: $HOME/.local/bin/uv run uvicorn main:app --host 0.0.0.0 --port $PORT
+    # A venv inside the project directory (rootDir), not $HOME/.local/bin: Render does not
+    # guarantee the build and start phases share the same $HOME, or that anything written
+    # outside the project directory during build survives into the running instance. The
+    # astral.sh curl installer writes to $HOME/.local/bin, which is why the first deploy
+    # failed at startup with "uv: No such file or directory" even though the build succeeded.
+    buildCommand: python3 -m venv .venv && .venv/bin/pip install --upgrade pip uv && .venv/bin/uv sync --frozen
+    startCommand: .venv/bin/uvicorn main:app --host 0.0.0.0 --port $PORT
     # No healthCheckPath: every route in api/app.py either requires a session (401) or is
     # POST-only (405 on Render's GET probe) — there is no unauthenticated GET route to point
     # it at today. Render falls back to checking the port is listening. Add a plain `/health`
