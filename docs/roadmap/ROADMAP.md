@@ -14,6 +14,15 @@ Version 3 adds the Knowledge Authoring Studio: canonical Knowledge Objects, sche
 forms, deterministic MDX rendering, and transactional publication through the existing
 artifact pipeline. See `docs/architecture/AUTHORING-STUDIO.md`.
 
+ADR-004 moved the backend to Python (`backend/`): schema contract, Kernel port, LadybugDB-backed
+build pipeline, Studio API and auth, GitHub publication, and a local MCP server are implemented,
+and the Python producer is the production build default. Hosting the API on Render is being
+validated. What remains is Phase 7 cleanup:
+deleting each TypeScript area (`build/` producer, `kernel/`, `authoring/` and `auth/`, relay
+routes) only after its own parity proof and a production observation window. See the Phase 7
+checklists in `docs/adr/ADR-004-full-python-backend-ladybugdb-mcp.md`. The items below predate
+ADR-004 and are kept as the original backlog.
+
 1. **First vertical slice.** Pick one entity (Research Program is the natural start,
    since everything else references it), wire a server-only bootstrap module that calls
    `createPlatformRuntime(...).start()` once and shares the resulting `ApplicationContext`,

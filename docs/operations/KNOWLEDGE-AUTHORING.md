@@ -6,9 +6,10 @@ object is published.
 
 ## Start the Studio
 
-Run `pnpm dev` and open `/studio`. Development mode enables the Studio locally. Public
-production deployments keep it unavailable unless `STORIES_STUDIO_ENABLED=true` is set.
-Only enable it in an access-controlled environment with a durable writable filesystem.
+Start the Python API and Next.js together (see `DEVELOPER-WORKFLOW.md`), then open `/studio`
+and sign in. Development mode enables the Studio locally. In production it is unavailable unless
+`STORIES_STUDIO_ENABLED=true` is set on the Python service. Drafts are stored in Supabase and
+publication is a GitHub commit, so no writable local filesystem is needed.
 
 ## Public organization
 
@@ -24,28 +25,28 @@ Hypotheses and experiments remain Project investigations in the underlying Knowl
 ## Knowledge Object lifecycle
 
 1. **Create:** the Studio creates a private object with a UUID and schema defaults.
-2. **Draft:** every edit autosaves canonical JSON under `knowledge/<kind>/`. Partial drafts
-   are allowed and display friendly validation guidance.
-3. **Validate:** the Kernel applies the registered Zod schema, normalization, and closed-world
-   relationship resolution. Relationships are selected visually from published objects.
+2. **Draft:** every edit autosaves the canonical object to Supabase (`persistence_records`,
+   namespace `knowledge`) through the Python API. Partial drafts are allowed and display
+   friendly validation guidance.
+3. **Validate:** the Python authoring definitions apply the registered schema and
+   normalization. Relationships are selected visually from published objects.
 4. **Preview:** narrative content is rendered through the same `MarkdownDocument` component
    used by the public Story experience.
-5. **Publish:** `MDXRenderer` generates deterministic MDX in the existing registered content
-   folder. The Knowledge Artifact Pipeline regenerates DuckDB and the manifest.
-6. **Refresh:** Runtime and presentation caches are invalidated and affected Next.js paths are
-   revalidated without restarting the Studio.
-7. **Version:** commit canonical JSON and generated MDX together. Git remains the official
-   publication history.
+5. **Publish:** `MDXRenderer` generates deterministic MDX, and the API commits it to the
+   configured GitHub branch (`GITHUB_REPOSITORY`, `GITHUB_PUBLISH_BRANCH`) in one atomic commit.
+6. **Deploy:** Vercel builds the commit; the Python knowledge build regenerates DuckDB and the
+   manifest. The API then asks Next.js to revalidate affected paths (best effort).
+7. **Version:** the commit is the version. Git remains the official publication history.
 
 ## Dynamic forms
 
-The Kernel authoring API walks every registered Zod object shape. It derives required state,
-defaults, enum choices, arrays, dates, URLs, and text controls. Relationship fields come from
-the existing Kernel registration metadata. The UI never declares a Program, Project, Story,
-or Artifact form manually.
+The Python authoring definitions (`GET /api/authoring/definitions`) describe every registered
+document kind: required state, defaults, enum choices, arrays, dates, URLs, and text controls.
+Relationship fields come from the registration metadata. The UI never declares a Program,
+Project, Story, or Artifact form manually.
 
-Adding a registered schema automatically produces a form. Use Zod `.describe()` metadata when
-a field needs author-facing guidance; validation remains owned by the schema.
+Adding a registered schema automatically produces a form; validation remains owned by the
+schema.
 
 ## Drafts and validation
 
@@ -58,7 +59,9 @@ The schema `status` describes the research lifecycle (`draft`, `active`, `paused
 
 ## Rendering and MDX generation
 
-`KnowledgeRenderer` is the format-neutral renderer contract. V3 registers only `MDXRenderer`.
+`KnowledgeRenderer` is the format-neutral renderer contract. Only `MDXRenderer`
+(`backend/authoring/renderer.py`) is registered. Its output is byte-identical to the original
+TypeScript renderer.
 It validates and normalizes fields, follows schema field order, emits readable YAML, normalizes
 line endings, and produces a stable final newline.
 
