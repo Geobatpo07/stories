@@ -64,3 +64,8 @@ services:
         value: Geobatpo07/stories
       - key: GITHUB_PUBLISH_BRANCH
         value: main
+      # Mounts the Studio MCP tools over Streamable HTTP at /mcp (backend/mcp_server/http.py),
+      # gated by this one shared secret (checked via the x-mcp-token header). Leave unset to
+      # keep /mcp unmounted entirely. Generate with: openssl rand -hex 32
+      - key: MCP_REMOTE_TOKEN
+        sync: false

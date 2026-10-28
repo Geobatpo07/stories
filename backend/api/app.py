@@ -7,6 +7,8 @@ a failing email provider) this does too, so the framework answers 500.
 """
 
 import logging
+from collections.abc import AsyncIterator
+from contextlib import AsyncExitStack, asynccontextmanager
 from datetime import UTC, datetime
 from email.utils import format_datetime
 from typing import Any
@@ -140,7 +142,26 @@ def create_app(dependencies: AppDependencies | None = None) -> FastAPI:
         except Exception:  # logged, never raised: it runs after the response
             logger.exception("Site revalidation failed after a successful publication")
 
-    app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+    # Built before the app, not after: mounting a sub-app does not run its lifespan on its own
+    # (confirmed the hard way — without this, the MCP session manager's task group is never
+    # started, and every request fails with "Task group is not initialized. Make sure to use
+    # run()."). FastAPI only runs lifespans it is given at construction time, so this app's own
+    # lifespan explicitly enters the mounted MCP app's, when there is one.
+    mcp_token = deps.environ.get("MCP_REMOTE_TOKEN") or ""
+    mcp_app = None
+    if mcp_token:
+        from mcp_server.http import build_http_app
+
+        mcp_app = build_http_app(deps, mcp_token)
+
+    @asynccontextmanager
+    async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+        async with AsyncExitStack() as stack:
+            if mcp_app is not None:
+                await stack.enter_async_context(mcp_app.router.lifespan_context(mcp_app))
+            yield
+
+    app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
 
     # The Studio editor calls this API from the browser. Same origin needs nothing; a different
     # origin (local dev: next dev on :3000, this service on :8000) must be listed explicitly.
@@ -266,5 +287,12 @@ def create_app(dependencies: AppDependencies | None = None) -> FastAPI:
         if (blocked := await studio_gate(request)) is not None:
             return blocked
         return _json(200, list_authoring_definitions())
+
+    # ---- /mcp (ADR-004 phase 5/6: the Studio MCP tools, remote, opt-in) -----------------------
+    # Built above, with the app's lifespan, so its session manager is actually running by the
+    # time a request reaches it.
+
+    if mcp_app is not None:
+        app.mount("/mcp", mcp_app)
 
     return app
