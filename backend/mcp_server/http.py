@@ -14,8 +14,10 @@ it: `create_app()` only mounts this at all when the variable is set.
 
 import hmac
 
+from fastapi import FastAPI
 from starlette.applications import Starlette
 from starlette.responses import PlainTextResponse
+from starlette.routing import Route
 from starlette.types import ASGIApp, Receive, Scope, Send
 
 from api.deps import AppDependencies
@@ -63,3 +65,35 @@ def build_http_app(deps: AppDependencies, token: str) -> Starlette:
     mcp_app = server.streamable_http_app(streamable_http_path="/")
     mcp_app.add_middleware(RequireToken, token=token)
     return mcp_app
+
+
+class _BareMountEndpoint:
+    """Raw ASGI passthrough for a literal hit on the mount path with no trailing slash.
+
+    `app.mount(path, mcp_app)` only ever matches `{path}/...` (Starlette's `Mount` compiles its
+    regex as `path + "/{path:path}"`), never the bare `{path}` itself — that's a *different*,
+    unmatched route as far as the outer router is concerned. With `redirect_slashes=True`
+    (FastAPI's default), hitting the bare path 307-redirects to the slashed one, which is normally
+    harmless. It isn't here: claude.ai's custom-connector UI strips the trailing slash from the
+    URL when it saves a connector, and its MCP client does not follow that redirect — it reports
+    "Impossible de se connecter au serveur" and never retries the corrected path. This endpoint is
+    registered as an exact-path `Route` alongside the `Mount`, so the bare path gets Match.FULL
+    immediately and the redirect logic never runs; it forwards straight into `mcp_app` with the
+    path rewritten to `/` (the one route `mcp_app` actually has), so both spellings behave
+    identically, headers, middleware (`RequireToken` included) and streaming responses alike."""
+
+    def __init__(self, mcp_app: ASGIApp) -> None:
+        self._mcp_app = mcp_app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        await self._mcp_app({**scope, "path": "/"}, receive, send)
+
+
+def attach_mcp(app: FastAPI, mcp_app: Starlette, path: str = "/mcp") -> None:
+    """Mount an already-built `mcp_app` (from `build_http_app`) on `app` at `path`, answering
+    identically whether a client requests `path` or `path/` (see `_BareMountEndpoint`).
+
+    Takes `mcp_app` rather than building it itself because the caller needs it before `app`
+    exists too, to enter its lifespan (see the comment in `api/app.py` on why)."""
+    app.mount(path, mcp_app)
+    app.router.routes.append(Route(path, _BareMountEndpoint(mcp_app)))

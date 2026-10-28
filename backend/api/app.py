@@ -290,9 +290,13 @@ def create_app(dependencies: AppDependencies | None = None) -> FastAPI:
 
     # ---- /mcp (ADR-004 phase 5/6: the Studio MCP tools, remote, opt-in) -----------------------
     # Built above, with the app's lifespan, so its session manager is actually running by the
-    # time a request reaches it.
+    # time a request reaches it. attach_mcp also registers a fallback for the bare "/mcp" path
+    # (no trailing slash) answering identically to "/mcp/" — see _BareMountEndpoint for why that
+    # needs to be exact rather than the usual redirect.
 
     if mcp_app is not None:
-        app.mount("/mcp", mcp_app)
+        from mcp_server.http import attach_mcp
+
+        attach_mcp(app, mcp_app)
 
     return app
